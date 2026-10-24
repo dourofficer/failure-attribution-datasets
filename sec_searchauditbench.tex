@@ -49,8 +49,8 @@ query / predicted answer length (chars): median & 146 / 669\\\bottomrule
 \smallskip Long tail: 350 runs have $<$20 messages but 202 have $\ge$150. The critical step is the final-answer message in 210 cases (16.9\%) and lies in the last fifth of the run in 420 (33.8\%); by root cause the median relative position is 0.40 for Search Coverage Gap, 0.50 Candidate Mismanagement, 0.59 Unverified Source Reliance, 0.62 Entity--Relation Misbinding, 0.85 Constraint Neglect and 1.0 Unsupported Answer. Tool calls: 32\,k \code{search}, 13.6\,k \code{visit} (a handful of stray names such as \code{web\_search}). Paper-reported token counts: 65.1\,k per trajectory on average (median 39.4\,k, P90 152\,k), of which 49.1\,k are tool returns and 15.3\,k reasoning.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_searchauditbench.pdf}\\[2pt]
-\includegraphics[width=\linewidth]{../figures/bench_searchauditbench.pdf}
+\includegraphics[width=\linewidth]{figures/cat_searchauditbench.pdf}\\[2pt]
+\includegraphics[width=\linewidth]{figures/bench_searchauditbench.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{index} 546 (GLM-5.2 on xBench-DeepSearch; 8 messages = 3 assistant decisions, 9\,k characters; the shortest run whose critical step is not the final answer). The Chinese query asks where a $>$100\,M-view IShowSpeed short was filmed; after two searches the agent visits a UniFuncs aggregation page, accepts its claim (a pit in Handan, Hebei) and answers, never opening the actual YouTube short --- gold answer Changsha. Label: \emph{Unverified Source Reliance} at message 5, span [5, 7], with rationale, repair directive and four rubrics.

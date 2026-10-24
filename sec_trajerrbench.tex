@@ -52,7 +52,7 @@ chars / trajectory: mean / med. & 52.6\,k / 20.9\,k & 20.6\,k / 19.7\,k & 201\,k
 \smallskip Subsets by domain and model: retail / DeepSeek-Reasoner 103, airline / Qwen3-Max 80, retail / GPT-5 76, airline / DeepSeek-Reasoner 71, airline / GPT-5 70; SWE-Pro: Gemini-3.1-Pro 28, Claude-Opus-4.6 21, Grok-4.20 21, Kimi-K2.6 16. Blamed module: reason 58.0\%, plan 14.4\%, obs 10.9\%, act 7.0\%, verify 6.2\%, null 3.5\%; on SWE-Pro \code{reason.WrongChoice} alone is 40.7\% and all OBS subtypes are absent. Critical steps sit mid-to-late: 13.5\% in the first 40\% of the run, 42\% between 0.6 and 0.8, 19.8\% in the last fifth.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_trajerrbench.pdf}
+\includegraphics[width=\linewidth]{figures/cat_trajerrbench.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{airline\_failed\_qwen3-max::0250f877-\dots} (en edition, $\tau^2$-Bench airline, Qwen3-Max; 7 messages, 8\,k characters --- the shortest $\tau^2$ run; step 0 is the airline policy prompt). The user asks for the balances of their gift cards and certificates; instead of identifying the user and looking up the account, the assistant immediately calls \code{transfer\_to\_human\_agents}, which ends the episode. Label: step 3, \code{act.WrongTool}; no free-text rationale is shipped.

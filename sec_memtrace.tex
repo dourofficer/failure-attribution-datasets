@@ -48,7 +48,7 @@ slice steps / failure: median & 497 & 495 & 81 & 1,447 & 497\\\bottomrule
 \smallskip Plus 75 Annotation-Error (67 unique queries) and 3 Judge-Error annotations kept in the files (238 in total). By source: LongMemEval 70, LoCoMo 58, RealMem 32 failures (graphs 75 / 16 / 12). Graphs hold on average 3,010 nodes and 5,322 edges (max 17,753 / 32,616); operations per graph 422 -- 4,571. Slice length: mean 805, min 12, max 3,661 operations. The faulty operation lies inside the slice in 140 / 160 cases (misses are mostly Mem0 extraction errors: the fact never became a memory unit, so no edge reaches the prediction); its relative position in the slice is late (mean 0.79, median 0.90) and mean 0.69 among all operations of the graph. Node text per graph: median 20.9\,M characters; per slice median 7.6\,M (Mem0 slices 0.1--0.3\,M).
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_memtrace.pdf}
+\includegraphics[width=\linewidth]{figures/cat_memtrace.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{mem0/longmemeval\_longmemeval-f8c5f88b.json}, annotation \code{query:f8c5f88b@1} (Mem0 on LongMemEval; Update Error). The prediction's backward slice has 16 operations out of 977 in the graph; at operation 12 an update rewrites ``new tennis racket from a sports store downtown'' into ``focusing on improving tennis game with a new racket'', so retrieval and answering (steps 15--16) no longer see the purchase location. Prompt-template inputs (4--8\,k characters each) are omitted from the rendering.

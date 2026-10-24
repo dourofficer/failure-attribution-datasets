@@ -55,7 +55,7 @@ characters / log: mean & 32.1\,k & 51.0\,k & 11.6\,k\\\bottomrule
 \smallskip Consensus in our subset: 54\% / 29\% / 17\% of flagged steps carry 1 / 2 / 3 votes (paper 56.1 / 27.8 / 16.2). Agent at flagged steps, manual: orchestrator 60\% (\code{Orchestrator} 33.7\% + \code{MagenticOneOrchestrator} 26.8\%), WebSurfer 31.4\%, FileSurfer 3.6\%, Assistant 3.1\%; automatic: Verification\_Expert 17.1\%, Computer\_terminal 9.2\%, Validation\_Expert 6.1\%, DataVerification\_Expert 4.5\%, the rest spread over many \code{*\_Expert} names.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.40\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_mp_bench.pdf}
+\includegraphics[width=\linewidth]{figures/cat_mp_bench.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{manual/18.json} (MAST Magentic-One GAIA level-2 log; 9 steps, 3 agents, 13.7\,k characters). The first Bing search already shows ``beta-geometric'' in a snippet; the WebSurfer's click on a paper silently fails, it then summarises ``Markov models'' and the orchestrator answers \emph{Markov Model} (ground truth \emph{beta geometric}). Five steps are flagged in total: 5, 7 and 8 by all three annotators, 3 only by annotator 3, 6 only by annotator 2---the renderer marks all five; the annotation box lists the per-annotator (step, annotator, category) labels with their reasons (truncated) and the per-step votes, and its ``faulty agent'' row names only the agent of the first flagged step (steps 6 and 8 blame the orchestrator).

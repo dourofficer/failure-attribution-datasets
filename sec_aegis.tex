@@ -58,7 +58,7 @@ characters / traj.: mean & 20\,k & 21.5\,k\\\bottomrule
 \smallskip Per framework (all): AgentVerse 2,449, LLM Debate 2,404 (always 12 turns), MacNet 2,359 (10 turns), DyLAN 1,567, SmolAgents 481, Magentic-One 273; only the two GAIA systems are long (up to 45 turns, 56\,k characters). Blamed agents are structural: Solver 2,281, Evaluator 1,934, RoleAssigner 1,752 (AgentVerse), Node0 2,000, Node3 1,815 (MacNet), Assistant1--3 (Debate/DyLAN), MagenticOneOrchestrator 129, WebSurfer 74. Where MacNet markers exist, the first injected turn sits at relative position 0.23 on average.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/fw_aegis.pdf}
+\includegraphics[width=\linewidth]{figures/fw_aegis.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{GSM8K\_gpt-4o-mini\_macnet\_12\_f7cdb106} (MacNet chain, 10 turns, 5 nodes, 8.4\,k characters), chosen because only MacNet records carry turn-level markers. Node1 is prompt-injected to repeat steps (FM-1.3) and Node3's responses are corrupted to terminate prematurely (FM-3.1); Node3 silently changes 10\%/20\% into 5\%/30\% and the system answers 20.5 instead of 17. All five turns of the two injected nodes are marked.

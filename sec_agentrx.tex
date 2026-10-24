@@ -54,7 +54,7 @@ characters / traj.: mean & 46\,k & 18.7\,k & 64\,k\\\bottomrule
 \smallskip Blamed agent: $\tau$-retail Assistant 21, \emph{User} 8 (under-specified intent); Magentic-One Orchestrator 23, WebSurfer 18, Assistant 2, FileSurfer 1. Over all 335 annotated failure events, Adherence failures dominate (203), but at the root cause Misinterpretation of Tool Output leads (22 of 73). Paper-reported sizes: 4.9\,k ($\tau$), 6.4\,k (Flash), 16.5\,k (Magentic) tokens per trajectory.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_agentrx.pdf}
+\includegraphics[width=\linewidth]{figures/cat_agentrx.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} Magentic-One log \code{e6bc9808\ldots} (8 steps, 3 roles, 9.2\,k characters) with two annotated failures: the WebSurfer reads only 35\% of the search page (step 5, Adherence), then the Orchestrator declares the request satisfied on that partial evidence (step 7, Misinterpretation)---the second event is the root cause, illustrating the first-\emph{unrecoverable}-failure convention. The run answers \$1.08 billion.

@@ -53,7 +53,7 @@ characters / trajectory: mean & 182\,k & 452\,k & 297\,k & 163\,k & 23\,k & 131\
 \smallskip Root step (0-based) mean 78.3, median 55.5, max 521; 28.3\% of trajectories have $>$100 steps after the root, 48.6\% $>$50. $\approx$45\,k tokens per trajectory on average (max 1.2\,M characters). The sender of the root step equals the responsible role in 99.2\% of records; 14.9\% of trajectories contain explicit hand-off markers.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.36\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/agent_longrca.pdf}
+\includegraphics[width=\linewidth]{figures/agent_longrca.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{webarena\_verified\_\_099} (13 steps, 4 roles, 28.7\,k characters)---the shortest English-language record, chosen for space; a typical trajectory is ten times longer. The Verification\_Expert correctly finds that neither of the two reviews mentions price, but then reports \code{SUCCESS} with an empty list instead of the \code{NOT\_FOUND} status the WebArena RETRIEVE protocol requires.

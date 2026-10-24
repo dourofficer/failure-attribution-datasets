@@ -54,8 +54,8 @@ characters / log: mean / median & 23.3\,k / 4.6\,k & ---\\\bottomrule
 \smallskip Short logs: 278 trajectories have 3--5 steps, 274 have 6--10, only 12 have $>$20. Relative error position is spread almost uniformly over deciles (8\,/\,45\,/\,55\,/\,56\,/\,23\,/\,48\,/\,54\,/\,68\,/\,48\,/\,15; exactly at the last step: 23). Derived faulty role: \code{assistant} 187, no role 145, Search Agent 31, MagenticOneOrchestrator 25, Developer Agent 19, WebSurfer 15, Coder 14, Planner 5. All 73 Human-Interaction cases sit in the OWL subset. A few OpenManus/OWL logs embed huge tool outputs (max 1.1\,M characters).
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_agenthallu.pdf}\\[2pt]
-\includegraphics[width=\linewidth]{../figures/fw_agenthallu.pdf}
+\includegraphics[width=\linewidth]{figures/cat_agenthallu.pdf}\\[2pt]
+\includegraphics[width=\linewidth]{figures/fw_agenthallu.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{Magentic\_One/087.json} (MATH-500, GPT-4.1 backbone; 10 steps, 3 roles). At step 3 the Coder reduces the problem to a single quartic and assumes each root yields one equation, skipping the case analysis in the reference solution; the code later prints 4, the Orchestrator reports 3, the answer is 6.

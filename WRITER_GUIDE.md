@@ -6,7 +6,7 @@ Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdfla
 ## Inputs you have
 - `notes/<slug>.md` — the analysis notes (identity, description, schema, statistics, example, caveats). This is your primary source. Use the numbers in it; do not invent numbers.
 - `notes/<slug>_stats.json` — machine-readable stats (only if you need a number not in the md).
-- `figures/{cat,agent,bench,fw}_<slug>.pdf` — small bar charts (category distribution, faulty-agent distribution, source benchmark, framework). Some may not exist — check with `ls figures/*<slug>*`. Include the ones that are informative (1–2 per dataset, side-by-side with the stats table). Do NOT include one that duplicates a table you already print; prefer the figure over a long table.
+- `report/figures/{cat,agent,bench,fw}_<slug>.pdf` — small bar charts (category distribution, faulty-agent distribution, source benchmark, framework). Some may not exist — check with `ls report/figures/*<slug>*`. Include the ones that are informative (1–2 per dataset, side-by-side with the stats table). Do NOT include one that duplicates a table you already print; prefer the figure over a long table.
 - `report/traj/<slug>.tex` — the pre-rendered example trajectory (ALL steps + annotation box). Include it with `\input{traj/<slug>}`. Do not rewrite it. If it does not exist, say so in your reply.
 - `report/preamble.tex` — macros. `report/sec_who_and_when.tex` — THE TEMPLATE. Match its structure, tone, density and macro usage exactly.
 
@@ -23,7 +23,7 @@ Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdfla
 \end{multicols}
 \paragraph{Statistics} computed from the downloaded data.\par\nobreak\vspace{1pt}   % or "from the paper" if not downloaded — say which
 \noindent\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}\small  <booktabs table of the key stats>  \smallskip <one short paragraph of extra numbers> \end{minipage}\hfill
-\begin{minipage}[t]{0.42\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{../figures/<...>.pdf}\end{minipage}
+\begin{minipage}[t]{0.42\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{figures/<...>.pdf}\end{minipage}
 \paragraph{Example trajectory} <1–2 sentences: which record, how many steps/agents, what goes wrong in plain words>
 \input{traj/<slug>}
 \paragraph{Notes} (i) ... (ii) ... (iii) ...   % quirks, caveats, overlaps with other datasets, what is unique

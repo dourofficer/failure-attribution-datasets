@@ -48,8 +48,8 @@ step-level labels & 294 & --- & 294 & --- & ---\\\bottomrule
 \smallskip Paper counts differ: 3,132 trajectories (web 767, OS 2,146, DB 84, embodied 135), 1,995 failures (paper). Characters per trajectory: mean 6.7\,k, median 5.4\,k, max 103\,k (web p90 39\,k). Environment verdict vs judge disagree on 12.9\% of runs where both exist (200 env-passes labelled failure, 252 env-fails labelled \code{Success}). Judge self-consistency (\code{result\_2} vs \code{result\_3}): exact label 77.5\%, success-vs-failure 94.3\%, category given both fail 73.3\% (main confusions CF$\leftrightarrow$Planning, Instruction$\leftrightarrow$Planning). \code{result\_5} (web/GPT, 294 labelled failures): Planning 252, Environment 17, History Error Accumulation 10, Instruction 8, False Assumption 7, Memory Limitation 5; error step mean 9.5, median 6, max 61; relative position mean 0.44, median 0.42 (49 of 294 in the first decile).
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_horizon.pdf}\\[2pt]
-\includegraphics[width=\linewidth]{../figures/bench_horizon.pdf}
+\includegraphics[width=\linewidth]{figures/cat_horizon.pdf}\\[2pt]
+\includegraphics[width=\linewidth]{figures/bench_horizon.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{web\_gpt\_5\_mini\_step\_4\_6} from \code{result\_5} (WebArena shopping-admin, GPT-5-mini, breadth level $s{=}4$; 14 steps; environment score 0). The agent sees at step 2 that order 299 is already cancelled, starts the bestsellers report, then at step 9 forgets this and goes back to cancel the order, loops on the same search and early-stops. Label (\emph{Memory Limitation}, step 9) and reason come from the LLM judge, not a human.

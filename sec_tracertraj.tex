@@ -53,7 +53,7 @@ injected / diagnosed labels & -- & 1822 / 278 & n/a & n/a\\\bottomrule
 \smallskip Blamed agent: agentic \code{assistant} 2,100 (100\%); coding Engineer 935, Product Manager 155, Team Leader 125, Architect 46; math \code{Custom} 400, \code{reasoning expert} 171, \code{BestMAS\_GSM8K} 55. The sender of the labelled step equals \code{mistake\_agent} in 100\% of rows. 1,212 rows place the error in the last 30\% of the trajectory; $\approx$8\,k tokens per trajectory on average.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/agent_tracertraj.pdf}
+\includegraphics[width=\linewidth]{figures/agent_tracertraj.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{coding/test} record \code{Filter\_5086\_I} (MetaGPT team, 8 steps, 2 roles, 16.7\,k characters). The Team Leader delegates a trivial \code{find\_duplicates} function to the Product Manager, who writes a requirements document into \code{solution.py} instead of code (step 6); no implementation is ever produced.

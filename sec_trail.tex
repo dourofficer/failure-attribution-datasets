@@ -55,7 +55,7 @@ human score (0--5): mean & 3.36 & 3.29 & 3.60\\\bottomrule
 \smallskip Span kinds: LLM 1,974, CHAIN 1,268, TOOL 648, AGENT 207, framework 529. Top-level category: Reasoning 592 (70\%), Planning 218 (26\%), System 31 (4\%). Error spans: LLM 744, TOOL 95, 2 unresolved ids; by agent, CodeAgent 577, ToolCallingAgent 253. Relative position of error spans: mean 0.64, median 0.67. Paper counts differ slightly (118/30 traces, 575 error spans). No success label, but the GAIA \code{true\_answer} is embedded in the log.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.40\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_trail.pdf}
+\includegraphics[width=\linewidth]{figures/cat_trail.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} GAIA trace \code{5e5dc94e\ldots} (the shortest with $\ge$2 errors: 11 spans, 1 agent, 5 errors on 2 spans). The manager CodeAgent answers ``6'' correctly but from memory, without any tool call; the planning LLM span (step 6) and the acting LLM span (step 8) carry Instruction Non-compliance, Incorrect Problem Identification, Task Orchestration and Tool Selection errors, three of them HIGH. Steps are spans in DFS order; LLM steps show the last input message and the output.

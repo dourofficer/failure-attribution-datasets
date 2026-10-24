@@ -57,7 +57,7 @@ faulty step / agent, task outcome & not labelled\\\bottomrule
 \smallskip LLMs: GPT-4o 751, Claude 323, Qwen 200, CodeLlama 200, GPT-4o-mini 168. Benchmarks: ProgramDev-v2 400, ProgramDev 390, GSM 223, Olympiad 206, GAIA 195, MMLU 168, Test-C 30, SWE-bench Lite 30. Any-failure rate by framework: OpenManus and AppWorld 96.7\%, MetaGPT 94.9\%, ChatDev 92.4\%, HyperAgent 90.0\%, Magentic 78.5\%, AG2 47.9\%. Median steps: AG2 4, MetaGPT 6, Magentic 19, OpenManus 23, HyperAgent 50.5, ChatDev 66; 334 traces exceed 200\,k characters. Most common label combinations after ``none'': 1.3+1.5 (54), 1.1 alone (46), 3.2 alone (34).
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/fw_mast_data.pdf}
+\includegraphics[width=\linewidth]{figures/fw_mast_data.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} AG2 \code{trace\_id} 124 (MathChat \code{mathproxyagent} $\leftrightarrow$ \code{assistant}, GSM-Plus, Claude; 6 messages, 4.8\,k characters), flagged with FM-2.6 only. The dataset has no step label, so no step is marked: the mismatch is visible at step 1, where the assistant's code prints \$302 but its text states \$254, after which it silently switches to \$302. Steps were obtained by parsing the printed AG2 message list.

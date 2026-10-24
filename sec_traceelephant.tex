@@ -54,7 +54,7 @@ screenshots / traj.: mean & 9.4 & 0 & 22.8 & 0\\\bottomrule
 \smallskip Blamed agent: Magentic-One WebSurfer 63\%, Orchestrator 30\%, FileSurfer 5\%; Captain-Agent WebServing\_Expert 33\%, InformationExtraction\_Expert 29\%, Orchestrator 18\%, DataVerification\_Expert 11\%; SWE-Agent \code{str\_replace\_editor} 80\%, \code{bash} 18\%. Magentic-One traces sum to up to $\approx$1\,M prompt+completion tokens; SWE-Agent \code{usage} fields are all zero.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.40\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/agent_traceelephant.pdf}
+\includegraphics[width=\linewidth]{figures/agent_traceelephant.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{captain-runs-gaia/gaia\_task\_9\_gpt-4o\_0su143t5rrfs} (5 LLM calls, 2 agents, 2.7\,k output characters; rendered as outputs + new tool observations only, since each step's input repeats the whole history). The Orchestrator hands a probability riddle to a CSVHandling\_Expert, who asserts that ball 1 is ``always in the firing line'' and answers 1 (ground truth 3); the Orchestrator accepts it.

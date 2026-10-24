@@ -50,7 +50,7 @@ non-empty \code{mistake\_reason} / \code{groundtruth} & 0 / 0\\\bottomrule
 \smallskip By task: 2Wiki 733, HotpotQA 578, MuSiQue 312, ARC 304, MATH-500 157, MMLU-Pro 92, GAIA 50. Length is bimodal: 610 trajectories have $\le$4 steps (ARC/MMLU-Pro, median 2) and 809 have 21--22 steps (MuSiQue median 21), which looks like a round cap. Messages by role: Planner 13.1\,k, WebSurfer 10.6\,k, CodeExecutor 175, Coder 126, FileSurfer 18. Blamed agent: Planner 73.6\%, WebSurfer 21.0\%, \code{Unknown} 42, Coder 23, CodeExecutor 22.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/agent_correct_error.pdf}
+\includegraphics[width=\linewidth]{figures/agent_correct_error.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{gpt-5-nano\_gaia\_level1\_task22\_1} (GAIA L1; 8 steps, user + Planner + WebSurfer, 3 roles). The WebSurfer opens the BBC script PDF and sees nothing (step 4); at the injected step 6 it re-opens the same URL and now ``reads'' a scene heading, which the Planner accepts as the final answer. With no \code{groundtruth} and no \code{mistake\_reason} in the release, the error can only be identified as the rewritten step.

@@ -50,7 +50,7 @@ chars / trajectory: mean / med. & 378\,k / 198\,k & --- & --- & ---\\\bottomrule
 \smallskip Backbones: GPT-4o 81 (50 / 16 / 15 per environment), Llama-3.3-70B-Turbo 57 (23 / 17 / 17), Qwen3-8B 62 (27 / 17 / 18). 155 of 200 runs are exactly 30 steps long (the cap), 32 have $\le$9. The critical step lies in the first fifth of the run in 78 cases and in the last fifth in 38; the paper's claim that failures ``cluster in mid-trajectory steps 6--15'' does not match the released labels (median 5). Blamed module: planning 39\%, reflection 20\%, memory 19\%, system 11\%, action 11\% --- the paper's Figure~3 shows memory and reflection on top, presumably counting all per-step tags from the annotation study rather than the single released label. 27 labels have an empty \code{failure\_type}. Trajectories are huge (max 5.8\,M characters) because WebShop/GAIA observations repeat the whole prompt and page each step.
 \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}
-\includegraphics[width=\linewidth]{../figures/cat_agenterrorbench.pdf}
+\includegraphics[width=\linewidth]{figures/cat_agenterrorbench.pdf}
 \end{minipage}
 
 \paragraph{Example trajectory} \code{Qwen3-8B\_014\_chat\_b000\_t00\_e14-1d03d2d8} (WebShop, Qwen3-8B; 4 agent steps, 26\,k characters; each step = observation + the agent's tagged response). The agent searches, opens a shirt in the right colour and size, and clicks \code{buy now} without ever checking the ``machine wash'' requirement; the label is \code{reflection.progress\_misjudge} at step 4, the final step.
