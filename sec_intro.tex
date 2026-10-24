@@ -1,0 +1,23 @@
+\section{The failure-attribution problem}\label{sec:intro}
+
+\begin{multicols}{2}
+\paragraph{Setting} An LLM-based \emph{agentic system} solves a task by executing a sequence of \emph{steps}: model calls, tool calls, code execution and environment observations. In a \emph{multi-agent system} (MAS) these steps are emitted by several roles (orchestrator, coder, web-surfer, verifier, \dots) that communicate through messages. Such systems fail often---on GAIA-style tasks the strongest open MAS still fail on a large share of tasks---and because a trajectory can span hundreds of steps and several agents, finding out \emph{why} a run failed is labour-intensive.
+
+\paragraph{Task definition (Who\&When)} \citet{zhang2025who} formalised \emph{automated failure attribution}: given a failed trajectory $\tau=(s_1,\dots,s_T)$ with each step $s_t$ produced by an agent $a_t\in\mathcal{A}$, predict
+\begin{enumerate}
+\item \textbf{Who}: the agent $a^\star$ responsible for the failure, and
+\item \textbf{When}: the \emph{decisive error step} $t^\star$---the earliest step such that, had it been correct, the task would have succeeded.
+\end{enumerate}
+A dataset for this task therefore stores, per failed trajectory, the full log, the ground-truth answer (so that failure is verifiable) and the labels $(a^\star,t^\star)$, usually with a free-text \emph{reason}. Evaluation is by \emph{agent-level accuracy} (exact match on $a^\star$) and \emph{step-level accuracy} (exact match on $t^\star$); some later benchmarks relax the step metric to a window ($|{\hat t}-t^\star|\le k$) or to set-overlap when several steps are acceptable.
+
+\paragraph{Why it is hard} Errors propagate: a subtle early mistake (a wrong assumption, a mis-read observation) can produce a visible crash dozens of steps later, and an attributor that flags the crash is wrong. Who\&When reports that the best prompted LLM reaches only $\approx$54\% agent-level and $\approx$14\% step-level accuracy, and that accuracy falls as the trajectory grows. Later work shows that \emph{full} traces (including hidden tool I/O and environment state) help considerably, that several steps may be equally plausible root causes (annotators disagree on up to 60\% of items in MP-Bench), and that very long traces (median 145 steps in LongRCA) remain mostly unsolved.
+
+\paragraph{Three ways to obtain labelled failures}
+\begin{itemize}[leftmargin=1.1em]
+\item \naturalbadge\ \textbf{Natural failures, human labels.} Run real MAS, keep the failed runs and let experts locate the decisive step (Who\&When, TraceElephant, MP-Bench, LongRCA, AgentRx, TRAIL). Realistic but expensive; annotation agreement is a known issue.
+\item \injected\ \textbf{Fault injection.} Take a \emph{successful} trajectory, replay it up to some step, inject a context-aware error (via an LLM or a programmatic perturbation) and continue; the injected step is the label by construction (Who\&When~Pro, TracerTraj, Aegis, CORRECT-Error, AgentErrata). Cheap and scalable, but the error distribution may differ from reality.
+\item \lbl{taxonomy}\ \textbf{Failure-mode labelling.} Label a trace with one or more failure \emph{categories} (MAST's 14 modes, TRAIL's taxonomy) without necessarily pinning a single step. Useful for diagnosis and training critics rather than for step-level attribution.
+\end{itemize}
+
+\paragraph{Attribution strategies in the literature} (i) \emph{all-at-once}: feed the whole log to a judge LLM and ask for $(a^\star,t^\star)$; (ii) \emph{step-by-step}: walk the log and stop at the first step judged erroneous---better step accuracy, higher cost; (iii) \emph{binary search}: recursively halve the log; (iv) \emph{trained attributors}: small models fine-tuned (often with RL) on injected-fault data such as TracerTraj, Aegis or Who\&When~Pro; (v) \emph{counterfactual replay}: re-execute from a candidate step with a corrected action and check whether the outcome flips---the most reliable but requires a reproducible environment (TraceElephant).
+\end{multicols}

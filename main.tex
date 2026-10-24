@@ -1,0 +1,45 @@
+\input{preamble}
+\usepackage[numbers,sort&compress]{natbib}
+\newcommand{\inputsec}[1]{\IfFileExists{sec_#1.tex}{\input{sec_#1}}{\par\textcolor{critical}{\bfseries [missing section: \detokenize{#1}]}\par}}
+\title{\vspace{-9mm}\LARGE Datasets for Failure Attribution in LLM Agent Systems\\[3pt]\large A compact survey of 20 benchmarks: descriptions, statistics and fully annotated example trajectories}
+\author{\normalsize Compiled from the released data and papers, 16 October 2026}\date{}
+\begin{document}
+\maketitle\vspace{-7mm}
+\begin{tcolorbox}[enhanced,colback=surface,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=5pt,right=5pt,top=3pt,bottom=3pt,fontupper=\small]
+\textbf{Scope.} This document describes the 20 datasets listed in \code{report.md} for \emph{failure attribution} in LLM agent and multi-agent systems: for each one, what it is, how it was built, its statistics (computed from the downloaded data where it is public) and one complete example trajectory---every step shown---with the released annotation. Section~\ref{sec:intro} introduces the task, Section~\ref{sec:overview} compares the datasets, Sections~\ref{sec:g1}--\ref{sec:g4} cover them one by one, and Section~\ref{sec:reco} draws practical conclusions. All data, notes and scripts are in \code{/dataDisk/home/thanhdo/failure-attribution-datasets/}.
+\end{tcolorbox}
+\vspace{-2pt}\tableofcontents
+\input{sec_intro}
+\input{sec_overview}
+
+\section{Core MAS failure-attribution benchmarks (agent + decisive step)}\label{sec:g1}
+\inputsec{who_and_when}
+\inputsec{traceelephant}
+\inputsec{mp_bench}
+\inputsec{who_and_when_pro}
+\inputsec{longrca}
+\inputsec{agentrx}
+
+\section{Large injected-fault datasets (mainly for training attributors)}\label{sec:g2}
+\inputsec{tracertraj}
+\inputsec{aegis}
+\inputsec{correct_error}
+\inputsec{agenterrata}
+
+\section{Failure-taxonomy datasets (failure-mode labels)}\label{sec:g3}
+\inputsec{mast_data}
+\inputsec{trail}
+
+\section{Related trajectory-debugging datasets}\label{sec:g4}
+\inputsec{agenterrorbench}
+\inputsec{searchauditbench}
+\inputsec{failure_as_process}
+\inputsec{trajerrbench}
+\inputsec{agenthallu}
+\inputsec{memtrace}
+\inputsec{horizon}
+\inputsec{megarca_mix}
+
+\input{sec_recommend}
+\bibliographystyle{plainnat}\bibliography{refs_merged}
+\end{document}

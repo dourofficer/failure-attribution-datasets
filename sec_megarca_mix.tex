@@ -1,0 +1,53 @@
+% ===================== MegaRCA-Mix =====================
+\subsection{MegaRCA-Mix}\label{ds:megarca_mix}
+\naturalbadge\ \nobadge\ \lbl{edge + fault side + mode}\ \lbl{single-agent (Claude Code)}\ \lbl{Harbor Index: GAIA / SWE-bench / HLE / OpenRCA + 15}
+
+\begin{identity}
+Paper & \emph{Root-Cause Attribution Is a Search Problem: Continual Search for Long-Horizon Agent Failures} --- Raj et al.\ (Scale AI, 10 authors), arXiv:2609.13463, Sep 2026 (v2 28 Sep 2026; no venue) \cite{megarca2026}\\
+Links & \href{https://arxiv.org/abs/2609.13463}{arXiv} \textperiodcentered\ taxonomy paper \href{https://arxiv.org/abs/2607.28802}{arXiv:2607.28802} (Raj et al., \emph{Model or Harness?}) \textperiodcentered\ source trials \href{https://hub.harborframework.com/datasets/harbor-index}{Harbor Index} \textperiodcentered\ no code, data or release statement\\
+License & not stated\\
+Status & \textbf{not released} as of 2026-10-16 (no GitHub / HF / project page found); \code{data/megarca\_mix/} is empty; every number below is from the paper\\
+\end{identity}
+
+\begin{multicols}{2}
+\paragraph{Description} MegaRCA-Mix is a small, deliberately hard root-cause-attribution test set for \emph{very long} single-agent executions: 50 failed trials with a median log of 286\,K tokens (1.05 MiB), each shipped with the full evidence bundle a human debugger would have --- raw trajectory, trial configuration, agent-side console logs, verifier output and sandbox artifacts. It was built because the released RCA benchmarks the paper also evaluates on (TRAIL, TELBench, AgentRx, Who\&When algorithm-generated) have short traces and a single trajectory file, so a judge never has to \emph{search} for evidence. The paper's method, \emph{Continual Search}, prompts an LLM judge for up to four turns to keep opening unread artifacts before committing to a diagnosis.
+\begin{itemize}
+\item \textbf{Source}: failed trials from Harbor Index (82 tasks distilled from 29 benchmarks in seven domains); the paper names GAIA, SWE-Bench, HLE, OpenRCA ``+ 15 additional benchmarks''. Per-benchmark, per-domain and per-model composition of the 50 trials is not reported.
+\item \textbf{Agent}: Claude Code with Opus-4.8 and GPT-5.5 backbones, run sandboxed under the Harbor framework with its verifiers. Failures are natural.
+\end{itemize}
+\textbf{Annotation}: each trial is human-annotated with its \emph{first consequential error} under the interaction-centric taxonomy of Raj et al.: a triple (\emph{edge} between the model and another component, \emph{fault side} $\in$ \{model, harness, environment, grader\}, \emph{failure mode} out of 41) plus a quoted first-divergence citation. Gold is stored as one or more \emph{acceptable cluster sets} per trial. Number of annotators, their background and agreement are not reported. \textbf{Taxonomy} (41 modes along eight edges): model--owner (Over/Under-initiative, Satisficing, Instruction-Following, Reasoning, Unauthorized Irreversible Action, Sycophancy, Domain Knowledge Deficit, Value Misalignment; grader-side \emph{Instruction--Grader Mismatch}), model--grader (Specification Gaming, Evaluation Awareness), model--third party (Indirect Prompt Injection, Contextual Sycophancy), model--context (State Tracking, Goal Drift, Rationale Erosion), model--memory (Missed Write/Read, State Staleness, Overgeneralization, Pollution, Redundancy, \ldots), model--tool (Incorrect Selection, Tool Hallucination, Feedback Neglect, Recovery Failure, Malformed/Suboptimal Arguments; harness-side \emph{Mistranslation}), model--peer/subagent (Delegation, Communication), model--environment (Recovery/Observation Failure; environment-side \emph{Service Failure}, \emph{Stale State Delivery}). Four modes therefore blame the benchmark side, not the model.
+
+\paragraph{Metrics and baselines} The judge (Claude Agent SDK with file-reading tools) outputs JSON \{\code{edge}, \code{fault\_side}, \code{failure\_mode}, \code{first\_divergence}, \code{evidence\_quote}, \code{rationale}\} with exact strings from \code{taxonomy.py}. Score: per-trial set-F1 between the predicted cluster set and each acceptable gold set, $F_1(A,B)=2|A\cap B|/(|A|+|B|)$, max over gold sets, averaged over 50 trials (paper Table 2, after four judge turns):
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}\toprule
+Judge & Single-turn & Passive cont. & Continual Search\\\midrule
+GPT-5.5 & 0.356 & 0.569 & 0.569\\
+Opus-4.8 & 0.471 & 0.479 & \textbf{0.608}\\\bottomrule
+\end{tabular}
+\end{center}
+(The abstract quotes GPT-5.5 0.349 $\to$ 0.498, a different run.) Evidence coverage: 70.5\% of relevant artifacts opened at turn 1 for both strategies; Continual Search reaches 95.2\% (turn 3) and 98.5\% (turn 4) while passive continuation plateaus at 75.6\%. Config files, console logs and raw session records are opened only in later turns, and these are what fix misdiagnoses.
+
+\paragraph{Schema} Not observable. From the paper, a trial = Claude Code session trajectory + \code{config.json} / trial configuration + console logs + verifier/grader output + sandbox artifacts, with gold = acceptable set(s) of (\code{edge}, \code{fault\_side}, \code{failure\_mode}) and a first-divergence citation. There is no agent-role label (Claude Code is single-agent with sub-agents) and the ``step'' is a cited divergence point rather than an index.
+\end{multicols}
+
+\paragraph{Statistics} from the paper only (nothing downloadable; \code{notes/megarca\_mix\_stats.json} has empty lists).\par\nobreak\vspace{1pt}
+\noindent\begin{minipage}[t]{\linewidth}\vspace{0pt}\small
+\begin{tabular}{@{}ll@{}}\toprule
+Statistic & Value (paper)\\\midrule
+trials & 50, all failed\\
+log length & median 286\,K tokens / 1.05 MiB per trial\\
+steps per trajectory; error position & not reported (labels are first-divergence citations, not indices)\\
+failure-mode / fault-side distribution & not reported (4 sides: model, harness, environment, grader)\\
+source benchmarks & GAIA, SWE-Bench, HLE, OpenRCA + 15 others via Harbor Index; per-benchmark counts not given\\
+agent / backbones & Claude Code; Opus-4.8 and GPT-5.5; per-model counts not given\\
+annotators / agreement & human; count and agreement not reported\\\bottomrule
+\end{tabular}
+
+\smallskip For comparison, the median trace is roughly 2$\times$ the long traces of LongRCA and an order of magnitude above the 16\,k-token Hand-Crafted logs of Who\&When.
+\end{minipage}
+
+\paragraph{Example trajectory} \textbf{Reconstructed, not real data.} No MegaRCA-Mix trial is printed in the paper; the closest material is the worked example of the judge in Appendix A.1 / Figure 10, a GAIA2 (adaptability) trial \code{scenario\_universe\_21\_5e0gvz} that is \emph{not} one of the 50 trials but uses the same label format. The four ``steps'' below paraphrase the paper's prose (the raw turns are not shown there). The agent cancels Saturday appointments, messages a friend, waits once for a reply that never arrives and finishes without rescheduling or cancelling; a trajectory-only reading blames the model (Satisficing), but \code{config.json} and the console log show empty environment settings, so the final label is environment-side \emph{Stale State Delivery}.
+\input{traj/megarca_mix}
+
+\paragraph{Notes} (i) Unreleased: a \emph{described} benchmark only --- cite the numbers but do not count it among usable datasets; the paper's experiments on released data use TRAIL, TELBench, AgentRx and Who\&When, all covered elsewhere in this survey. (ii) What is unique on paper: the longest traces of any RCA set; a multi-file evidence bundle that turns attribution into a search problem; a component / fault-side taxonomy (model vs harness vs environment vs grader) in which some root causes are \emph{benchmark-side} --- a category almost no other dataset admits; multiple acceptable gold sets scored by set-F1 instead of single-step exact match. (iii) Caveats: only 50 trials; annotation protocol and agreement unreported; no composition tables; benchmark count inconsistent between text (29) and Table 1 (19 named); abstract and Table 2 give different GPT-5.5 numbers. (iv) Lineage: built on Harbor Index (Terminal-Bench team) and the Raj et al.\ taxonomy; AgentRx and TRAIL are the closest released analogues (long single-agent traces with a category taxonomy).

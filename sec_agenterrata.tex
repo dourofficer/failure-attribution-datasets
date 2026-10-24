@@ -1,0 +1,64 @@
+% ===================== AgentErrata =====================
+\subsection{AgentErrata}\label{ds:agenterrata}
+\injected\ \nobadge\ \lbl{step + failure mode}\ \lbl{mostly single-agent}\ \lbl{BrowseComp / SWE-bench Lite / WebArena}
+
+\begin{identity}
+Paper & \emph{Diagnosing with Insights: Structured Analysis of Agent Failures via Behavioral Abstractions} --- Bi et al. (Tsinghua / Microsoft Research / UIUC), arXiv:2609.02371, Sep.\ 2026, preprint (no venue) \cite{agenterrata2026}\\
+Links & \href{https://arxiv.org/abs/2609.02371}{arXiv 2609.02371} only; the paper gives no code or data URL and no availability statement\\
+License & not stated (paper CC BY 4.0)\\
+Status & \textbf{not released}: HF datasets API, GitHub search and the web were checked on 2026-10-16 with no result. Nothing downloaded; \code{data/agenterrata/} holds only the Who\&When case file (103 KB) that the paper's Appendix~C analyses\\
+\end{identity}
+
+\begin{multicols}{2}
+\paragraph{Description} AgentErrata is the evaluation set for AgentScope, a diagnosis method that abstracts a trajectory into a Reasoning--Action Graph and localises faults on it. It was built because Who\&When marks the failing step but has no failure-type label, and because---the authors argue---Who\&When's annotated step is often the \emph{earliest detectable} issue rather than the \emph{decisive} one. Trajectories come from three agent stacks, \textbf{OpenManus} (tool loop), \textbf{OWL} (two-agent user/assistant society) and \textbf{Mini SWE Agent}, on BrowseComp, SWE-bench Lite and WebArena; per-framework and per-benchmark counts are not given. Only \emph{successful} runs are kept; then taxonomy-guided \textbf{fault injection} is applied: an LLM first judges whether a run is suitable for a given mode, single-step faults are injected by instrumented replay at a chosen step, and faults with cross-step dependencies get extra post-processing to keep the text consistent. Every injected fault is decisive (the task fails). All 303 trajectories were \textbf{manually verified}, invalid ones discarded; annotator count, time and agreement are not reported. Labels per trajectory: the injected step and one of 10 modes in 3 categories:
+\begin{itemize}
+\item \textbf{Reasoning}: Wrong Context (WC), Instruction Unfollowing (IU), Insufficient Context (IC), Context Miss (CM);
+\item \textbf{Control-flow}: Termination Miss (TM), Premature Termination (PT), Step Loop (SL);
+\item \textbf{Action}: Action Mismatch (AM), Invocation Issue (II), Execution Failure (EF).
+\end{itemize}
+Whether an agent/role label exists is not stated.
+
+\paragraph{Metrics and baselines} Fault localisation: step-level accuracy with tolerance (SLA T$\pm$0/1/3). Attribution: classification accuracy (CA, predicted mode = gold). Both reported with and without the reference solution; without solution, in \% (paper Tables 2--4):
+
+\begin{center}\small
+\begin{tabular}{@{}llcc@{}}\toprule
+Backbone & Method & SLA $\pm$0 / $\pm$1 / $\pm$3 & CA\\\midrule
+GPT-4o & All-at-Once & 2.1 / 4.2 / 23.7 & 20.6$^*$\\
+ & Step-by-Step & 8.9 / 13.2 / 25.7 & ---\\
+ & AgentScope & \textbf{30.0} / \textbf{35.6} / \textbf{49.8} & \textbf{43.6}\\
+GPT-5.1 & All-at-Once & 3.3 / 4.6 / 18.8 & 18.2$^*$\\
+ & Step-by-Step & 1.3 / 4.3 / 13.2 & ---\\
+ & AgentScope & \textbf{31.4} / \textbf{36.6} / \textbf{54.1} & \textbf{45.9}\\\bottomrule
+\end{tabular}
+\end{center}
+$^*$LLM-as-a-judge classifier. With DeepSeek-V3.2 the three methods reach SLA T$\pm$0 of 0.7 / 17.8 / 35.0 and AgentScope CA 45.2. The Who\&When prompting baselines stay near chance on exact step accuracy even with the strongest backbone.
+
+\paragraph{Schema} Not available. The paper's internal representation is a DAG whose vertices are $\langle$id, role, content, ISR$\rangle$ with ISR = \{Intent \& Context, Reasoning \& Action, Signal \& Validation\}; node types: reasoning, action (tool call/output), user input, output, claim, tool response; edges: control and data dependencies. By analogy with Who\&When (benchmarked alongside), a release would hold steps with role/content, a \code{mistake\_step} and a mode label.
+\end{multicols}
+
+\paragraph{Statistics} from the paper (nothing could be computed).\par\nobreak\vspace{1pt}
+\noindent\begin{minipage}[t]{\linewidth}\vspace{0pt}\small
+\begin{tabular}[t]{@{}lr@{}}\toprule
+trajectories (all failed, one injected fault) & 303\\
+frameworks & 3 (counts n/a)\\
+benchmarks & 3 (counts n/a)\\
+categories: Reasoning / Control-flow / Action & 36.0 / 31.0 / 36.0\,\%\\
+steps, agents per trajectory & not reported\\
+error position, faulty agent & not reported\\
+annotation & injection + manual check, no IAA\\\bottomrule
+\end{tabular}\hfill
+\begin{tabular}[t]{@{}lr@{}lr@{}lr@{}}\toprule
+\multicolumn{6}{@{}l@{}}{mode share (\%, paper Fig.\ 7; $\approx$count if scaled to 303)}\\\midrule
+WC & 8.3 (25) & \quad TM & 9.6 (29) & \quad AM & 13.2 (40)\\
+IU & 9.9 (30) & \quad PT & 12.5 (38) & \quad II & 7.9 (24)\\
+IC & 9.6 (29) & \quad SL & 8.9 (27) & \quad EF & 14.9 (45)\\
+CM & 5.3 (16) & & & &\\\bottomrule
+\end{tabular}
+
+\smallskip The distribution is described as ``roughly uniform'' with biases from the LLM suitability check. The paper's figures are internally inconsistent: category shares sum to 103\% and the four Reasoning modes sum to 33.1\%, not 36.0\%. A runtime illustration mentions traces from 4 steps / 7 calls up to 120 steps / 242 calls (AgentErrata and Who\&When pooled).
+\end{minipage}
+
+\paragraph{Example trajectory} The paper prints no AgentErrata record. Its only worked example (Appendix~C) is the Who\&When Hand-Crafted log \code{2.json}: Magentic-One (Orchestrator + WebSurfer) on a GAIA question about Ted Danson series, 86 steps, 103\,KB. Who\&When blames WebSurfer at step 4 (a bare search-results page); the paper reads this as an information gap and locates the decisive failure in the later stagnation loop (steps 11--85, two ``Stalled\ldots Replanning'' events at 37 and 64) and the final execution failure. \textbf{The trajectory below is long (86 steps)}; it is shown in full because the paper's argument is about where in it the decisive step lies, with the Who\&When label as the marked step.
+\input{traj/agenterrata}
+
+\paragraph{Notes} (i) Nothing is public: no data, code or licence; all numbers above are paper-reported and a release would presumably be $\approx$303 JSON trajectories with a step index and one of 10 modes. (ii) Unique combination if released: injected decisive step + failure-mode label + manual verification, on mostly single-agent tool loops (OpenManus, Mini SWE Agent) rather than MAS. (iii) Taxonomy overlap with MAST (\S\ref{ds:mast_data}): SL $\approx$ FM-1.3, PT $\approx$ FM-3.1, TM $\approx$ FM-1.5, AM $\approx$ FM-2.6, IU $\approx$ FM-1.1; the Action category (II, EF) matches TRAIL's system-execution errors. (iv) Appendix~C's ``earliest detectable vs.\ decisive'' point applies to every human-labelled step dataset; in the cited file the run actually ends with ``FINAL ANSWER: CSI Cyber'', which matches the ground truth, yet it is labelled a failure---a label ambiguity in Who\&When itself. (v) Name clash: the AgentScope \emph{method} is unrelated to the \code{agentscope-ai} framework.

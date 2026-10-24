@@ -1,0 +1,245 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{zhang2025who}
+\@writefile{toc}{\contentsline {section}{\numberline {1}The failure-attribution problem}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{The failure-attribution problem}{section.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Setting}{1}{paragraph*.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Task definition (Who\&When)}{1}{paragraph*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Why it is hard}{1}{paragraph*.3}\protected@file@percent }
+\citation{zhang2025who}
+\@writefile{toc}{\contentsline {paragraph}{Three ways to obtain labelled failures}{2}{paragraph*.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Attribution strategies in the literature}{2}{paragraph*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Landscape of the 20 datasets}{2}{section.2}\protected@file@percent }
+\newlabel{sec:overview}{{2}{2}{Landscape of the 20 datasets}{section.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Release timeline (month of the first arXiv version, approximate). Failure-attribution datasets appeared only after Who\&When (May 2025) and accelerated in 2026, moving from a few hundred hand-labelled logs to $10^4$ injected failures and to long-horizon, full-trace settings.}}{2}{figure.caption.6}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:timeline}{{1}{2}{Release timeline (month of the first arXiv version, approximate). Failure-attribution datasets appeared only after Who\&When (May 2025) and accelerated in 2026, moving from a few hundred hand-labelled logs to $10^4$ injected failures and to long-horizon, full-trace settings}{figure.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Overview. ``\#failed'' = labelled failed trajectories available (paper figure where the release differs; see each section). ``med.\ steps'' computed from the downloaded data. $^\dagger $MemTrace steps are memory operations in the dependency slice of the failed answer. $^\ddagger $Failure-as-a-Process: all 1\,794 runs, from the released annotations (trajectory text not released).}}{2}{table.caption.7}\protected@file@percent }
+\newlabel{tab:overview}{{1}{2}{Overview. ``\#failed'' = labelled failed trajectories available (paper figure where the release differs; see each section). ``med.\ steps'' computed from the downloaded data. $^\dagger $MemTrace steps are memory operations in the dependency slice of the failed answer. $^\ddagger $Failure-as-a-Process: all 1\,794 runs, from the released annotations (trajectory text not released)}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Core MAS failure-attribution benchmarks (agent + decisive step)}{2}{section.3}\protected@file@percent }
+\newlabel{sec:g1}{{3}{2}{Core MAS failure-attribution benchmarks (agent + decisive step)}{section.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Labelled failed trajectories per dataset (log scale). Injected-fault datasets (orange) are 1--2 orders of magnitude larger than human-labelled natural ones (blue).}}{3}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:sizes}{{2}{3}{Labelled failed trajectories per dataset (log scale). Injected-fault datasets (orange) are 1--2 orders of magnitude larger than human-labelled natural ones (blue)}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Steps per trajectory, computed from the downloaded data. Most benchmarks live in the 5--30 step range; LongRCA and MemTrace are the long-horizon outliers.}}{3}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:steps}{{3}{3}{Steps per trajectory, computed from the downloaded data. Most benchmarks live in the 5--30 step range; LongRCA and MemTrace are the long-horizon outliers}{figure.caption.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Where the labelled error step sits inside the trajectory (relative position $t^\star /T$, 10 bins). Natural-failure benchmarks spread errors across the whole run with a spike at the end (the final wrong answer is often the labelled step); some injected datasets inject preferentially at the start (TracerTraj) or at the very end (Who\&When Pro, CORRECT-Error) --- a distribution shift to keep in mind when training on them.}}{3}{figure.caption.9}\protected@file@percent }
+\newlabel{fig:errpos}{{4}{3}{Where the labelled error step sits inside the trajectory (relative position $t^\star /T$, 10 bins). Natural-failure benchmarks spread errors across the whole run with a spike at the end (the final wrong answer is often the labelled step); some injected datasets inject preferentially at the start (TracerTraj) or at the very end (Who\&When Pro, CORRECT-Error) --- a distribution shift to keep in mind when training on them}{figure.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Who\&When}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{ds:who_and_when}{{3.1}{4}{Who\&When}{subsection.3.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{4}{paragraph*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{4}{paragraph*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{4}{paragraph*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{4}{paragraph*.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{4}{paragraph*.14}\protected@file@percent }
+\citation{traceelephant2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{5}{paragraph*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}TraceElephant}{5}{subsection.3.2}\protected@file@percent }
+\newlabel{ds:traceelephant}{{3.2}{5}{TraceElephant}{subsection.3.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{5}{paragraph*.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{6}{paragraph*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{6}{paragraph*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{6}{paragraph*.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{6}{paragraph*.20}\protected@file@percent }
+\citation{mpbench2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{7}{paragraph*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}MP-Bench}{7}{subsection.3.3}\protected@file@percent }
+\newlabel{ds:mp_bench}{{3.3}{7}{MP-Bench}{subsection.3.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{7}{paragraph*.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{7}{paragraph*.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{7}{paragraph*.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{8}{paragraph*.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{8}{paragraph*.26}\protected@file@percent }
+\citation{whowhenpro2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{9}{paragraph*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Who\&When Pro}{9}{subsection.3.4}\protected@file@percent }
+\newlabel{ds:who_and_when_pro}{{3.4}{9}{Who\&When Pro}{subsection.3.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{9}{paragraph*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{10}{paragraph*.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{10}{paragraph*.30}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{10}{paragraph*.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{10}{paragraph*.32}\protected@file@percent }
+\citation{longrca2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{11}{paragraph*.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}LongRCA Bench}{11}{subsection.3.5}\protected@file@percent }
+\newlabel{ds:longrca}{{3.5}{11}{LongRCA Bench}{subsection.3.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{11}{paragraph*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{11}{paragraph*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{12}{paragraph*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{12}{paragraph*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{12}{paragraph*.38}\protected@file@percent }
+\citation{agentrx2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{14}{paragraph*.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}AgentRx}{14}{subsection.3.6}\protected@file@percent }
+\newlabel{ds:agentrx}{{3.6}{14}{AgentRx}{subsection.3.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{14}{paragraph*.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{14}{paragraph*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{14}{paragraph*.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{15}{paragraph*.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{15}{paragraph*.44}\protected@file@percent }
+\citation{agentracer2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{16}{paragraph*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Large injected-fault datasets (mainly for training attributors)}{16}{section.4}\protected@file@percent }
+\newlabel{sec:g2}{{4}{16}{Large injected-fault datasets (mainly for training attributors)}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}TracerTraj (AgenTracer)}{16}{subsection.4.1}\protected@file@percent }
+\newlabel{ds:tracertraj}{{4.1}{16}{TracerTraj (AgenTracer)}{subsection.4.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{17}{paragraph*.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{17}{paragraph*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{17}{paragraph*.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{17}{paragraph*.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{17}{paragraph*.50}\protected@file@percent }
+\citation{aegis2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{19}{paragraph*.51}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}AEGIS / Aegis-Bench}{19}{subsection.4.2}\protected@file@percent }
+\newlabel{ds:aegis}{{4.2}{19}{AEGIS / Aegis-Bench}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{20}{paragraph*.52}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{20}{paragraph*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{20}{paragraph*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{20}{paragraph*.55}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{20}{paragraph*.56}\protected@file@percent }
+\citation{correct2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{22}{paragraph*.57}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}CORRECT-Error}{22}{subsection.4.3}\protected@file@percent }
+\newlabel{ds:correct_error}{{4.3}{22}{CORRECT-Error}{subsection.4.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{22}{paragraph*.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{23}{paragraph*.59}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{23}{paragraph*.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{23}{paragraph*.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{23}{paragraph*.62}\protected@file@percent }
+\citation{agenterrata2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{25}{paragraph*.63}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}AgentErrata}{25}{subsection.4.4}\protected@file@percent }
+\newlabel{ds:agenterrata}{{4.4}{25}{AgentErrata}{subsection.4.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{25}{paragraph*.64}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{25}{paragraph*.65}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{25}{paragraph*.66}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{25}{paragraph*.67}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{25}{paragraph*.68}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{31}{paragraph*.69}\protected@file@percent }
+\citation{cemri2025mast}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Failure-taxonomy datasets (failure-mode labels)}{32}{section.5}\protected@file@percent }
+\newlabel{sec:g3}{{5}{32}{Failure-taxonomy datasets (failure-mode labels)}{section.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}MAST-Data (MAD)}{32}{subsection.5.1}\protected@file@percent }
+\newlabel{ds:mast_data}{{5.1}{32}{MAST-Data (MAD)}{subsection.5.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{32}{paragraph*.70}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{32}{paragraph*.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{32}{paragraph*.72}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{32}{paragraph*.73}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{32}{paragraph*.74}\protected@file@percent }
+\citation{trail2025}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{34}{paragraph*.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}TRAIL}{34}{subsection.5.2}\protected@file@percent }
+\newlabel{ds:trail}{{5.2}{34}{TRAIL}{subsection.5.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{34}{paragraph*.76}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{34}{paragraph*.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{35}{paragraph*.78}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{35}{paragraph*.79}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{35}{paragraph*.80}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{36}{paragraph*.81}\protected@file@percent }
+\citation{agentdebug2026}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Related trajectory-debugging datasets}{37}{section.6}\protected@file@percent }
+\newlabel{sec:g4}{{6}{37}{Related trajectory-debugging datasets}{section.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}AgentErrorBench (AgentDebug)}{37}{subsection.6.1}\protected@file@percent }
+\newlabel{ds:agenterrorbench}{{6.1}{37}{AgentErrorBench (AgentDebug)}{subsection.6.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{37}{paragraph*.82}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{37}{paragraph*.83}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{37}{paragraph*.84}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{38}{paragraph*.85}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{38}{paragraph*.86}\protected@file@percent }
+\citation{searchauditor2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{39}{paragraph*.87}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}SearchAuditBench (SearchAuditor)}{39}{subsection.6.2}\protected@file@percent }
+\newlabel{ds:searchauditbench}{{6.2}{39}{SearchAuditBench (SearchAuditor)}{subsection.6.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{39}{paragraph*.88}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{40}{paragraph*.89}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{40}{paragraph*.90}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{40}{paragraph*.91}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{40}{paragraph*.92}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{41}{paragraph*.93}\protected@file@percent }
+\citation{failureprocess2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Failure as a Process (CLI coding-agent annotations)}{42}{subsection.6.3}\protected@file@percent }
+\newlabel{ds:failure_as_process}{{6.3}{42}{Failure as a Process (CLI coding-agent annotations)}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{42}{paragraph*.94}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{42}{paragraph*.95}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{42}{paragraph*.96}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{42}{paragraph*.97}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{42}{paragraph*.98}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{43}{paragraph*.99}\protected@file@percent }
+\citation{trajdebug2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}TrajErrBench (TrajDebug)}{44}{subsection.6.4}\protected@file@percent }
+\newlabel{ds:trajerrbench}{{6.4}{44}{TrajErrBench (TrajDebug)}{subsection.6.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{44}{paragraph*.100}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{44}{paragraph*.101}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{44}{paragraph*.102}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{45}{paragraph*.103}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{45}{paragraph*.104}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{45}{paragraph*.105}\protected@file@percent }
+\citation{agenthallu2026}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}AgentHallu}{46}{subsection.6.5}\protected@file@percent }
+\newlabel{ds:agenthallu}{{6.5}{46}{AgentHallu}{subsection.6.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{46}{paragraph*.106}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{46}{paragraph*.107}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{46}{paragraph*.108}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{46}{paragraph*.109}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{46}{paragraph*.110}\protected@file@percent }
+\citation{memtrace2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{48}{paragraph*.111}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.6}MemTrace (MemTraceBench)}{48}{subsection.6.6}\protected@file@percent }
+\newlabel{ds:memtrace}{{6.6}{48}{MemTrace (MemTraceBench)}{subsection.6.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{48}{paragraph*.112}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{48}{paragraph*.113}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{49}{paragraph*.114}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{49}{paragraph*.115}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{49}{paragraph*.116}\protected@file@percent }
+\citation{horizon2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{51}{paragraph*.117}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.7}HORIZON}{51}{subsection.6.7}\protected@file@percent }
+\newlabel{ds:horizon}{{6.7}{51}{HORIZON}{subsection.6.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{51}{paragraph*.118}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{52}{paragraph*.119}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{52}{paragraph*.120}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{52}{paragraph*.121}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{52}{paragraph*.122}\protected@file@percent }
+\citation{megarca2026}
+\@writefile{toc}{\contentsline {paragraph}{Notes}{53}{paragraph*.123}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.8}MegaRCA-Mix}{53}{subsection.6.8}\protected@file@percent }
+\newlabel{ds:megarca_mix}{{6.8}{53}{MegaRCA-Mix}{subsection.6.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Description}{54}{paragraph*.124}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Metrics and baselines}{54}{paragraph*.125}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Schema}{54}{paragraph*.126}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics}{54}{paragraph*.127}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Example trajectory}{54}{paragraph*.128}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Notes}{55}{paragraph*.129}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Cross-cutting observations and recommendations}{55}{section.7}\protected@file@percent }
+\newlabel{sec:reco}{{7}{55}{Cross-cutting observations and recommendations}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{No two datasets agree on what a ``step'' is}{55}{paragraph*.130}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Agent naming is a hidden evaluation knob}{55}{paragraph*.131}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Single root cause is a modelling choice}{55}{paragraph*.132}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Natural versus injected}{55}{paragraph*.133}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Observation level matters}{55}{paragraph*.134}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Label provenance}{55}{paragraph*.135}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Recommended protocol}{55}{paragraph*.136}\protected@file@percent }
+\bibstyle{plainnat}
+\bibdata{refs_merged}
+\bibcite{agentrx2026}{{1}{2026}{{Barke et~al.}}{{Barke, Goyal, Khare, Singh, Nath, and Bansal}}}
+\bibcite{agenterrata2026}{{2}{2026}{{Bi et~al.}}{{Bi, Gao, Xie, Li, Xu, Yang, and Yang}}}
+\bibcite{cemri2025mast}{{3}{2025}{{Cemri et~al.}}{{Cemri, Pan, Yang, Agrawal, Chopra, Tiwari, Keutzer, Parameswaran, Klein, Ramchandran, Zaharia, Gonzalez, and Stoica}}}
+\bibcite{traceelephant2026}{{4}{2026}{{Chen et~al.}}{{Chen, Wang, Mu, Wang, Liu, Feng, and Wang}}}
+\bibcite{memtrace2026}{{5}{2026}{{Deng et~al.}}{{Deng, Zhong, Peng, Lu, Wu, Li, Xu, Yao, Fang, Cao, Guo, Yuan, Ma, Yu, Hu, Dong, Zhu, and Zhang}}}
+\bibcite{trail2025}{{6}{2025}{{Deshpande et~al.}}{{Deshpande, Gangal, Mehta, Krishnan, Kannappan, and Qian}}}
+\bibcite{mpbench2026}{{7}{2026}{{In et~al.}}{{In, Tanjim, Subramanian, Kim, Bhattacharya, Sarkhel, Kim, Park, and Park}}}
+\bibcite{aegis2026}{{8}{2026}{{Kong et~al.}}{{Kong, Zhang, Yin, Zhang, Zhang, Chen, Zhang, Zhang, Zhu, and Feng}}}
+\bibcite{searchauditor2026}{{9}{2026}{{Liang et~al.}}{{Liang, Liu, Huang, Zhao, Huang, Wang, Duan, and Cao}}}
+\bibcite{whowhenpro2026}{{10}{2026{}}{{Liu et~al.}}{{Liu, Xi, Zhang, Zeng, Yue, Wang, Kang, Wu, and Wang}}}
+\bibcite{agenthallu2026}{{11}{2026{}}{{Liu et~al.}}{{Liu, Yang, Li, Li, and He}}}
+\bibcite{trajdebug2026}{{12}{2026}{{Qi et~al.}}{{Qi, Yin, Shi, Peng, Lu, Liu, Xuan, Liu, Hu, Wang, Hou, Xu, and Li}}}
+\bibcite{megarca2026}{{13}{2026}{{Raj et~al.}}{{Raj, Lee, Mahmoud, Wang, Dumitru, Wang, Zhao, He, Yi, and Gupta}}}
+\bibcite{horizon2026}{{14}{2026}{{Wang et~al.}}{{Wang, Bai, Sun, Wang, Zhang, Hu, Schroder, Mutlu, Song, and Nowak}}}
+\bibcite{correct2026}{{15}{2026}{{Yu et~al.}}{{Yu, Li, Xu, Fu, Hou, Lai, and Wang}}}
+\bibcite{agentracer2026}{{16}{2026{}}{{Zhang et~al.}}{{Zhang, Wang, Chen, Zhou, Wang, and Yan}}}
+\bibcite{zhang2025who}{{17}{2025}{{Zhang et~al.}}{{Zhang, Yin, Zhang, Liu, Han, Zhang, Li, Wang, Wang, Chen, and Ding}}}
+\bibcite{longrca2026}{{18}{2026{}}{{Zhang et~al.}}{{Zhang, Feng, Pei, Wang, Peng, Liu, Jiang, Ma, Zhang, Yao, Zhao, Sun, Huo, Liu, Li, Xie, and Pei}}}
+\bibcite{failureprocess2026}{{19}{2026}{{Zhao et~al.}}{{Zhao, Li, Li, Zhao, Barr, Sarro, and Ye}}}
+\bibcite{agentdebug2026}{{20}{2026}{{Zhu et~al.}}{{Zhu, Liu, Li, Tian, Yang, Zhang, Han, Xie, Cui, Zhang, Ma, Yu, Ramesh, Wu, Liu, Lu, Zou, and You}}}
+\gdef \@abspage@last{57}
