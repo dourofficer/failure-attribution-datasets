@@ -1,0 +1,76 @@
+\section{Future work: counterfactual outcome prediction for agent trajectories}\label{sec:future}
+
+\begin{multicols}{2}
+\paragraph{Motivation} Every attribution dataset in this survey defines the decisive step counterfactually---``the step that, had it been correct, would have let the run succeed''---yet none of them tests that claim. Labels come from a human or an LLM reading a single observed continuation, and the data show how fragile such labels are: three experts agree on one failure-inducing step in only 16\% of MP-Bench logs (\S\ref{sec:reco}), and our own re-analysis of the released files (\code{scripts/explore/}) adds two more: on the 86 tasks that Who\&When and TraceElephant both ran in the same system family, the blamed agent coincides in only 18, and 240 of 685 LongRCA TravelPlanner reasons cite an external verifier verdict that is not in the trajectory at all. At the same time, the datasets that \emph{do} intervene use replay only as an annotation or data-generation tool: TraceElephant's dynamic setting re-executes from a candidate step to confirm a label \citep{traceelephant2026}, AgentDebug fixes a step and reruns to validate a diagnosis \citep{agentdebug2026}, and Aegis, Who\&When~Pro and TracerTraj inject faults into successful runs and keep the ones that fail \citep{aegis2026,whowhenpro2026,agentracer2026}. Aegis reports that an injection flips the outcome in 34.1\% (DyLAN) to 76.5\% (Debate) of attempts, i.e.\ the same perturbation has very different effects depending on the system---but nobody has tried to \emph{predict} that effect. We propose to make the intervention effect itself the prediction target, in the spirit of perturbation-response prediction in single-cell biology, where a model predicts the expression change caused by a gene knock-out rather than the cell's unperturbed state \citep{roohani2024gears}.
+
+\paragraph{Problem statement} Let $h_t=(s_1,\dots,s_t)$ be the prefix of a trajectory and let $V(h_t)=\Pr[\text{success}\mid h_t]$ be its value under the system's own stochastic continuation. An \emph{intervention} $\iota$ at step $t$ replaces $s_t$ by $s_t'$ (a repair in a failed run, a corruption in a successful one) and yields the prefix $h_t^{\iota}$. We define two tasks:
+\begin{tcolorbox}[enhanced,colback=surface,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,fontupper=\small]
+\textbf{Q1 (repair).} Given a \emph{failed} trajectory and a repair $\iota$ at step $t$, predict $\Delta^{+}(h_t,\iota)=V(h_t^{\iota})-V(h_t)$: how much more likely is success if this step is fixed?\\[2pt]
+\textbf{Q2 (injection).} Given a \emph{successful} trajectory and a corruption $\iota$ at step $t$, predict $\Delta^{-}(h_t,\iota)=V(h_t)-V(h_t^{\iota})$: how much does this error cost?\\[2pt]
+\textbf{Labels.} Both are estimated by $n$ replicate reruns of each arm from the same prefix, so a label is a frequency with a confidence interval, not a single bit. Failure attribution is the special case $t^\star=\arg\max_t\Delta^{+}$ with the maximiser reported as a hard label; outcome prediction is the control arm $V(h_t)$ alone.
+\end{tcolorbox}
+Both quantities are treatment effects in the sense of causal inference \citep{shalit2017ite}: the two arms share task, prefix and system, and differ only in $s_t$.
+
+\paragraph{Why it is not outcome prediction} Predicting $V(h_t)$ is what process reward models and early-failure predictors do \citep{lightman2023prm}. The objection that ``a correct step $t$ does not guarantee later steps are correct, and a wrong step $t$ may be corrected later'' applies to both questions, but it affects them differently. (i)~\emph{Confounding.} A value model learns from observed runs that sloppy prefixes come from runs that fail---but also from hard tasks, weak models and bad configurations. It can score well by recognising a failing run without learning that step $t$ \emph{causes} the failure; the paired design removes this by construction. (ii)~\emph{Variance.} Task difficulty and prefix quality are held fixed across arms, so $\Delta$ is estimated with lower variance than an absolute outcome, exactly as in a paired experiment. (iii)~\emph{The attenuation is the signal.} The repair effect $\Delta^{+}$ is attenuated by the probability of independent downstream failures (MP-Bench annotators flag several scattered errors per run), and the injection effect $\Delta^{-}$ is attenuated by the system's recovery capacity (Aegis's per-framework flip rates). A decisive step is precisely one whose repair effect survives the rest of the run; a robust system is one in which injection effects are small. Outcome prediction cannot separate ``the step was wrong'' from ``the step was wrong and nothing downstream absorbed it''; the flip question measures the second thing directly. The two coincide only in a deterministic system where the intervention makes the remainder identical to a known successful run.
+\end{multicols}
+
+\begin{center}
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,
+  st/.style={draw=rule,fill=white,rounded corners=1.5pt,minimum width=7mm,minimum height=5mm,inner sep=1pt},
+  ctl/.style={st,draw=ink3!70},
+  trt/.style={st,draw=s2,fill=s2!8},
+  outc/.style={circle,minimum size=4.2mm,inner sep=0pt,font=\scriptsize\bfseries,text=white},
+  ar/.style={-{Latex[length=1.6mm]},draw=ink3,semithick}]
+  % shared prefix
+  \foreach \i/\n in {1/$s_1$,2/$s_2$,3/$\cdots$,4/$s_{t-1}$} {\node[st] (p\i) at (\i*1.05,0) {\n};}
+  \foreach \i in {1,2,3} {\pgfmathtruncatemacro{\j}{\i+1}\draw[ar] (p\i) -- (p\j);}
+  \node[above=1mm of p2.north,anchor=south,text=ink2] {shared prefix $h_{t-1}$};
+  % control arm
+  \node[ctl] (c0) at (6,0.9) {$s_t$};
+  \foreach \i in {1,2} {\node[ctl] (c\i) at (6+\i*1.05,0.9) {$\cdot$};}
+  \node[ctl] (cT) at (9.15,0.9) {$s_{T}$};
+  \draw[ar] (p4) -- (c0); \draw[ar] (c0)--(c1); \draw[ar] (c1)--(c2); \draw[ar] (c2)--(cT);
+  \node[outc,fill=critical] (cf) at (10.4,0.9) {F};
+  \draw[ar] (cT)--(cf);
+  \node[right=1mm of cf,text=ink2,align=left] {$n$ replicates $\Rightarrow V(h_t)$\\control arm};
+  % treated arm
+  \node[trt] (t0) at (6,-0.9) {$s_t'$};
+  \foreach \i in {1,2} {\node[trt] (t\i) at (6+\i*1.05,-0.9) {$\cdot$};}
+  \node[trt] (tT) at (9.15,-0.9) {$s_{T'}$};
+  \draw[ar,draw=s2] (p4) -- (t0); \draw[ar,draw=s2] (t0)--(t1); \draw[ar,draw=s2] (t1)--(t2); \draw[ar,draw=s2] (t2)--(tT);
+  \node[outc,fill=good] (ts) at (10.4,-0.9) {S};
+  \draw[ar,draw=s2] (tT)--(ts);
+  \node[right=1mm of ts,text=ink2,align=left] {$n$ replicates $\Rightarrow V(h_t^{\iota})$\\intervened arm};
+  \node[below=1mm of t0.south,text=s2!70!black] {intervention $\iota$};
+  % brace for delta
+  \draw[decorate,decoration={brace,amplitude=2.5pt},ink2] (13.6,1.15) -- (13.6,-1.15) node[midway,right=3pt,text=ink] {$\Delta=V(h_t^{\iota})-V(h_t)$};
+\end{tikzpicture}
+\captionof{figure}{Counterfactual outcome prediction. From a shared prefix, the control arm continues with the recorded step $s_t$ and the intervened arm with $s_t'$; each arm is rerun $n$ times under the system's own stochasticity. The prediction target is the difference in success frequency, not the outcome of either arm.}\label{fig:cfo}
+\end{center}
+
+\begin{multicols}{2}
+\paragraph{Benchmark construction} The limiting resource is a \emph{replayable} environment; of the 20 datasets only TraceElephant ships one, and live-web tasks (GAIA, AssistantBench, WebArena on public sites) drift between runs. We therefore propose to build the benchmark in sandboxed environments with deterministic graders and to use the existing datasets as sources of prefixes and interventions:
+\begin{itemize}[leftmargin=1.1em,itemsep=1pt]
+\item \textbf{Environments}: SWE-Bench Verified (via TraceElephant's SWE-Agent traces and its released agent code), $\tau^2$-bench and TravelPlanner (tool-calling with a simulated user and a rule-based checker), ALFWorld/WebShop (embodied and shopping, as in AgentErrorBench), and the Who\&When~Pro harness for multi-agent runs over offline benchmarks.
+\item \textbf{Prefixes}: the 220 TraceElephant failures and their decisive steps for Q1; fresh successful runs in the same environments for Q2.
+\item \textbf{Intervention vocabulary}: for repairs, the \code{ideal\_action} field of MP-Bench, SearchAuditBench's repair directives and the \code{mistake\_reason} text of Who\&When/TraceElephant, turned into a concrete replacement step by a strong model and checked by a human; for corruptions, the 14 Aegis error modes and the Who\&When~Pro taxonomy applied at graded severities (wrong argument, wrong tool, dropped constraint, fabricated observation) and at several relative positions.
+\item \textbf{Replicates}: $n=8$ per arm at temperature $>0$, giving $V$ with a $\pm0.17$ half-width at the extremes; a trivial but important by-product is a replicate-based $V(h_t)$ for outcome prediction, which is a far better label than the one observed bit that PRM datasets use.
+\item \textbf{Splits}: held-out tasks, held-out intervention types, and held-out frameworks, mirroring the cross-distribution evaluation recommended in \S\ref{sec:reco}.
+\end{itemize}
+A first version with 200 prefixes $\times$ 3 interventions $\times$ 2 arms $\times$ 8 replicates is $\approx$10\,k partial reruns; because runs start from step $t$, the average rerun is a fraction of a full trajectory, and the cost is in the low thousands of dollars at current API prices.
+
+\paragraph{Models and baselines}
+\begin{enumerate}[leftmargin=1.2em,itemsep=1pt]
+\item \textbf{Priors}: relative position $t/T$ and intervention severity alone. These must be reported because late, severe injections always fail and single repairs rarely rescue long runs.
+\item \textbf{Value-model difference}: train a PRM-style model on $V(h_t)$ and score $\hat V(h_t^{\iota})-\hat V(h_t)$. This is the decisive baseline: if it matches the measured $\Delta$, the flip question reduces to outcome prediction and the contribution is the benchmark.
+\item \textbf{LLM judge}: a prompted frontier model asked for the probability that the intervention changes the outcome, with and without the recorded continuation.
+\item \textbf{Direct effect predictor}: a model trained on (prefix, intervention) pairs against replicate-based $\Delta$, with a shared encoder for both arms, in the TARNet style \citep{shalit2017ite}.
+\end{enumerate}
+Metrics: Brier score and AUROC on the sign of $\Delta$, calibration of $\hat\Delta$, and rank correlation between predicted and measured effects across candidate steps of the same trajectory (which is the quantity that matters for attribution).
+
+\paragraph{Hypotheses} \textbf{H1}: the annotated decisive step flips the outcome in a minority of TraceElephant runs when repaired in isolation, i.e.\ current step labels are mostly \emph{necessary} but not \emph{sufficient} causes. \textbf{H2}: the value-model difference correlates only weakly with measured $\Delta$, because the observational model absorbs task difficulty rather than step causality. \textbf{H3}: $\Delta^{-}$ decays with system robustness and with the number of remaining steps, and the decay rate is framework-specific, matching the Aegis flip rates. If H1 holds, the benchmark also delivers the first counterfactually validated attribution labels, which can be fed back to every dataset in \S\ref{sec:g1}.
+
+\paragraph{Risks} Non-determinism makes single reruns meaningless (hence replicates); environments drift (hence sandboxes and pinned model versions); interventions can be unrealistic (hence human-checked repairs and severity-graded corruptions); and some causes are not in the trajectory at all (LongRCA's evaluator verdicts), so a share of prefixes will have $\Delta\approx0$ for every intervention---these should be kept, not filtered, as they are the ``no decisive step'' cases that MP-Bench and TraceElephant already contain.
+
+\paragraph{Milestones} (1)~Validation study: repair the labelled step of every TraceElephant SWE-Agent trace with replicates and report the flip rate, a one-month effort that tests H1 on its own. (2)~Q2 benchmark in two sandboxed environments with graded corruptions. (3)~Q1 benchmark with human-checked repairs. (4)~Baselines 1--4 and the three generalisation splits. The novelty is not the replay machinery, which exists, but the shift from using it to \emph{produce} labels to treating the effect it measures as the thing to \emph{predict}.
+\end{multicols}
