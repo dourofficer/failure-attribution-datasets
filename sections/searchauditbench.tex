@@ -1,0 +1,59 @@
+% ===================== SearchAuditBench =====================
+\subsection{SearchAuditBench (SearchAuditor)}\label{ds:searchauditbench}
+\badgerow{\naturalbadge\ \okbadge\ \lbl{step + span + root cause + repair}\ \lbl{single-agent}\ \lbl{BrowseComp(-ZH) / DeepSearchQA / SEALQA / xBench-DeepSearch}}
+
+\begin{identity}
+Paper & \emph{SearchAuditor: Auditing and Attributing Failures in Long-Horizon Search Agents} --- Liang, Liu, Huang, Zhao, Huang, Wang, Duan, Cao (no affiliation on the arXiv page), arXiv:2608.05212, Aug 2026 (preprint, no venue yet) \cite{searchauditor2026}\\
+Links & \href{https://github.com/lzzzx666/SearchAuditor}{GitHub \code{lzzzx666/SearchAuditor}} (code, prompts and the data as \code{SearchAuditBench/SearchAuditBench.zip}) \textperiodcentered\ no HF dataset, no project page\\
+License & \textbf{none stated} (no LICENSE file); the trajectories embed verbatim search and page returns, and the queries come from BrowseComp, BrowseComp-ZH, DeepSearchQA, Seal-0 and xBench-DeepSearch, whose terms apply\\
+Status & downloaded in full, ungated; 390 MB (one 313 MB JSONL); \code{data/searchauditbench/extracted/benchmark\_data\_1243.jsonl}. The ZIP is PPMd-compressed: \code{unzip} and Python's \code{zipfile} fail, 7-Zip is required (the README says so)\\
+\end{identity}
+
+\begin{multicols}{2}
+\paragraph{Description} SearchAuditBench frames attribution as \emph{trajectory auditing} for deep-search (web research) agents. Given the query, the agent's wrong final answer and the frozen trajectory --- but \emph{no} gold answer and no web access --- an auditor must (1) localise the \textbf{critical error step} (an assistant decision message), (2) classify the \textbf{root cause} into a six-way search-specific taxonomy and (3) write a \textbf{repair directive} that is graded against 3--5 case-specific rubrics. All failures are natural. Eight open-weight models with exposed reasoning --- GLM-5.2, Kimi-K2.6, DeepSeek-V4-Pro, Qwen3.5-397B-A17B and the deep-research specialists OpenSeeker, OpenResearcher, Quest-35B, Tongyi-DeepResearch-30B-A3B --- were run under a single ReAct scaffold adapted from Tongyi DeepResearch with two tools, \code{search} (list of queries) and \code{visit} (URLs + goal), on five benchmarks. 3,500 raw runs $\to$ 3,288 gradable $\to$ 1,674 judged wrong by an LLM evaluator $\to$ after dropping non-auditable cases (evaluator false negatives, flawed items, truncated traces, environment-caused failures, no single critical step) \textbf{1,243 annotated failures}, 125--175 per model. \textbf{Annotation}: four annotators from the author team, each case labelled by \emph{one} of them (disjoint split, so no agreement coefficient exists); Claude Opus 4.6 pre-screens candidate error regions with rationales, humans verify, relocate or relabel, and every field is human-written. The critical step is the earliest decision at which the root-cause mechanism is established; a \textbf{tolerance span} $[k_s,k_e]$ brackets equally defensible adjacent decisions. \textbf{Taxonomy}: \emph{Candidate Mismanagement} (premature lock-in, wrong rejection, failure to converge), \emph{Search Coverage Gap} (decisive evidence path never searched), \emph{Constraint Neglect} (accepts a candidate violating a visible hard constraint), \emph{Unverified Source Reliance} (trusts a snippet or secondary source), \emph{Entity--Relation Misbinding} (right fact, wrong entity/time/slot) and \emph{Unsupported Answer} (residual guess from memory). Rubrics are graded by DeepSeek-V4-Flash, validated against humans (30/713 false passes, 43/159 false fails; paper App.~D).
+
+\paragraph{Metrics and baselines} CS-Strict (exact critical message), CS-Loose (inside the span), RC-Acc / RC-F1 (6-way), Diag = RC correct $\wedge$ CS-Loose, Rep@Diag (all rubrics pass, given Diag) and the end-to-end \textbf{FPS} = Diag $\times$ Rep@Diag. Baselines are Who\&When-style prompting and AgentRx; Claude-Opus-4.8 backbone, \% (paper Table 2):
+
+\begin{center}\small\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}lcccccc@{}}\toprule
+Auditor & CS-S & CS-L & RC-Acc & Diag & Rep@D & FPS\\\midrule
+All-at-Once & 32.1 & 47.1 & 47.6 & 28.2 & 71.5 & 20.2\\
+Step-by-Step & 23.1 & 37.7 & 37.5 & 18.9 & 68.9 & 13.0\\
+Binary Search & 32.8 & 47.1 & 43.4 & 25.3 & 70.5 & 17.9\\
+AgentRx & 35.4 & 49.7 & 43.0 & 26.7 & 46.4 & 12.4\\
+SearchAuditor & \textbf{39.9} & \textbf{54.8} & \textbf{50.7} & \textbf{33.7} & \textbf{73.0} & \textbf{24.6}\\\bottomrule
+\end{tabular}
+\end{center}
+With GPT-5.5 SearchAuditor reaches CS-Strict 44.9 / CS-Loose 58.7 / FPS 32.3 against 39.0 / 51.9 / 26.6 for the best baseline; resuming failed LiveBrowseComp runs from the repaired step raises accuracy (paper Table 4). Even the best auditor localises fewer than half of the critical steps exactly.
+
+\paragraph{Schema} One JSONL object per failed run: \code{index}, \code{model}, \code{dataset} (six tags; \code{BrowseComp English} is a separate tag used only for GLM-5.2), \code{query}, \code{predicted\_answer}, \code{gold\_answer} (QC only, hidden from auditors), \code{trajectory} = OpenAI-style messages with \code{message\_index} (0-based), \code{role} (\code{system} / \code{user} / \code{assistant} / \code{tool}), \code{content}, \code{reasoning\_content} (chain of thought), \code{tool\_calls} [\{\code{tool\_name}, \code{tool\_arguments}, \code{tool\_call\_id}\}], \code{finish\_reason}; labels \code{critical\_step} = \{\code{message\_index}, \code{span\_start\_message\_index}, \code{span\_end\_message\_index}\} (always an assistant message; the span may include tool returns), \code{root\_cause\_primary}, \code{rationale.failure\_rationale}, \code{repair\_directive}, \code{repair\_rubrics} [\{\code{requirement}\}]. No train/test split.
+\end{multicols}
+
+\paragraph{Statistics} computed from the downloaded JSONL (the paper's Tables 5--7 agree to within rounding).\par\nobreak\vspace{1pt}
+\noindent\begin{minipage}[t]{0.53\linewidth}\vspace{0pt}\small
+\fitbox{\begin{tabular}{@{}lr@{}}\toprule
+ & All (failed only)\\\midrule
+trajectories & 1,243\\
+generating models / source benchmarks & 8 / 5 (6 tags)\\
+messages (sys + user + asst + tool): mean / median (max) & 73.1 / 43 (404)\\
+assistant decision steps: mean / median (max) & 34.3 / 20 (201)\\
+tool-return messages: mean / median & 36.7 / 21\\
+critical message index (0-based): mean / median (max) & 38.2 / 16 (392)\\
+relative critical position: mean / median & 0.58 / 0.58\\
+tolerance span (messages): mean / median (min -- max) & 4.3 / 4 (1 -- 12)\\
+repair rubrics / instance: mean (range) & 4.4 (3 -- 5)\\
+characters / trajectory: mean / median (max) & 209\,k / 123\,k (1.85\,M)\\
+query / predicted answer length (chars): median & 146 / 669\\\bottomrule
+\end{tabular}}
+
+\smallskip Long tail: 350 runs have $<$20 messages but 202 have $\ge$150. The critical step is the final-answer message in 210 cases (16.9\%) and lies in the last fifth of the run in 420 (33.8\%); by root cause the median relative position is 0.40 for Search Coverage Gap, 0.50 Candidate Mismanagement, 0.59 Unverified Source Reliance, 0.62 Entity--Relation Misbinding, 0.85 Constraint Neglect and 1.0 Unsupported Answer. Tool calls: 32\,k \code{search}, 13.6\,k \code{visit} (a handful of stray names such as \code{web\_search}). Paper-reported token counts: 65.1\,k per trajectory on average (median 39.4\,k, P90 152\,k), of which 49.1\,k are tool returns and 15.3\,k reasoning.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.45\linewidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{assets/figures/cat_searchauditbench.pdf}\\[2pt]
+\includegraphics[width=\linewidth]{assets/figures/bench_searchauditbench.pdf}
+\end{minipage}
+
+\paragraph{Example trajectory} \code{index} 546 (GLM-5.2 on xBench-DeepSearch; 8 messages = 3 assistant decisions, 9\,k characters; the shortest run whose critical step is not the final answer). The Chinese query asks where a $>$100\,M-view IShowSpeed short was filmed; after two searches the agent visits a UniFuncs aggregation page, accepts its claim (a pit in Handan, Hebei) and answers, never opening the actual YouTube short --- gold answer Changsha. Label: \emph{Unverified Source Reliance} at message 5, span [5, 7], with rationale, repair directive and four rubrics.
+\input{traj/searchauditbench}
+
+\paragraph{Notes} (i) Richest label set in the survey: critical step \emph{with tolerance span}, root cause, rationale, repair directive \emph{and} executable rubrics --- the only dataset that scores ``how to fix'' (diagnosis-gated repair grading), so it is the natural test-bed for attribution-to-repair pipelines. (ii) Long and evidence-heavy: tool returns are stored verbatim (median 123\,k, max 1.85\,M characters), and the set is multilingual --- BrowseComp-ZH queries plus several models reasoning in Chinese even on English benchmarks. (iii) Label provenance: one author-team annotator per case after a Claude Opus 4.6 pre-screen; no inter-annotator agreement is reported, and the authors note the pre-screening model is deliberately absent from the evaluated auditors. (iv) Positional skew: a third of critical steps fall in the last 20\% and Constraint Neglect / Unsupported Answer are late by construction, so ``blame the last assistant step'' is a non-trivial CS-Loose baseline. (v) One scaffold, one role: all eight models share the same \code{search}/\code{visit} loop, so there is no framework or agent-level variation to attribute to; no license and no official split. (vi) Overlaps: BrowseComp queries also underlie AgentErrata's injected failures, and AgentRx is used here as a baseline, but no trajectories are shared.

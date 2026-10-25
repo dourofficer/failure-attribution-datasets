@@ -1,4 +1,4 @@
-# Guide for writing one dataset section (`report/sec_<slug>.tex`)
+# Guide for writing one dataset section (`report/sections/<slug>.tex`)
 
 Root: `/dataDisk/home/thanhdo/failure-attribution-datasets`. All paths below are relative to it.
 Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdflatex`.
@@ -6,9 +6,9 @@ Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdfla
 ## Inputs you have
 - `notes/<slug>.md` — the analysis notes (identity, description, schema, statistics, example, caveats). This is your primary source. Use the numbers in it; do not invent numbers.
 - `notes/<slug>_stats.json` — machine-readable stats (only if you need a number not in the md).
-- `report/figures/{cat,agent,bench,fw}_<slug>.pdf` — small bar charts (category distribution, faulty-agent distribution, source benchmark, framework). Some may not exist — check with `ls report/figures/*<slug>*`. Include the ones that are informative (1–2 per dataset, side-by-side with the stats table). Do NOT include one that duplicates a table you already print; prefer the figure over a long table.
+- `report/assets/figures/{cat,agent,bench,fw}_<slug>.pdf` — small bar charts (category distribution, faulty-agent distribution, source benchmark, framework). Some may not exist — check with `ls report/assets/figures/*<slug>*`. Include the ones that are informative (1–2 per dataset, side-by-side with the stats table). Do NOT include one that duplicates a table you already print; prefer the figure over a long table.
 - `report/traj/<slug>.tex` — the pre-rendered example trajectory (ALL steps + annotation box). Include it with `\input{traj/<slug>}`. Do not rewrite it. If it does not exist, say so in your reply.
-- `report/preamble.tex` — macros. `report/sec_who_and_when.tex` — THE TEMPLATE. Match its structure, tone, density and macro usage exactly.
+- `report/preamble.tex` — macros. `report/sections/who_and_when.tex` — THE TEMPLATE. Match its structure, tone, density and macro usage exactly.
 
 ## Required structure (copy from the template)
 ```
@@ -23,17 +23,17 @@ Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdfla
 \end{multicols}
 \paragraph{Statistics} computed from the downloaded data.\par\nobreak\vspace{1pt}   % or "from the paper" if not downloaded — say which
 \noindent\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}\small  <booktabs table of the key stats>  \smallskip <one short paragraph of extra numbers> \end{minipage}\hfill
-\begin{minipage}[t]{0.42\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{figures/<...>.pdf}\end{minipage}
+\begin{minipage}[t]{0.42\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{assets/figures/<...>.pdf}\end{minipage}
 \paragraph{Example trajectory} <1–2 sentences: which record, how many steps/agents, what goes wrong in plain words>
 \input{traj/<slug>}
 \paragraph{Notes} (i) ... (ii) ... (iii) ...   % quirks, caveats, overlaps with other datasets, what is unique
 ```
-If no figure exists, make the first minipage full width (`\linewidth`) and drop the second one. If the trajectory file has many steps (>30), add a sentence before `\input` warning the reader that the trajectory is long and (optionally) use `\input` anyway — all steps must be shown.
+Choose the two widths so the row fills the line: the table minipage is the table's natural width plus ~0.015 (never below 0.48), the figure minipage is 0.98 minus that. Figures are generated 3.4in wide (= 0.47\linewidth) so they print close to true size; `\fitbox{...}` around a tabular shrinks it only if it is wider than its minipage. If no figure exists, make the first minipage full width (`\linewidth`) and drop the second one. If the trajectory file has many steps (>30), add a sentence before `\input` warning the reader that the trajectory is long and (optionally) use `\input` anyway — all steps must be shown.
 
 ## Style rules
 - Compact: aim for ≤ 1.3 pages of prose+tables per dataset (the trajectory adds whatever it needs). Short sentences, numbers inline.
 - Use `\code{...}` for field names / repo ids (escape `_` as `\_` inside \code and elsewhere; `&` as `\&`; `%` as `\%`; `#` as `\#`).
-- Cite the paper once with `\cite{<bibkey>}` in the identity box (keys below). Also write a corrected BibTeX entry (same key; real authors from the notes, real title, venue, year, arXiv id) to `report/bibfix/<slug>.bib`.
+- Cite the paper once with `\cite{<bibkey>}` in the identity box (keys below). Also write a corrected BibTeX entry (same key; real authors from the notes, real title, venue, year, arXiv id) to `report/bib/bibfix/<slug>.bib`.
 - Links with `\href{url}{text}`. Use `\textperiodcentered` between links.
 - No `\section` (only `\subsection`, `\paragraph`). No new packages. No `\newcommand`.
 - Availability badge must reflect reality: `\okbadge` (downloaded, public), `\gatedbadge` (needs approval), `\partialbadge` (only a subset is public / downloaded), `\nobadge` (no public release yet — then statistics come from the paper and the example may be reconstructed from the paper; say so explicitly).
@@ -49,8 +49,8 @@ Create `report/test_<slug>.tex`:
 \usepackage[numbers,sort&compress]{natbib}
 \begin{document}
 \section{Test}
-\input{sec_<slug>}
-\bibliographystyle{plainnat}\bibliography{refs}
+\input{sections/<slug>}
+\bibliographystyle{plainnat}\bibliography{bib/refs}
 \end{document}
 ```
 Run from `report/`: `pdflatex -interaction=nonstopmode test_<slug>.tex` (twice). Requirements: zero lines starting with `!` in the log; no `Overfull \hbox` worse than 15pt in YOUR section (the trajectory file may have a few — ignore those inside `traj/`). Then rasterise page 1–2 with

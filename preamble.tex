@@ -2,12 +2,15 @@
 \documentclass[9pt,a4paper]{extarticle}
 \usepackage[a4paper,margin=13mm,top=15mm,bottom=16mm,headsep=4mm,footskip=7mm]{geometry}
 \usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
-\usepackage[sfdefault,light]{FiraSans}
+\usepackage{newtxtext}  % Times, as in the ICML template
 \usepackage[scaled=0.82]{sourcecodepro}
 \usepackage{microtype}
+\setlength{\emergencystretch}{2em} % let narrow columns wrap long tokens instead of overflowing
 \usepackage{amsmath,amssymb}
+\usepackage{newtxmath}   % matching Times math
 \usepackage[table,dvipsnames]{xcolor}
 \usepackage{booktabs,multicol,tabularx,makecell,array,longtable}
+\renewcommand*\setemergencystretch[2]{\emergencystretch 2em} % multicol otherwise resets it to 4pt per column
 \usepackage{graphicx}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -54,7 +57,7 @@
 \renewcommand{\headrulewidth}{0.3pt}\renewcommand{\headrule}{\color{rule}\hrule width\headwidth height 0.3pt}
 
 % ---------- helper macros ----------
-\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\code}[1]{\texttt{\small\def\_{\textunderscore\allowbreak}#1}}  % underscores are break points
 \newcommand{\chip}[2]{\tikz[baseline=(t.base)]\node[fill=#1!18,text=#1!60!black,rounded corners=2pt,inner xsep=3pt,inner ysep=1.5pt,font=\scriptsize\bfseries](t){#2};}
 \newcommand{\okbadge}{\chip{good}{available}}
 \newcommand{\gatedbadge}{\chip{warning}{gated}}
@@ -71,6 +74,7 @@
 \newenvironment{statsbox}{\begin{tcolorbox}[enhanced,colback=white,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=3pt,right=3pt,top=2pt,bottom=2pt,fontupper=\small]}{\end{tcolorbox}}
 
 % ---------- trajectory rendering ----------
+\newcommand{\trajfont}{\ttfamily\footnotesize} % font for the trajectory step boxes
 \newcommand{\trajtask}[2]{%
 \begin{tcolorbox}[enhanced,colback=s1!6,colframe=s1!60!black,boxrule=0.4pt,arc=1.5pt,left=4pt,right=4pt,top=2pt,bottom=2pt,fontupper=\footnotesize,
   title={\footnotesize\bfseries\faTasks\ Task \ifx\\#1\\\else\textnormal{\scriptsize(\code{#1})}\fi},coltitle=white,colbacktitle=s1!60!black,toptitle=1pt,bottomtitle=1pt]
@@ -79,11 +83,11 @@
 % \begin{trajstep}{idx}{agent}{color} body \end{trajstep}
 \newenvironment{trajstep}[3]{%
 \begin{tcolorbox}[enhanced,breakable,colback=white,colframe=#3!55,boxrule=0pt,leftrule=2.2pt,arc=0pt,left=4pt,right=3pt,top=1.5pt,bottom=1.5pt,before skip=1.5pt,after skip=1.5pt,
-  fontupper=\scriptsize\color{ink},overlay unbroken and first={\node[anchor=north west,fill=#3!18,text=#3!50!black,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){#1 \textperiodcentered\ #2};}]
+  fontupper=\trajfont\color{ink},overlay unbroken and first={\node[anchor=north west,fill=#3!18,text=#3!50!black,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){#1 \textperiodcentered\ #2};}]
 \vspace{8pt}\par}{\end{tcolorbox}}
 \newenvironment{faultystep}[3]{%
 \begin{tcolorbox}[enhanced,breakable,colback=critical!5,colframe=critical,boxrule=0.5pt,leftrule=2.2pt,arc=0pt,left=4pt,right=3pt,top=1.5pt,bottom=1.5pt,before skip=1.5pt,after skip=1.5pt,
-  fontupper=\scriptsize\color{ink},overlay unbroken and first={\node[anchor=north west,fill=critical,text=white,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){\faExclamationTriangle\ #1 \textperiodcentered\ #2 \textperiodcentered\ ANNOTATED ERROR STEP};}]
+  fontupper=\trajfont\color{ink},overlay unbroken and first={\node[anchor=north west,fill=critical,text=white,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){\faExclamationTriangle\ #1 \textperiodcentered\ #2 \textperiodcentered\ ANNOTATED ERROR STEP};}]
 \vspace{8pt}\par}{\end{tcolorbox}}
 % \trajannotation{agent}{step}{category}{reason}{ground truth}{final output}{extra}
 \newcommand{\trajannotation}[7]{%
@@ -99,3 +103,7 @@ System output & #6\\
 \ifx\\#7\\\else Other labels & #7\\\fi
 \end{tabular}
 \end{tcolorbox}}
+% shrink a table to the line width only when it is too wide (font-independent)
+\newsavebox{\fitboxsb}
+\newcommand{\fitbox}[1]{\sbox{\fitboxsb}{#1}\ifdim\wd\fitboxsb>\linewidth\resizebox{\linewidth}{!}{\usebox{\fitboxsb}}\else\usebox{\fitboxsb}\fi}
+\newcommand{\badgerow}[1]{{\raggedright\noindent#1\par}} % badge rows wrap instead of overflowing
