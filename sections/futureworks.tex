@@ -1,163 +1,98 @@
-\section{Future work: counterfactual outcome prediction for agent trajectories}\label{sec:future}
+\section{A research direction that follows from the data}\label{sec:future}
 
-\begin{multicols}{2}
-\paragraph{Motivation} Every attribution dataset in this survey defines the decisive step counterfactually---``the step that, had it been correct, would have let the run succeed''---yet none of them tests that claim. Labels come from a human or an LLM reading a single observed continuation, and the data show how fragile such labels are: three experts agree on one failure-inducing step in only 16\% of MP-Bench logs (\S\ref{sec:reco}), and our own re-analysis of the released files (\code{scripts/explore/}) adds two more observations: on the 86 tasks that Who\&When and TraceElephant both ran in the same system family, the blamed agent coincides in only 18, and 240 of 685 LongRCA TravelPlanner reasons cite an external verifier verdict that is not in the trajectory at all. The datasets that \emph{do} intervene use replay only as an annotation or data-generation tool: TraceElephant re-executes from a candidate step to confirm a label \citep{traceelephant2026}, AgentDebug fixes a step and reruns to validate a diagnosis \citep{agentdebug2026}, and Aegis, Who\&When~Pro and TracerTraj inject faults into successful runs and keep the ones that fail \citep{aegis2026,whowhenpro2026,agentracer2026}. Aegis reports that an injection flips the outcome in 34.1\% (DyLAN) to 76.5\% (Debate) of attempts, i.e.\ the same perturbation has very different effects depending on the system---but nobody has tried to \emph{predict} that effect. We propose to make the intervention effect itself the prediction target, in the spirit of perturbation-response prediction in single-cell biology, where a model predicts the expression change caused by a gene knock-out rather than the unperturbed state \citep{roohani2024gears}. The two motivating questions are
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt]
-\item[\textbf{Q1}] If one step of a \emph{failed} trajectory is changed and the run is resumed from that point, does it succeed?
-\item[\textbf{Q2}] If an error is injected into one step of a \emph{successful} trajectory and the run is resumed from that point, does it fail?
-\end{itemize}
-Both are ambiguous as stated (``does it succeed'' under a stochastic system is a probability; ``changed'' needs a vocabulary; ``resumed'' needs a replay semantics). The formulation below fixes each ambiguity.
-\end{multicols}
+\subsection{Counterfactual perturbation prediction on agent trajectories}\label{sec:future:perturb}
 
-\subsection{Problem formulation}\label{sec:future:formal}
+\paragraph{Motivation} Every dataset in this survey defines the decisive step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant verifies that counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure and discard the ones the system absorbed. Three observations from the raw data make the gap concrete. (i)~Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs, i.e.\ the root cause of a task failure is run-specific. (ii)~In LongRCA, 364 of 1,140 reasons state no causal link to the outcome and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan---the label was never tested. (iii)~Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time, so absorption is the common case, yet no dataset records it. The questions below turn attribution from a human-labelled classification target into an \emph{interventional quantity that can be measured}.
 
-\begin{multicols}{2}
-\paragraph{Setting}
-\begin{definition}[Task, environment, grader]\label{def:env}
-A \emph{task} $x\in\mathcal X$ comes with a sandboxed \emph{environment} $E_x=(\mathcal Z, z_0, f, \omega)$---state space, initial state, transition $z_t=f(z_{t-1},a_t)$ and observation map $o_t=\omega(z_t)$---and a \emph{grader} $g_x:\mathcal Y\to\{0,1\}$ on final outputs. $f$, $\omega$ and $g_x$ are deterministic functions.
-\end{definition}
-
-\begin{definition}[Agentic system and trajectory]\label{def:traj}
-An \emph{agentic system} $\pi$ consists of a finite agent set $\mathcal A$, a scheduler $\sigma$ and per-agent policies $\pi_\alpha$. At step $t$ the scheduler picks $\alpha_t=\sigma(h_{t-1})$ and the agent samples an action $a_t\sim\pi_{\alpha_t}(\cdot\mid x,h_{t-1})$ (an LLM call: message, tool call or code). The environment answers with $o_t$. A \emph{step} is $s_t=(\alpha_t,a_t,o_t)$, a \emph{prefix} is $h_t=(s_1,\dots,s_t)$ (with $h_0=\varnothing$), and a \emph{trajectory} $\tau=h_T$ ends when the system emits a final output $y(\tau)\in\mathcal Y$ or exhausts a budget $B$ (steps, tokens or wall-clock); exhaustion counts as $y=\bot$ with $g_x(\bot)=0$. The \emph{outcome} is $Y(\tau)=g_x(y(\tau))\in\{0,1\}$.
-\end{definition}
-All randomness lives in the policies (sampling at temperature $>0$); the environment and grader are fixed. This is the regime of every dataset in \S\ref{sec:g1}--\ref{sec:g4} except the live-web ones, which violate Assumption~\ref{as:replay} below.
-
-\begin{definition}[Continuation law and value]\label{def:value}
-Let $P_\pi(\cdot\mid x,h_t)$ denote the distribution over complete trajectories obtained by \emph{resuming} $\pi$ from prefix $h_t$: the environment is restored to $z_t$, the conversation state of every agent is restored to what it was after $h_t$, and the remaining budget is $B$ minus what $h_t$ consumed. The \emph{value} of a prefix is
-\[
-V(h_t)\;=\;\mathbb E_{\tau'\sim P_\pi(\cdot\mid x,h_t)}\big[Y(\tau')\big]\in[0,1].
-\]
-\end{definition}
+\paragraph{Setting and notation} An agent system $\pi$ (single- or multi-agent, stochastic) interacts with an environment $\mathcal{E}$ on a task $x$ with an automatic success predicate $S\in\{0,1\}$ (ground-truth answer, unit tests, verifier). A trajectory is $\tau=(s_1,\dots,s_T)$ where step $s_t=(a_t,u_t,o_t)$ records the acting agent $a_t\in\mathcal{A}$, its output $u_t$ (message, tool call or code) and the resulting observation $o_t$ (tool result, page, test log). $\tau_{<k}$ denotes the prefix $(s_1,\dots,s_{k-1})$. We write $\mathrm{Roll}(\tau_{<k}\oplus s_k')$ for the random continuation obtained by restoring the state reached after $\tau_{<k}$, executing the (possibly modified) step $s_k'$ and letting $\pi$ and $\mathcal{E}$ run to termination; randomness comes from sampling in $\pi$ and from $\mathcal{E}$.
 
 \begin{assumption}[Replayability]\label{as:replay}
-For every prefix $h_t$ the state $z_t$ can be reconstructed, either from a snapshot or by deterministically replaying $a_1,\dots,a_t$ from $z_0$. The latter is \emph{verified} by a replay check: the recomputed observations must equal the recorded $o_1,\dots,o_t$ byte for byte. Prefixes that fail the check are excluded.
+The environment state after $\tau_{<k}$ can be restored exactly (container snapshot, sandbox seed, simulated user), so that $\mathrm{Roll}(\cdot)$ is a well-defined distribution over continuations. Live-web environments violate this and are excluded from the measured part of the programme.
 \end{assumption}
 
-\begin{assumption}[Fixed system]\label{as:system}
-Model versions, prompts, tools, temperature and budget $B$ are pinned for the whole study; random seeds are \emph{not} fixed, so that $P_\pi(\cdot\mid x,h_t)$ reflects the system's own run-to-run variability (which is large: \S\ref{sec:reco}, point on run-specific root causes).
+\begin{assumption}[Fixed intervention vocabulary]\label{as:vocab}
+Interventions come from a finite, declared set $\Delta=\Delta_{\mathrm{fix}}\cup\Delta_{\mathrm{inj}}$; each $\delta\in\Delta$ is a deterministic map $s_k\mapsto\delta(s_k)$ that changes exactly one step. Table~\ref{tab:vocab} lists a starting vocabulary. ``A change to a step'' without such a vocabulary is not a learnable object.
 \end{assumption}
 
-\paragraph{Interventions}
-\begin{definition}[Intervention]\label{def:interv}
-An \emph{intervention} is a pair $\iota=(t,\phi)$ of a target step index $t\in\{1,\dots,T\}$ and a \emph{step editor} $\phi$. Two editor classes are distinguished by what the environment recomputes:
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt]
-\item \emph{action-level}: $\phi$ replaces the action, $a_t'=\phi(x,h_{t-1},s_t)$, and the observation is recomputed, $o_t'=\omega(f(z_{t-1},a_t'))$; the agent identity is kept, $\alpha_t'=\alpha_t$;
-\item \emph{observation-level}: $\phi$ keeps $a_t$ and replaces $o_t$ by $o_t'=\phi(x,h_{t-1},s_t)$, simulating a corrupted tool result or environment reply; the environment state is left at $f(z_{t-1},a_t)$.
-\end{itemize}
-The \emph{intervened prefix} is $h_t^{\iota}=(s_1,\dots,s_{t-1},s_t')$ with $s_t'=(\alpha_t,a_t',o_t')$. Steps after $t$ are \textbf{never copied} from the observed trajectory: the continuation is regenerated from $h_t^{\iota}$ under Definition~\ref{def:value}. This is the $\mathrm{do}(s_t:=s_t')$ semantics; ``editing step $t$ and keeping the rest'' is not an intervention in this sense.
-\end{definition}
-
-\begin{definition}[Repair and corruption vocabularies]\label{def:vocab}
-A \emph{repair} $\phi\in\Phi^{+}$ is an editor intended to make step $t$ correct for $x$. Two privilege levels are recorded: an \emph{oracle repair} may use the ground truth and the recorded continuation; an \emph{unprivileged repair} may use only $(x,h_{t-1},s_t)$ and a free-text diagnosis (e.g.\ \code{mistake\_reason}). A \emph{corruption} $\phi\in\Phi^{-}$ is an editor drawn from an error-mode taxonomy $\mathcal M$ (the 14 Aegis modes or the Who\&When~Pro families, \S\ref{sec:g2}) at a severity level $\ell\in\{1,2,3\}$; it must produce a step that the system accepts as well-formed. Every editor is applied by a fixed procedure (a prompted model plus human check), and the resulting $s_t'$ is stored, so that the intervention is a concrete, inspectable object rather than a description.
-\end{definition}
-
-\paragraph{Estimands}
 \begin{definition}[Intervention effect]\label{def:effect}
-For a prefix $h_t$ and intervention $\iota=(t,\phi)$,
+For a trajectory $\tau$, a step index $k$ and an intervention $\delta\in\Delta$, define the \emph{baseline success rate} and the \emph{intervened success rate}
 \[
-\Delta(h_t,\iota)\;=\;V(h_t^{\iota})-V(h_t)\;\in[-1,1].
+p_0(\tau,k)=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus s_k))=1\big],\qquad
+p_\delta(\tau,k)=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus\delta(s_k)))=1\big],
 \]
-\end{definition}
-Both arms share $x$, $h_{t-1}$ and $\pi$ and differ only in $s_t$, so $\Delta$ is an average treatment effect with assignment by design; no adjustment for confounders is needed \citep{shalit2017ite}. The two motivating questions become:
-
-\begin{task}[Q1, repair effect]\label{task:q1}
-Given an observed trajectory $\tau$ with $Y(\tau)=0$, a step index $t$ and a repair $\iota=(t,\phi)$, $\phi\in\Phi^{+}$, predict $\Delta^{+}(\tau,\iota)=\Delta(h_t,\iota)$.
-\end{task}
-\begin{task}[Q2, injection effect]\label{task:q2}
-Given an observed trajectory $\tau$ with $Y(\tau)=1$, a step index $t$ and a corruption $\iota=(t,\phi)$, $\phi\in\Phi^{-}$, predict $\Delta^{-}(\tau,\iota)=-\Delta(h_t,\iota)=V(h_t)-V(h_t^{\iota})$.
-\end{task}
-Note that the comparison is between the \emph{two rerun arms}, not between the rerun and the single observed bit $Y(\tau)$: a failed run may have $V(h_t)>0$ and a successful run $V(h_t)<1$ under Assumption~\ref{as:system}. ``Does the repaired run succeed?'' is therefore read as $V(h_t^{\iota})$, and ``does the repair \emph{matter}?'' as $\Delta^{+}$; both are reported.
-
-\begin{definition}[Monte-Carlo labels]\label{def:labels}
-Each arm is rerun $n$ times independently, giving $\hat V_n(h)=\frac1n\sum_{i=1}^{n}Y(\tau'^{(i)})$ and $\hat\Delta_n=\hat V_n(h_t^{\iota})-\hat V_n(h_t)$. A label is the triple $(\hat V_n(h_t),\hat V_n(h_t^{\iota}),n)$ with exact binomial (Clopper--Pearson) intervals; $\operatorname{se}(\hat\Delta_n)\le 1/\sqrt{2n}$, i.e.\ $0.25$ at $n=8$. Allocation is sequential: arms whose first $n_0=4$ replicates are unanimous stop; disagreeing arms continue to $n=16$.
+and the \emph{effect} $\phi(\tau,k,\delta)=p_\delta(\tau,k)-p_0(\tau,k)\in[-1,1]$. Both probabilities are estimated by $N$ independent rollouts; $p_0$ is estimated with the original step re-executed (not read from the observed outcome), which is what makes the quantity robust to run-to-run stochasticity. A step $k$ is \emph{$\alpha$-decisive} for a failed $\tau$ if $\max_{\delta\in\Delta_{\mathrm{fix}}}\phi(\tau,k,\delta)\ge\alpha$, and \emph{$\alpha$-fragile} for a successful $\tau$ if $\min_{\delta\in\Delta_{\mathrm{inj}}}\phi(\tau,k,\delta)\le-\alpha$.
 \end{definition}
 
-\paragraph{Prediction tasks} A \emph{predictor} $F$ outputs $\hat\Delta\in[-1,1]$ (or the pair $\hat V(h_t),\hat V(h_t^{\iota})$) from an input $u$ and is \textbf{not allowed to execute the environment} (otherwise Definition~\ref{def:labels} is the trivial solution; a budgeted variant allowing $b\ll n$ rollouts is a separate track). Three observability regimes are defined by what $u$ contains:
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt]
-\item[R0] $(x,h_{t-1},s_t,s_t')$ and a description of $\pi$---the \emph{prospective} regime, the only one available online;
-\item[R1] R0 plus the recorded continuation $s_{t+1},\dots,s_T$ and $Y(\tau)$---the \emph{post-mortem} regime of failure attribution;
-\item[R2] R1 plus full traces (tool I/O, screenshots, prompts), as in TraceElephant.
-\end{itemize}
-The three regimes are evaluated separately; R1$-$R0 measures how much the observed future tells about the counterfactual one.
-
-\paragraph{Derived quantities} The formulation subsumes the tasks of this survey and two new ones. Fix an effect threshold $\theta\in(0,1)$ (we use $\theta=0.25$, the resolution of $n=8$).
-\begin{definition}[Decisive step and responsible agent]\label{def:decisive}
-For a failed $\tau$ and a repair vocabulary $\Phi^{+}$,
-\[
-t^\star(\tau)=\min\Big\{t:\ \max_{\phi\in\Phi^{+}}\Delta\big(h_t,(t,\phi)\big)\ge\theta\Big\},\qquad \alpha^\star(\tau)=\alpha_{t^\star}.
-\]
-If the set is empty, $\tau$ has \emph{no decisive step} under $\Phi^{+}$ (several independent errors, or a cause outside the trajectory). $t^\star$ is ``earliest effective'', matching the Who\&When convention; the \emph{most} effective step $\arg\max_t\max_\phi\Delta$ is reported alongside. A repair is \emph{sufficient} if $V(h_t^{\iota})\ge1-\theta$, \emph{necessary-only} if $\Delta\ge\theta$ but $V(h_t^{\iota})<1-\theta$.
-\end{definition}
-\begin{definition}[Lock-in time]\label{def:lock}
-For a failed $\tau$,
-\[
-t_{\mathrm{lock}}(\tau)=\min\Big\{t:\ \max_{t'\ge t,\ \phi\in\Phi^{+}}\Delta\big(h_{t'},(t',\phi)\big)<\theta\Big\},
-\]
-the step after which no single-step repair recovers the run; the Failure-as-a-Process $t_{\mathrm{lock}}$ (\S\ref{sec:g4}) is the human estimate of this quantity.
-\end{definition}
-\begin{definition}[Robustness profile]\label{def:robust}
-For a system $\pi$, corruption mode $m\in\mathcal M$ and relative position $\rho=t/T$, $R_\pi(m,\rho)=1-\mathbb E\big[\Delta^{-}\mid m,\rho\big]$ over successful trajectories; $R_\pi$ close to 1 means the system absorbs that error at that position. Aegis's per-framework injection success rates are marginal estimates of $1-R_\pi$.
-\end{definition}
-
-\paragraph{Metrics} For a test set of labelled triples: (i)~mean absolute error and Brier score of $\hat\Delta$ against $\hat\Delta_n$, reported together with the \emph{noise floor} $\mathbb E[\operatorname{var}(\hat\Delta_n)]$ that even a perfect predictor cannot beat; (ii)~AUROC of $\hat\Delta$ for the event $\{\hat\Delta_n\ge\theta\}$; (iii)~expected calibration error of $\hat\Delta$; (iv)~within-trajectory Spearman correlation between predicted and measured effects over the candidate steps of the same trajectory, which is the quantity that decides attribution; (v)~attribution accuracy of $\hat t^\star$ (Definition~\ref{def:decisive} computed from $\hat\Delta$) against $t^\star$ computed from the Monte-Carlo labels, exact and within $\pm k$ steps.
-
-\paragraph{Relation to the biology analogy} Prefix $h_{t-1}$ plays the role of the cell state, $\iota$ of the perturbation and $\Delta$ of the response; generalisation to \emph{unseen} perturbations corresponds to held-out editor types and held-out steps. Two differences matter: the perturbation space here is open-ended (hence the fixed vocabularies of Definition~\ref{def:vocab}), and effects compound sequentially, so the same editor has position-dependent effects (hence $\rho$ in Definition~\ref{def:robust}).
-\end{multicols}
-
-\begin{center}
-\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,
-  st/.style={draw=rule,fill=white,rounded corners=1.5pt,minimum width=7mm,minimum height=5mm,inner sep=1pt},
-  ctl/.style={st,draw=ink3!70},
-  trt/.style={st,draw=s2,fill=s2!8},
-  outc/.style={circle,minimum size=4.2mm,inner sep=0pt,font=\scriptsize\bfseries,text=white},
-  ar/.style={-{Latex[length=1.6mm]},draw=ink3,semithick}]
-  \foreach \i/\n in {1/$s_1$,2/$s_2$,3/$\cdots$,4/$s_{t-1}$} {\node[st] (p\i) at (\i*1.05,0) {\n};}
-  \foreach \i in {1,2,3} {\pgfmathtruncatemacro{\j}{\i+1}\draw[ar] (p\i) -- (p\j);}
-  \node[above=1mm of p2.north,anchor=south,text=ink2] {shared prefix $h_{t-1}$ (replayed, Assumption~\ref{as:replay})};
-  \node[ctl] (c0) at (6,0.9) {$s_t$};
-  \foreach \i in {1,2} {\node[ctl] (c\i) at (6+\i*1.05,0.9) {$\cdot$};}
-  \node[ctl] (cT) at (9.15,0.9) {$s_{T}$};
-  \draw[ar] (p4) -- (c0); \draw[ar] (c0)--(c1); \draw[ar] (c1)--(c2); \draw[ar] (c2)--(cT);
-  \node[outc,fill=critical] (cf) at (10.4,0.9) {F};
-  \draw[ar] (cT)--(cf);
-  \node[right=1mm of cf,text=ink2,align=left] {$n$ replicates $\Rightarrow \hat V_n(h_t)$\\control arm};
-  \node[trt] (t0) at (6,-0.9) {$s_t'$};
-  \foreach \i in {1,2} {\node[trt] (t\i) at (6+\i*1.05,-0.9) {$\cdot$};}
-  \node[trt] (tT) at (9.15,-0.9) {$s_{T'}$};
-  \draw[ar,draw=s2] (p4) -- (t0); \draw[ar,draw=s2] (t0)--(t1); \draw[ar,draw=s2] (t1)--(t2); \draw[ar,draw=s2] (t2)--(tT);
-  \node[outc,fill=good] (ts) at (10.4,-0.9) {S};
-  \draw[ar,draw=s2] (tT)--(ts);
-  \node[right=1mm of ts,text=ink2,align=left] {$n$ replicates $\Rightarrow \hat V_n(h_t^{\iota})$\\intervened arm};
-  \node[below=1mm of t0.south,text=s2!70!black] {$\iota=(t,\phi)$: $s_t\mapsto s_t'$};
-  \draw[decorate,decoration={brace,amplitude=2.5pt},ink2] (13.6,1.15) -- (13.6,-1.15) node[midway,right=3pt,text=ink] {$\hat\Delta_n=\hat V_n(h_t^{\iota})-\hat V_n(h_t)$};
-\end{tikzpicture}
-\captionof{figure}{Counterfactual outcome prediction (Definitions~\ref{def:interv}--\ref{def:labels}). From a shared, replayed prefix, the control arm continues with the recorded step $s_t$ and the intervened arm with $s_t'$; steps after $t$ are regenerated in both arms, $n$ times each, under the system's own stochasticity. The prediction target is the difference in success frequency, not the outcome of either arm.}\label{fig:cfo}
-\end{center}
-
-\begin{multicols}{2}
-\paragraph{Why it is not outcome prediction} Predicting $V(h_t)$ is what process reward models and early-failure predictors do \citep{lightman2023prm}. The objection that ``a correct step $t$ does not guarantee later steps are correct, and a wrong step $t$ may be corrected later'' applies to both questions, but it affects them differently. (i)~\emph{Confounding.} A value model learns from observed runs that sloppy prefixes come from runs that fail---but also from hard tasks, weak models and bad configurations. It can score well by recognising a failing run without learning that step $t$ \emph{causes} the failure; the paired design of Definition~\ref{def:effect} removes this by construction. (ii)~\emph{Variance.} Task difficulty and prefix quality are held fixed across arms, so $\Delta$ is estimated with lower variance than an absolute outcome, exactly as in a paired experiment. (iii)~\emph{The attenuation is the signal.} $\Delta^{+}$ is attenuated by the probability of independent downstream failures (MP-Bench annotators flag several scattered errors per run), and $\Delta^{-}$ is attenuated by the system's recovery capacity (Aegis's per-framework flip rates). A decisive step is precisely one whose repair effect survives the rest of the run; a robust system is one in which injection effects are small. Outcome prediction cannot separate ``the step was wrong'' from ``the step was wrong and nothing downstream absorbed it''; $\Delta$ measures the second thing directly. The two coincide only in a deterministic system where the intervention makes the remainder identical to a known successful run.
-
-\paragraph{Benchmark construction} The limiting resource is Assumption~\ref{as:replay}; of the 20 datasets only TraceElephant ships environments, and live-web tasks (GAIA, AssistantBench, WebArena on public sites) drift between runs. We therefore propose sandboxed environments with deterministic graders, using the existing datasets as sources of prefixes and interventions:
-\begin{itemize}[leftmargin=1.1em,itemsep=1pt]
-\item \textbf{Environments}: SWE-Bench Verified (TraceElephant's SWE-Agent traces and released agent code; snapshot = container state), $\tau^2$-bench and TravelPlanner (tool calling with a simulated user and a rule-based checker; snapshot = database state), ALFWorld/WebShop (as in AgentErrorBench), and the Who\&When~Pro harness for multi-agent runs over offline benchmarks.
-\item \textbf{Prefixes}: the 220 TraceElephant failures and their decisive steps for Task~\ref{task:q1}; fresh successful runs in the same environments for Task~\ref{task:q2}; for every prefix also 3--5 \emph{control} steps chosen uniformly at random, so that the label set contains effects near zero.
-\item \textbf{Editors}: repairs from MP-Bench's \code{ideal\_action}, SearchAuditBench's repair directives and the \code{mistake\_reason} text of Who\&When/TraceElephant, turned into a concrete $s_t'$ by a strong model and checked by a human (oracle and unprivileged variants, Definition~\ref{def:vocab}); corruptions from the Aegis modes and the Who\&When~Pro taxonomy at three severities and at several relative positions $\rho$.
-\item \textbf{Replicates}: Definition~\ref{def:labels}, $n_0=4$ to $n=16$. A by-product is a replicate-based $V(h_t)$ for every prefix, a far better outcome-prediction label than the single observed bit that PRM datasets use.
-\item \textbf{Splits}: held-out tasks, held-out editor types and held-out systems, mirroring the cross-distribution evaluation recommended in \S\ref{sec:reco}; R0/R1/R2 are evaluated separately.
-\end{itemize}
-A first version with 200 prefixes $\times$ 4 interventions (1 labelled + 3 control steps) $\times$ 2 arms $\times$ 8 replicates is $\approx$13\,k partial reruns; because runs resume at step $t$, the average rerun is a fraction of a full trajectory, and the cost is in the low thousands of dollars at current API prices.
-
-\paragraph{Models and baselines}
-\begin{enumerate}[leftmargin=1.2em,itemsep=1pt]
-\item \textbf{Priors}: relative position $\rho$ and corruption severity $\ell$ alone. These must be reported because late, severe injections always fail and single repairs rarely rescue long runs.
-\item \textbf{Value-model difference}: a PRM-style model trained on $\hat V_n(h_t)$, scoring $\hat V(h_t^{\iota})-\hat V(h_t)$. This is the decisive baseline: if it matches the measured $\Delta$, the effect question reduces to outcome prediction and the contribution is the benchmark.
-\item \textbf{LLM judge}: a prompted frontier model asked for $\hat\Delta$ in each regime R0--R2.
-\item \textbf{Direct effect predictor}: a model trained on $(x,h_{t-1},s_t,s_t')$ against $\hat\Delta_n$ with a shared encoder for both arms, in the TARNet style \citep{shalit2017ite}; loss weighted by the label precision $1/\operatorname{var}(\hat\Delta_n)$.
+The two questions that motivate the direction are now unambiguous:
+\begin{enumerate}[leftmargin=1.4em]
+\item \textbf{Repair (Q1).} Given a \emph{failed} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{fix}}$: what is $p_\delta(\tau,k)$? Equivalently, which $(k,\delta)$ maximise $\phi$?
+\item \textbf{Injection (Q2).} Given a \emph{successful} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{inj}}$: what is $1-p_\delta(\tau,k)$, the probability that the perturbation cascades into failure rather than being absorbed?
 \end{enumerate}
+Neither asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures.
 
-\paragraph{Hypotheses} \textbf{H1}: the annotated decisive step of TraceElephant has $\Delta^{+}\ge\theta$ in a minority of runs when repaired in isolation, i.e.\ current step labels are mostly necessary but not sufficient causes (Definition~\ref{def:decisive}). \textbf{H2}: the value-model difference correlates only weakly with measured $\Delta$, because the observational model absorbs task difficulty rather than step causality. \textbf{H3}: $R_\pi(m,\rho)$ decreases in $\rho$ and in severity with a system-specific rate, matching the Aegis flip rates. If H1 holds, the benchmark also delivers the first counterfactually validated attribution labels, which can be fed back to every dataset in \S\ref{sec:g1}.
+\begin{table}[h]\centering\small
+\begin{tabularx}{\linewidth}{@{}l l >{\RaggedRight}X@{}}\toprule
+Set & Intervention $\delta$ & Definition (changes step $k$ only) \\\midrule
+$\Delta_{\mathrm{fix}}$ & \textsc{oracle-action} & replace $u_k$ by the action a human/LLM with access to the ground truth deems correct at $k$ \\
+ & \textsc{hint} & prepend to $u_k$'s context a one-sentence statement of the fact the step got wrong \\
+ & \textsc{fix-observation} & replace a corrupted/empty $o_k$ (404, OCR failure, swallowed output) by the correct observation \\
+ & \textsc{reassign} & let a different agent $a'\neq a_k$ produce step $k$ \\\midrule
+$\Delta_{\mathrm{inj}}$ & \textsc{corrupt-output} & rewrite $u_k$ with a context-aware error of mode $m$ (the Aegis/Who\&When~Pro injectors) \\
+ & \textsc{corrupt-observation} & perturb $o_k$ (wrong number, truncated page, failing tool) \\
+ & \textsc{delete} & drop step $k$ and continue \\
+ & \textsc{swap-agent} & route step $k$ to an agent not designed for it \\\bottomrule
+\end{tabularx}
+\caption{A starting intervention vocabulary $\Delta$. Each entry is a deterministic transformation; what varies across rollouts is only the continuation.}
+\label{tab:vocab}
+\end{table}
 
-\paragraph{Risks} Non-determinism makes single reruns meaningless (hence Definition~\ref{def:labels}); environments drift (hence Assumptions~\ref{as:replay}--\ref{as:system}); editors can be unrealistic (hence human-checked repairs and severity-graded corruptions); and some causes are not in the trajectory at all (LongRCA's evaluator verdicts), so a share of prefixes will have $\Delta\approx0$ for every editor---these are kept, not filtered, as they are the ``no decisive step'' cases of Definition~\ref{def:decisive} that MP-Bench and TraceElephant already contain.
+\begin{figure}[h]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth]
+% prefix
+\foreach \i in {1,...,5}{\node[draw=rule,fill=surface,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (s\i) at (\i*0.85,0) {$s_{\i}$};}
+\node[draw=critical,fill=critical!8,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (sk) at (6*0.85,0) {$s_k$};
+\node[above=1pt of sk,text=critical] {intervene: $\delta(s_k)$};
+\draw[decorate,decoration={brace,amplitude=3pt,mirror},rule!80!black] (s1.south west) -- (s5.south east) node[midway,below=3pt,text=ink2]{prefix $\tau_{<k}$, state restored};
+% rollouts
+\foreach \j/\y/\c/\l in {1/0.9/good/$S=1$, 2/0.3/good/$S=1$, 3/-0.3/critical/$S=0$, 4/-0.9/good/$S=1$}{
+  \draw[->,\c!70,line width=0.6pt] (sk.east) .. controls (7.0,0) and (7.4,\y) .. (8.4,\y);
+  \foreach \i in {0,1,2}{\node[draw=\c!60,fill=\c!6,minimum width=0.45cm,minimum height=0.32cm,inner sep=0pt] at (8.7+\i*0.55,\y) {};}
+  \node[right=2pt,text=\c!70!black] at (9.85,\y) {\l};}
+\node[text=ink2,anchor=west] at (10.9,0.3) {$N$ rollouts of $\pi,\mathcal{E}$};
+\node[text=ink2,anchor=west] at (10.9,-0.2) {$\hat p_\delta=\tfrac{\#\{S=1\}}{N}$};
+\node[text=ink2,anchor=west] at (10.9,-0.7) {$\hat\phi=\hat p_\delta-\hat p_0$};
+\end{tikzpicture}
+\caption{The measured quantity. The state after the prefix is restored, step $k$ is replaced by $\delta(s_k)$, and $N$ independent continuations give a success rate; the same with the original $s_k$ gives the baseline. The effect is the difference.}
+\label{fig:perturb}
+\end{figure}
 
-\paragraph{Milestones} (1)~Validation study: repair the labelled step of every TraceElephant SWE-Agent trace with replicates and report the flip rate, a one-month effort that tests H1 on its own. (2)~Task~\ref{task:q2} benchmark in two sandboxed environments with graded corruptions. (3)~Task~\ref{task:q1} benchmark with human-checked repairs. (4)~Baselines 1--4 and the three generalisation splits. The novelty is not the replay machinery, which exists, but the shift from using it to \emph{produce} labels to treating the effect it measures as the thing to \emph{predict}.
-\end{multicols}
+\paragraph{Learning tasks}
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
+\item[T1 --- Outcome prediction (the surrogate).] Learn $f(\tau_{<k},s_k,\delta)\approx p_\delta(\tau,k)$ \emph{without executing}. Evaluate against Monte-Carlo estimates with Brier score, calibration and AUROC; report separately for $\Delta_{\mathrm{fix}}$ and $\Delta_{\mathrm{inj}}$. Baselines: process-reward-model value estimates \cite{wang2024mathshepherd}, the system's own self-monitoring signals (orchestrator ledger flags precede the labelled step in 24 of 90 Magentic-One traces, \S\ref{ds:traceelephant}), and per-source position priors.
+\item[T2 --- Attribution by effect.] Predict $k^\star=\arg\max_k\max_{\delta\in\Delta_{\mathrm{fix}}}\phi(\tau,k,\delta)$ and compare with the human labels of Who\&When, TraceElephant, MP-Bench and LongRCA. Disagreements between effect-based and human labels, adjudicated by rollouts, are the interesting output; MP-Bench's three annotators make it possible to ask whether effect size tracks annotator consensus.
+\item[T3 --- Fragility and lock-in.] For successful trajectories, the curve $r(k/T)=\mathbb{E}_{\delta\in\Delta_{\mathrm{inj}}}\,p_\delta(\tau,k)$ measures recoverability as a function of position; the first $k$ at which $r$ drops below a threshold is the \emph{point of no return}, the interventional counterpart of Failure-as-a-Process's $t_{\mathrm{lock}}$ (\S\ref{ds:failure_as_process}). Per-agent and per-mode versions of $r$ quantify which roles and which error modes a system can recover from and whether verifier agents change anything.
+\end{description}
+
+\paragraph{The analogy to perturbation biology} The programme is a trajectory-level version of pooled genetic perturbation screens and their in-silico predictors. Perturb-seq \cite{dixit2016perturbseq} applies a library of CRISPR perturbations to a population of cells and reads out the transcriptional phenotype of each cell; GEARS \cite{roohani2024gears} and scGen \cite{lotfollahi2019scgen} then learn to predict the phenotype of \emph{unseen} perturbations from the measured ones, so that most of the screen can be run in silico. Table~\ref{tab:analogy} maps the objects. The correspondence is useful for borrowing methodology (replicate-based effect estimation, essentiality and buffering as graded rather than binary properties, interaction effects between two perturbations) and for seeing where it breaks: a gene library is finite and fixed, whereas edits to a step are open-ended---hence Assumption~\ref{as:vocab}; cells are independent replicates, whereas rollouts share a prefix and a policy, so $N$ must be chosen per prefix; and a rollout costs tokens rather than reagents, which makes the ``screen'' cheap enough to run exhaustively on small benchmarks.
+
+\begin{table}[h]\centering\small
+\begin{tabularx}{\linewidth}{@{}>{\RaggedRight}X >{\RaggedRight}X >{\RaggedRight}X@{}}\toprule
+Perturbation biology & Agent trajectories & Remark \\\midrule
+cell with a genetic background & trajectory prefix $\tau_{<k}$ with restored state & the ``background'' includes the task, the system and the prior errors \\
+CRISPR knockout / activation & \textsc{delete}, \textsc{corrupt-}$\ast$ / \textsc{hint}, \textsc{oracle-action} & loss- and gain-of-function interventions on one step \\
+phenotype readout (expression, viability) & success predicate $S$, optionally the failure mode of the continuation & binary readout today; a richer readout is the new trajectory itself \\
+replicate cells & $N$ independent rollouts & estimates $p_\delta$; biology has thousands of replicates, we have $N\approx 5$--$10$ \\
+essential gene & $\alpha$-decisive step & graded by effect size, not by a single annotator \\
+genetic buffering / robustness & absorbed injection ($\phi\approx0$ on a successful run) & the data Aegis and Who\&When~Pro discard \\
+epistasis (double perturbations) & two-step interventions $(k_1,\delta_1),(k_2,\delta_2)$ & tests MP-Bench's claim of several independent causes \\
+in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (task T1) & replaces most rollouts once calibrated \\\bottomrule
+\end{tabularx}
+\caption{Correspondence between pooled perturbation screens and interventional failure attribution.}
+\label{tab:analogy}
+\end{table}
+
+\paragraph{Feasibility with the surveyed data} Assumption~\ref{as:replay} holds for SWE-bench / SWE-Bench~Pro (TraceElephant's SWE-Agent runs, TrajErrBench), ALFWorld and WebShop (AgentErrorBench), the TravelPlanner and VitaBench sandboxes (LongRCA) and $\tau^2$-Bench with its simulated user (TrajErrBench, AgentRx); it fails for live-web GAIA, which should be used only to test the surrogate's transfer. Injectors for $\Delta_{\mathrm{inj}}$ exist (Aegis, Who\&When~Pro, TracerTraj) and only need to be run with the negatives retained. A first dataset of 200 failed and 200 successful trajectories, interventions at the labelled step plus four control positions, two interventions each and $N=8$ rollouts is $\approx$25\,k continuations; at the tail lengths observed here (medians of 10--145 steps, 30\,k--260\,k tokens per full trace) this is of the order of $10^9$ tokens, affordable with small open models and well below the cost of the human annotation it replaces.
+
+\paragraph{Difficulties to design for} \emph{Stochasticity}: $p_0$ for a failed run is not zero---a plain re-run can succeed---so effects must be reported with confidence intervals and the evaluation metric must be probabilistic. \emph{Exposed downstream errors}: a repair at $k$ can succeed up to step $k+m$ and then fail for a new reason; each rollout should therefore be re-attributed (cheaply, by the surrogate) so that ``no flip'' is separable into ``wrong step'' and ``several independent errors''. \emph{Oracle fixes leak the answer}: \textsc{oracle-action} must be constructed from the ground truth but must not inject it verbatim; \textsc{hint} is the weaker, safer variant and both should be reported. \emph{Vocabulary coverage}: some labelled errors (a wrong team composition before the log begins, 20 of 126 Who\&When Algorithm-Generated labels sit on step~0 for this reason) have no single-step intervention and must be declared out of scope rather than silently scored as zero effect. \emph{Cost concentration}: long-horizon sources (LongRCA) dominate the token budget; stratify the rollout budget by trajectory length rather than by trajectory.
+
+\paragraph{What would count as a result} A calibrated surrogate (T1) that predicts, from the prefix alone, which steps of a failed run are worth repairing and which steps of a successful run are load-bearing; effect-based labels (T2) that agree with human consensus where humans agree and resolve the cases where they do not; and fragility curves (T3) that characterise, for the first time with an interventional definition, how far into a run a multi-agent system can still recover from an error. The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
