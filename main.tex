@@ -1,5 +1,6 @@
 \input{preamble}
 \usepackage[numbers,sort&compress]{natbib}
+
 \newcommand{\inputsec}[1]{\IfFileExists{#1.tex}{\input{#1}}{\par\textcolor{critical}{\bfseries [missing section: \detokenize{#1}]}\par}}
 \title{\vspace{-9mm}\LARGE Datasets for Failure Attribution in LLM Agent Systems\\[3pt]\large A compact survey of 21 benchmarks: descriptions, statistics and fully annotated example trajectories}
 \newcommand{\dataset}[2]{\inputsec{#1/#2/#2}} % \dataset{<group dir>}{<slug>} -> <group dir>/<slug>/<slug>.tex

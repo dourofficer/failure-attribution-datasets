@@ -111,3 +111,5 @@ System output & #6\\
 \newsavebox{\fitboxsb}
 \newcommand{\fitbox}[1]{\sbox{\fitboxsb}{#1}\ifdim\wd\fitboxsb>\linewidth\resizebox{\linewidth}{!}{\usebox{\fitboxsb}}\else\usebox{\fitboxsb}\fi}
 \newcommand{\badgerow}[1]{{\raggedright\noindent#1\par}} % badge rows wrap instead of overflowing
+
+\newcommand{\note}[1]{\leavevmode{\color{purple}[\textsc{Note}: #1]}} 
