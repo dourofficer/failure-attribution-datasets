@@ -8,7 +8,10 @@
 \setlength{\emergencystretch}{2em} % let narrow columns wrap long tokens instead of overflowing
 \usepackage{amsmath,amssymb,amsthm}
 \theoremstyle{definition}\newtheorem{definition}{Definition}\newtheorem{assumption}{Assumption}\newtheorem{task}{Task}
-\usepackage{newtxmath}   % matching Times math
+% Computer Modern math (text stays Times): default math fonts + CM for \mathrm/operators
+\DeclareSymbolFont{operators}{OT1}{cmr}{m}{n}\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathrm}{normal}{OT1}{cmr}{m}{n}\SetMathAlphabet{\mathbf}{normal}{OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathit}{normal}{OT1}{cmr}{m}{it}\SetMathAlphabet{\mathsf}{normal}{OT1}{cmss}{m}{n}\SetMathAlphabet{\mathtt}{normal}{OT1}{cmtt}{m}{n}
 \usepackage[table,dvipsnames]{xcolor}
 \usepackage{booktabs,multicol,tabularx,makecell,array,longtable}
 \renewcommand*\setemergencystretch[2]{\emergencystretch 2em} % multicol otherwise resets it to 4pt per column
