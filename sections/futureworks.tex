@@ -1,24 +1,15 @@
-\section{Future work}\label{sec:future}
+\section{Research proposals}\label{sec:future}
 
-\subsection{Counterfactual perturbation prediction on agent trajectories}\label{sec:future:perturb}
+\subsection{Preliminaries: a working definition of failure attribution}\label{sec:future:prelim}
 
 \begin{multicols}{2}
-\paragraph{Motivation} Every dataset in this survey defines the decisive step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant verifies that counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure and discard the ones the system absorbed. Three observations from the raw data make the gap concrete:
+\paragraph{Why a definition is needed} The two proposals that follow need a target that stays fixed from one dataset to the next. The survey shows that the current targets do not:
 \begin{itemize}[leftmargin=1.1em]
-\item Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs, i.e.\ the root cause of a task failure is run-specific.
-\item In LongRCA, 364 of 1,140 reasons state no causal link to the outcome and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan---the label was never tested.
-\item Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time, so absorption is the common case, yet no dataset records it.
+\item Every dataset defines its labelled step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant ever tests the counterfactual by re-execution (\S\ref{ds:traceelephant}).
+\item The summary that is labelled differs: the earliest decisive step (Who\&When, TrajErrBench, LongRCA), the first \emph{unrecovered} failure (AgentRx), a set of steps with per-annotator votes (MP-Bench), every error span (TRAIL), three timestamps $t_{\mathrm{err}}/t_{\mathrm{lock}}/t_{\mathrm{obs}}$ (Failure-as-a-Process), a step with a tolerance span (SearchAuditBench) or a set of (edge, fault side, mode) triples (MegaRCA-Mix).
+\item Humans do not agree on the proxy: exact-step agreement is 40.3\% in LongRCA, 77.9\% in AgentHallu and 91.2\% / 66.7\% on the two TrajErrBench domains, TraceElephant's round-1 Krippendorff's $\alpha$ for the step is 0.64, and the blamed agent agrees between Who\&When and TraceElephant on only 18 of 86 paired tasks.
 \end{itemize}
-Two replay studies confirm the picture from the execution side. SymTrace \cite{luan2026symtrace} re-ran 54 successful MAS executions three times each and saw 39 of them fail at least once, while unguided reruns of failed executions reproduced the failure in only 67.97\% of attempts; in the faulty-agent injections of \citet{huang2024resilience} a reviewing Inspector agent recovered up to 96.4\% of the injected errors. Absorption and run-to-run drift are large effects, not noise. The questions below turn attribution from a human-labelled classification target into an \emph{interventional quantity that can be measured}.
-
-\paragraph{Closest prior work} Four strands already contain parts of the programme.
-\begin{itemize}[leftmargin=1.1em]
-\item \emph{Replay-based repair.} SymTrace \cite{luan2026symtrace} records a MAS execution, picks an \emph{anchor} node, serves every LLM and tool call before the anchor from the log and lets everything after it run live---the operational form of $\mathrm{Roll}(\tau_{<k}\oplus s_k')$ defined below. Its intervention augments the anchor's request with a category-specific repair instruction ($\hat q_k=q_k\oplus\Delta$, the \textsc{hint} of Table~\ref{tab:vocab}). On SymFail (536 evaluator-confirmed failures of AG2, CrewAI and Magentic-One on WebArena-Verified Hard and AssistantBench) this repairs 20.15\% of failures in one attempt, against 6.90\% for three unguided reruns and 3.7--4.3\% for self-reflection and critic-agent baselines, and selective replay reproduces the original failure in 80.78\% of single attempts versus 67.97\% for a full rerun. SymTrace runs one temperature-0 continuation per intervention, so it observes a single draw from $p_\delta$; it takes the anchor from a symptom detector rather than estimating which step is worth intervening on, and it has no injection side.
-\item \emph{Counterfactual attribution.} Causal Agent Replay \cite{shah2026car} states the same do-intervention-then-re-execute estimator with confidence intervals and a Monte-Carlo Shapley extension for interacting steps, but validates it only on synthetic structural causal models. Minimal repair families \cite{li2026mrfr} replay \emph{sets} of events and show that single-event replay misses repairs that are only jointly sufficient (exact family recovery on 90 controlled cases and a 24-case four-agent pilot). EMFA \cite{liao2026emfa} verifies the candidates of an error-propagation model with counterfactual checks and is the current best step-level attributor on Who\&When (+3.45 / +4.40 pp over the previous best on the two subsets); TraceElephant's dynamic setting (\S\ref{ds:traceelephant}) is the same idea with a replayable environment.
-\item \emph{Recovery as a measured property.} \citet{huang2024resilience} inject faulty agents into six MAS and find that a hierarchical topology loses 5.5\% of performance versus 10.5--23.7\% for flat ones; the hallucination-cascade study of \citet{jamshidi2026cascade} tracks claim-level errors through three-agent chains and finds net attenuation (normalised hallucination 0.422 $\to$ 0.272); ToolMaze \cite{zhu2026toolmaze} scores a perturbation-recovery rate separately from task success and finds it drops by $\approx$37\% under implicit tool failures. None of these ties recovery to a labelled step of a natural failure.
-\item \emph{Infrastructure and training.} AgentRewind \cite{zhuang2026agentrewind} checkpoints agent context and environment state jointly so that an agent can roll back---an implementation of Assumption~\ref{as:replay}; Agent-R \cite{yuan2025agentr} trains agents on trajectories spliced at the first erroneous step with a correct branch, i.e.\ it consumes exactly the (prefix, repaired step) pairs that task T1 would predict.
-\end{itemize}
-What is missing from all of them is the \emph{quantity}: an effect size per (trajectory, step, intervention), estimated from repeated rollouts, on failed \emph{and} successful natural runs.
+We therefore take the counterfactual itself as the definition and treat every human label as a noisy estimate of it.
 
 \paragraph{Setting and notation} An agent system $\pi$ (single- or multi-agent, stochastic) interacts with an environment $\mathcal{E}$ on a task $x$ with an automatic success predicate $S\in\{0,1\}$ (ground-truth answer, unit tests, verifier). A trajectory is $\tau=(s_1,\dots,s_T)$ where step $s_t=(a_t,u_t,o_t)$ records the acting agent $a_t\in\mathcal{A}$, its output $u_t$ (message, tool call or code) and the resulting observation $o_t$ (tool result, page, test log). $\tau_{<k}$ denotes the prefix $(s_1,\dots,s_{k-1})$. We write $\mathrm{Roll}(\tau_{<k}\oplus s_k')$ for the random continuation obtained by restoring the state reached after $\tau_{<k}$, executing the (possibly modified) step $s_k'$ and letting $\pi$ and $\mathcal{E}$ run to termination; randomness comes from sampling in $\pi$ and from $\mathcal{E}$.
 
@@ -39,15 +30,53 @@ p_\delta(\tau,k)&=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus\delta(s_k)))=1\big],
 and the \emph{effect} $\phi(\tau,k,\delta)=p_\delta(\tau,k)-p_0(\tau,k)\in[-1,1]$. Both probabilities are estimated by $N$ independent rollouts; $p_0$ is estimated with the original step re-executed (not read from the observed outcome), which is what makes the quantity robust to run-to-run stochasticity. A step $k$ is \emph{$\alpha$-decisive} for a failed $\tau$ if $\max_{\delta\in\Delta_{\mathrm{fix}}}\phi(\tau,k,\delta)\ge\alpha$, and \emph{$\alpha$-fragile} for a successful $\tau$ if $\min_{\delta\in\Delta_{\mathrm{inj}}}\phi(\tau,k,\delta)\le-\alpha$.
 \end{definition}
 
-The two questions that motivate the direction are now unambiguous:
-\begin{enumerate}[leftmargin=1.4em]
-\item \textbf{Repair (Q1).} Given a \emph{failed} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{fix}}$: what is $p_\delta(\tau,k)$? Equivalently, which $(k,\delta)$ maximise $\phi$?
-\item \textbf{Injection (Q2).} Given a \emph{successful} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{inj}}$: what is $1-p_\delta(\tau,k)$, the probability that the perturbation cascades into failure rather than being absorbed?
-\end{enumerate}
-Neither asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures.
+\begin{definition}[Failure attribution]\label{def:fa}
+For a failed trajectory $\tau$ the \emph{repair-effect profile} is
+\[e_\tau(k)=\max_{\delta\in\Delta_{\mathrm{fix}}}\phi(\tau,k,\delta),\qquad k=1,\dots,T,\]
+and \emph{failure attribution} is the estimation of $e_\tau$. For a threshold $\alpha\in(0,1]$ that is stated with every result, the labels used in the literature are summary statistics of the profile:
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{error set} $E_\alpha(\tau)=\{k:\ e_\tau(k)\ge\alpha\}$ --- the steps whose repair would have rescued the run;
+\item \textbf{decisive step} $k^\star=\min E_\alpha(\tau)$ --- the earliest of them;
+\item \textbf{lock-in} $k_{\mathrm{lock}}=\max E_\alpha(\tau)+1$ --- the first step from which no single-step repair recovers the run;
+\item \textbf{responsible agent} $a^\star=a_{k^\star}$ --- the agent that emitted the decisive step; no separate ``who'' label is defined;
+\item \textbf{fault side} --- whether the maximising $\delta$ at $k^\star$ acts on the output $u_k$ (model-side) or on the observation $o_k$ (tool- or environment-side).
+\end{itemize}
+\end{definition}
+
+\paragraph{Correspondence with the surveyed labels}
+\begin{itemize}[leftmargin=1.1em]
+\item $k^\star$ is the target of Who\&When, TraceElephant, TrajErrBench, LongRCA, CORRECT-Error and the injected datasets, and the $t_{\mathrm{err}}$ of Failure-as-a-Process.
+\item $E_\alpha$ is what MP-Bench's vote counts, AgentRx's failure events and TRAIL's error spans approximate; MP-Bench's per-step consensus rate is a human estimate of $e_\tau(k)$ itself.
+\item $k_{\mathrm{lock}}$ is AgentRx's ``first failure from which the run never recovers'' and Failure-as-a-Process's $t_{\mathrm{lock}}$; $k_{\mathrm{lock}}-k^\star$ is that paper's fix window (median 1 step).
+\item $a^\star$: the sender of the labelled step equals the responsible role in 99.2\% of LongRCA and 100\% of TracerTraj records, so defining the agent through the step loses nothing and removes the naming problems of Section~\ref{sec:reco}.
+\item Fault side recovers MegaRCA-Mix's model / harness / environment / grader sides and the environment-caused failures that SearchAuditBench excludes.
+\end{itemize}
+
+\paragraph{What the definition is robust to}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Annotator variance.} The target is measured, not adjudicated; a dataset whose ground truth depends on who labelled it cannot be a stable target across datasets.
+\item \emph{Run-to-run stochasticity.} $p_0$ is re-estimated by re-execution, so a run that failed by chance has a small effect everywhere instead of a forced label.
+\item \emph{Several causes.} The error set is graded by effect size; MP-Bench's 16\% single-step agreement becomes a property of the profile (several steps of comparable effect) rather than label noise.
+\item \emph{Recovery.} Decisive step and lock-in come from one profile, so the two conventions in the literature are reconciled instead of chosen between.
+\item \emph{Observation level.} The definition lives on the system, not on the log: output-only logs, LLM-call traces and span trees are different estimators of the same quantity, not different tasks.
+\end{itemize}
+
+\paragraph{What must be fixed for it to be well posed}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{The vocabulary $\Delta$} (Assumption~\ref{as:vocab}, Table~\ref{tab:vocab}). ``Had it been correct'' is not learnable until ``correct'' is an operation; results are reported per intervention. Errors with no single-step intervention---a wrong team composition before the log begins, which is where 20 of 126 Who\&When Algorithm-Generated labels sit (step~0)---are declared out of scope, not scored as zero.
+\item \emph{The step unit.} One step is one policy decision: an agent output $u_t$ together with the observation $o_t$ it produced. Orchestrator bookkeeping, user turns and bare tool returns are context, not candidates. This removes the indexing differences catalogued in Section~\ref{sec:reco}.
+\item \emph{$N$ and $\alpha$.} Effects are reported with intervals; $N=5$--$10$ rollouts separate an effect of 0.5 from 0 but not 0.1 from 0, so $\alpha$ is not set below the resolution that $N$ affords.
+\end{itemize}
+
+\paragraph{Proxies when replay is impossible}
+\begin{itemize}[leftmargin=1.1em]
+\item Live-web GAIA and AssistantBench runs and output-only logs violate Assumption~\ref{as:replay}. There the human decisive step is used as a proxy for $k^\star$, scored with exact match \emph{and} a $\pm k$ window, and the agreement figures above are quoted as its ceiling.
+\item No method is evaluated on proxies alone: the replayable environments of the survey (SWE-bench and SWE-Bench~Pro, ALFWorld, WebShop, $\tau^2$-Bench, TravelPlanner, VitaBench, Terminal-Bench) carry the measured version; the proxies test transfer.
+\item In one sentence: failure attribution is the estimation of a step-level repair-effect profile under a declared intervention set, and the decisive step, the error set, the lock-in point and the responsible agent are summary statistics of that profile.
+\end{itemize}
 \end{multicols}
 
-\begin{table}[h]\centering\small
+\medskip\noindent\begin{minipage}{\linewidth}\centering\small
 \begin{tabularx}{\linewidth}{@{}l l >{\RaggedRight}X@{}}\toprule
 Set & Intervention $\delta$ & Definition (changes step $k$ only) \\\midrule
 $\Delta_{\mathrm{fix}}$ & \textsc{oracle-action} & replace $u_k$ by the action a human/LLM with access to the ground truth deems correct at $k$ \\
@@ -59,9 +88,37 @@ $\Delta_{\mathrm{inj}}$ & \textsc{corrupt-output} & rewrite $u_k$ with a context
  & \textsc{delete} & drop step $k$ and continue \\
  & \textsc{swap-agent} & route step $k$ to an agent not designed for it \\\bottomrule
 \end{tabularx}
-\caption{A starting intervention vocabulary $\Delta$. Each entry is a deterministic transformation; what varies across rollouts is only the continuation.}
+\captionof{table}{A starting intervention vocabulary $\Delta$. Each entry is a deterministic transformation; what varies across rollouts is only the continuation.}
 \label{tab:vocab}
-\end{table}
+\end{minipage}\medskip
+
+\subsection{Proposal 1: Counterfactual perturbation prediction on agent trajectories}\label{sec:future:perturb}
+
+\begin{multicols}{2}
+\paragraph{Motivation} Every dataset in this survey defines the decisive step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant verifies that counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure and discard the ones the system absorbed. Three observations from the raw data make the gap concrete:
+\begin{itemize}[leftmargin=1.1em]
+\item Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs, i.e.\ the root cause of a task failure is run-specific.
+\item In LongRCA, 364 of 1,140 reasons state no causal link to the outcome and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan---the label was never tested.
+\item Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time, so absorption is the common case, yet no dataset records it.
+\end{itemize}
+Two replay studies confirm the picture from the execution side. SymTrace \cite{luan2026symtrace} re-ran 54 successful MAS executions three times each and saw 39 of them fail at least once, while unguided reruns of failed executions reproduced the failure in only 67.97\% of attempts; in the faulty-agent injections of \citet{huang2024resilience} a reviewing Inspector agent recovered up to 96.4\% of the injected errors. Absorption and run-to-run drift are large effects, not noise. The questions below turn attribution from a human-labelled classification target into an \emph{interventional quantity that can be measured}.
+
+\paragraph{Closest prior work} Four strands already contain parts of the programme.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Replay-based repair.} SymTrace \cite{luan2026symtrace} records a MAS execution, picks an \emph{anchor} node, serves every LLM and tool call before the anchor from the log and lets everything after it run live---the operational form of $\mathrm{Roll}(\tau_{<k}\oplus s_k')$ of Section~\ref{sec:future:prelim}. Its intervention augments the anchor's request with a category-specific repair instruction ($\hat q_k=q_k\oplus\Delta$, the \textsc{hint} of Table~\ref{tab:vocab}). On SymFail (536 evaluator-confirmed failures of AG2, CrewAI and Magentic-One on WebArena-Verified Hard and AssistantBench) this repairs 20.15\% of failures in one attempt, against 6.90\% for three unguided reruns and 3.7--4.3\% for self-reflection and critic-agent baselines, and selective replay reproduces the original failure in 80.78\% of single attempts versus 67.97\% for a full rerun. SymTrace runs one temperature-0 continuation per intervention, so it observes a single draw from $p_\delta$; it takes the anchor from a symptom detector rather than estimating which step is worth intervening on, and it has no injection side.
+\item \emph{Counterfactual attribution.} Causal Agent Replay \cite{shah2026car} states the same do-intervention-then-re-execute estimator with confidence intervals and a Monte-Carlo Shapley extension for interacting steps, but validates it only on synthetic structural causal models. Minimal repair families \cite{li2026mrfr} replay \emph{sets} of events and show that single-event replay misses repairs that are only jointly sufficient (exact family recovery on 90 controlled cases and a 24-case four-agent pilot). EMFA \cite{liao2026emfa} verifies the candidates of an error-propagation model with counterfactual checks and is the current best step-level attributor on Who\&When (+3.45 / +4.40 pp over the previous best on the two subsets); TraceElephant's dynamic setting (\S\ref{ds:traceelephant}) is the same idea with a replayable environment.
+\item \emph{Recovery as a measured property.} \citet{huang2024resilience} inject faulty agents into six MAS and find that a hierarchical topology loses 5.5\% of performance versus 10.5--23.7\% for flat ones; the hallucination-cascade study of \citet{jamshidi2026cascade} tracks claim-level errors through three-agent chains and finds net attenuation (normalised hallucination 0.422 $\to$ 0.272); ToolMaze \cite{zhu2026toolmaze} scores a perturbation-recovery rate separately from task success and finds it drops by $\approx$37\% under implicit tool failures. None of these ties recovery to a labelled step of a natural failure.
+\item \emph{Infrastructure and training.} AgentRewind \cite{zhuang2026agentrewind} checkpoints agent context and environment state jointly so that an agent can roll back---an implementation of Assumption~\ref{as:replay}; Agent-R \cite{yuan2025agentr} trains agents on trajectories spliced at the first erroneous step with a correct branch, i.e.\ it consumes exactly the (prefix, repaired step) pairs that task T1 would predict.
+\end{itemize}
+What is missing from all of them is the \emph{quantity}: an effect size per (trajectory, step, intervention), estimated from repeated rollouts, on failed \emph{and} successful natural runs.
+
+With Definitions~\ref{def:effect} and \ref{def:fa} in place, the two questions that motivate the proposal are unambiguous:
+\begin{enumerate}[leftmargin=1.4em]
+\item \textbf{Repair (Q1).} Given a \emph{failed} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{fix}}$: what is $p_\delta(\tau,k)$? Equivalently, which $(k,\delta)$ maximise $\phi$?
+\item \textbf{Injection (Q2).} Given a \emph{successful} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{inj}}$: what is $1-p_\delta(\tau,k)$, the probability that the perturbation cascades into failure rather than being absorbed?
+\end{enumerate}
+Neither asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures.
+\end{multicols}
 
 \begin{figure}[h]\centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth,scale=0.95,every node/.style={transform shape}]
@@ -136,7 +193,7 @@ in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (task T1) & repl
 The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
 \end{multicols}
 
-\subsection{Label-free attribution from the flow of trajectories}\label{sec:future:unsup}
+\subsection{Proposal 2: Label-free attribution from the flow of trajectories}\label{sec:future:unsup}
 
 \begin{multicols}{2}
 \paragraph{Motivation} Every human-labelled dataset in this survey is a \emph{test} set; the only training-scale resources are injected (Section~\ref{sec:g2}) and carry the positional skew of Fig.~\ref{fig:errpos}. \citet{yeh2026oat} show that step labels can be dispensed with altogether: \textsc{Oat} fits a one-class model of \emph{successful} trajectories---about 100 of them, embedded step by step with an LLM and modelled by a neural controlled differential equation \cite{kidger2020ncde}---and flags the steps of a failed run that deviate from the learned dynamics. On the authors' own tool-use set it reaches F1 0.44 against 0.21 for GPT-4o prompting, on Who\&When 0.23 against 0.15 for GPT-5, and it runs 200--5\,000$\times$ faster. Two features of the result matter more than the model.
@@ -146,19 +203,20 @@ The first two reuse the benchmarks surveyed here as test sets; the third is new 
 \end{itemize}
 The direction below asks what the principled estimator is at each level of supervision, down to none, and which errors remain identifiable there. It rests on an observation that holds across the survey: at step level, errors are sparse in \emph{both} outcome classes (Table~\ref{tab:contam}). Successful runs are not clean either---Failure-as-a-Process PASS runs contain 2.3 error events per 22.8 steps, all recovered---so ``success'' is a property of the trajectory, not of its steps.
 
-\paragraph{Three levels of supervision} With the notation of Section~\ref{sec:future:perturb} (trajectory $\tau=(s_1,\dots,s_T)$, success predicate $S$), a corpus can carry
+\paragraph{Three levels of supervision} With the notation of Section~\ref{sec:future:prelim} (trajectory $\tau=(s_1,\dots,s_T)$, success predicate $S$), a corpus can carry
 \begin{itemize}[leftmargin=1.1em]
 \item \textbf{L2}: the step label $t^\star$ (every dataset of Sections~\ref{sec:g1}--\ref{sec:g4});
+\item \textbf{L1$^{+}$}: the outcomes of several \emph{continuations of the same prefix}---rollouts under Assumption~\ref{as:replay}, or the two branches of a fault injection---still without any human label;
 \item \textbf{L1}: the outcome $S$ only, from the benchmark verifier, unit tests or a judge---free wherever the task has a ground truth;
 \item \textbf{L0}: raw logs, neither $S$ nor $t^\star$.
 \end{itemize}
-\textsc{Oat} sits between L1 and L0: it uses $S$ to select the training set and then ignores it.
+\textsc{Oat} sits between L1 and L0: it uses $S$ to select the training set and then ignores it. The proposal is built at L1 and L1$^{+}$: every trajectory is used, failed or not, no step is labelled, and synthetic trajectories are the natural way to add information.
 
 \begin{assumption}[Sparse errors]\label{as:sparse}
 The fraction $\varepsilon$ of erroneous steps is small in every trajectory, failed or not; Table~\ref{tab:contam} puts it between 1\% and 20\% on the surveyed data.
 \end{assumption}
 \begin{assumption}[Absorption]\label{as:absorb}
-A trajectory fails if and only if it contains an unrecovered error, and the earliest such error $t^\star$ determines the outcome: later steps may be wrong but are not causal. This is the decisive-step definition of Who\&When, TrajErrBench and LongRCA and the $t_{\mathrm{lock}}$ of Failure-as-a-Process.
+A trajectory fails if and only if it contains an error from which the run never recovers; the first such step $t^\star$ determines the outcome, and later steps, right or wrong, are not causal. In the terms of Definition~\ref{def:fa}, $t^\star$ is the lock-in point $k_{\mathrm{lock}}$ (AgentRx's first unrecovered failure, Failure-as-a-Process's $t_{\mathrm{lock}}$), not the decisive step $k^\star$, which precedes it by the fix window---median 1 step, but more than 10 in 239 of 1,184 runs (\S\ref{ds:failure_as_process}). A model built on this assumption is therefore expected to sit late relative to decisive-step labels and is scored against both.
 \end{assumption}
 
 \begin{definition}[Step hazard]\label{def:hazard}
@@ -171,13 +229,18 @@ and the attribution is the posterior
 $P(t^\star{=}t\mid S{=}0,\tau)=h_t\prod_{s<t}(1-h_s)\big/\big(1-\prod_{s}(1-h_s)\big)$.
 \end{definition}
 
-The three levels are three ways of fitting $h_\theta$ to the same likelihood (Fig.~\ref{fig:hazard}).
+\emph{Link to Proposal 1.} The survival function $\bar S_t(\tau)=\prod_{s\le t}(1-h_s)$ is the probability that a run which has reached $\tau_{\le t}$ still succeeds, so $h_\theta$ is a learned surrogate of the baseline success rate $p_0(\tau,t{+}1)$ of Definition~\ref{def:effect}, and the online lock-in estimate of U3 below is the point of no return of task T3. The two proposals share one object: the rollouts of Section~\ref{sec:future:perturb} measure it, the model here predicts it from the log.
+
+The levels are different ways of fitting $h_\theta$ to the same likelihood (Fig.~\ref{fig:hazard}).
 \begin{itemize}[leftmargin=1.1em]
 \item \textbf{L2.} The posterior is supervised directly.
+\item \textbf{L1$^{+}$.} A rollout from $\tau_{<k}$ is an ordinary L1 trajectory that shares its first $k-1$ steps with $\tau$ and enters the same likelihood. What it adds is \emph{identification}: with independent trajectories the likelihood only says that some step of a failed run was fatal, whereas two continuations of one prefix with different outcomes place the hazard at or after the branch point, and $N$ continuations give a direct target $\hat p_0$ for $\bar S_{k-1}$---the Monte-Carlo value estimation of process-reward models \cite{wang2024mathshepherd}, applied to agent runs. It is the only step-level supervision that costs no label, and it is exactly the by-product of the screen of Proposal~1.
 \item \textbf{L1.} $t^\star$ is marginalised out and $\theta$ maximises $\sum_\tau\log P(S_\tau\mid\tau)$ over \emph{all} trajectories: a failed run contributes ``some step was fatal'', a successful run ``no step was''. This is multiple-instance learning \cite{dietterich1997mil} with the survival link in place of the usual noisy-OR, or equivalently positive--unlabelled learning at step level \cite{elkan2008pu,kiryo2017nnpu}, where the steps of successful runs are (nearly) positive examples of correctness and the class prior is the $\varepsilon$ of Table~\ref{tab:contam}.
-\item \textbf{L0.} $S$ is latent as well. The likelihood then needs a model of the steps themselves and becomes a \emph{change-point mixture}: every trajectory follows a shared pre-change dynamics $p_0(s_t\mid\tau_{<t})$---the dominant mode---up to $t^\star\in\{1,\dots,T,\infty\}$, after which a second regime $p_1$ applies; $t^\star$ and $S=\mathbb{1}[t^\star{=}\infty]$ are inferred jointly by EM or by Bayesian change-point detection \cite{adams2007bocpd}.
+\item \textbf{L0.} $S$ is latent as well. The likelihood then needs a model of the steps themselves and becomes a \emph{change-point mixture}: every trajectory follows a shared pre-change dynamics $q_0(s_t\mid\tau_{<t})$---the dominant mode---up to $t^\star\in\{1,\dots,T,\infty\}$, after which a second regime $q_1$ applies; $t^\star$ and $S=\mathbb{1}[t^\star{=}\infty]$ are inferred jointly by EM or by Bayesian change-point detection \cite{adams2007bocpd}.
 \end{itemize}
-\textsc{Oat} is the special case in which $p_0$ is fitted on known successes and the posterior is replaced by a threshold on reconstruction error.
+\textsc{Oat} is the special case in which $q_0$ is fitted on known successes and the posterior is replaced by a threshold on reconstruction error.
+
+\paragraph{What synthetic data adds} Besides rollouts, the injectors of Table~\ref{tab:vocab} ($\Delta_{\mathrm{inj}}$, released with Aegis, Who\&When~Pro and TracerTraj) produce from one successful run a failed continuation with a known perturbed step and, as often as not (absorption 23--66\% in Aegis), a successful continuation that contains a step known to be wrong. Both enter the L1 likelihood as ordinary trajectories, so the corpus grows without a label. The pair is also the sharpest test of the thesis: a hazard model must put high posterior on the injected step of the failed branch and low cumulative hazard on the identical step of the absorbed branch, whereas any detector of deviation from the success flow (\textsc{Oat}, the one-class baselines) sees the same step twice and must flag both. Two controls follow. Inject uniformly over positions, because the released injected sets do not (Fig.~\ref{fig:errpos}) and an L1 model would otherwise learn the injector's position prior; and hold out injected modes, so that generalisation across error types is measured rather than memorised. The released injected datasets themselves are used as Tier~C test sets (below), not as training data, for the same reason.
 \end{multicols}
 
 \begin{table}[h]\centering\small
@@ -204,8 +267,8 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
 \node[draw=critical,fill=critical!10,minimum width=0.72cm,minimum height=0.42cm,inner sep=1pt] (s6) at (6*\dx,0) {$s_{t^\star}$};
 \foreach \i in {7,8,9}{\node[draw=critical!50,fill=critical!4,minimum width=0.72cm,minimum height=0.42cm,inner sep=1pt] (s\i) at (\i*\dx,0) {$s_{\i}$};}
 \node[right=2pt of s9,text=ink2] {$S=0$};
-\draw[decorate,decoration={brace,amplitude=3pt},rule!80!black] (s1.north west) -- (s5.north east) node[midway,above=3pt,text=ink2]{shared flow $p_0$ (dominant mode)};
-\draw[decorate,decoration={brace,amplitude=3pt},critical!70!black] (s6.north west) -- (s9.north east) node[midway,above=3pt,text=critical!70!black]{post-change regime $p_1$};
+\draw[decorate,decoration={brace,amplitude=3pt},rule!80!black] (s1.north west) -- (s5.north east) node[midway,above=3pt,text=ink2]{shared flow $q_0$ (dominant mode)};
+\draw[decorate,decoration={brace,amplitude=3pt},critical!70!black] (s6.north west) -- (s9.north east) node[midway,above=3pt,text=critical!70!black]{post-change regime $q_1$};
 \foreach \i/\h in {1/0.05,2/0.08,3/0.06,4/0.12,5/0.10,6/0.75,7/0.30,8/0.25,9/0.40}{
   \fill[s1!70] (\i*\dx-0.18,-1.35) rectangle (\i*\dx+0.18,-1.35+\h);}
 \draw[rule!80!black] (0.5,-1.35) -- (9*\dx+0.45,-1.35);
@@ -214,19 +277,27 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
   \fill[critical!70] (\i*\dx-0.18,-2.35) rectangle (\i*\dx+0.18,-2.35+\h);}
 \draw[rule!80!black] (0.5,-2.35) -- (9*\dx+0.45,-2.35);
 \node[anchor=east,text=ink2] at (0.4,-2.1) {$P(t^\star{=}t\mid S{=}0,\tau)$};
-\node[anchor=north west,text=ink2,align=left] at (9*\dx+1.6,0.0) {L2: $t^\star$ observed\\L1: $S$ observed, $t^\star$ marginalised\\L0: $S$ and $t^\star$ latent,\\\phantom{L0: }$p_0$ and $p_1$ fitted jointly};
+\node[anchor=north west,text=ink2,align=left] at (9*\dx+1.6,0.0) {L2: $t^\star$ observed\\L1: $S$ observed, $t^\star$ marginalised\\L0: $S$ and $t^\star$ latent,\\\phantom{L0: }$q_0$ and $q_1$ fitted jointly};
 \end{tikzpicture}
-\caption{The hazard model. Each step receives a prefix-conditional hazard $h_t$; the survival product turns the hazards into an outcome probability (what L1 supervises) and, for a failed run, into a posterior over the first fatal step (the attribution). At L0 the same posterior is a change point between a shared dynamics $p_0$ and a post-error regime $p_1$.}
+\caption{The hazard model. Each step receives a prefix-conditional hazard $h_t$; the survival product turns the hazards into an outcome probability (what L1 supervises) and, for a failed run, into a posterior over the first fatal step (the attribution). At L0 the same posterior is a change point between a shared dynamics $q_0$ and a post-error regime $q_1$.}
 \label{fig:hazard}
 \end{figure}
 
 \begin{multicols}{2}
 \paragraph{Learning tasks}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
-\item[U1 --- Outcome-supervised hazard (L1).] Fit $h_\theta$ by maximum likelihood on all trajectories of a corpus with outcomes, using the same frozen step embeddings as \textsc{Oat} so that the comparison isolates the estimator. Report the attribution posterior against the set-valued labels (MP-Bench consensus ranking with nDCG, AgentRx failure events, TRAIL spans, $t_{\mathrm{err}}$ and $t_{\mathrm{lock}}$ of Failure-as-a-Process) and exact / $\pm k$ step accuracy on Who\&When and TrajErrBench; report the calibration of $P(S{=}0\mid\tau)$, which the model yields for free.
-\item[U2 --- Fully unsupervised change-point model (L0).] Same corpora, outcomes hidden. The question is not whether it beats U1---it cannot---but \emph{which error classes are identifiable from the dominant mode alone}. The generator-likelihood argument predicts that errors visible only in the action stream are not (a hallucinated summary is a typical summary), whereas errors that change the \emph{observation} stream are: tool exceptions, empty pages, repeated queries (MAST FM-1.3), stalled ledgers, premature termination. Measure recall per category on the taxonomy datasets (TrajErrBench modules, Who\&When~Pro families, TRAIL and AgentRx categories), fitting $p_0$ on observations and on actions separately.
+\item[U1 --- Outcome-supervised hazard (L1 and L1$^{+}$).] Fit $h_\theta$ by maximum likelihood on all trajectories of a corpus with outcomes, using the same frozen step embeddings as \textsc{Oat} so that the comparison isolates the estimator. The estimator itself is small: a causal GRU or two-layer transformer over the embeddings with a sigmoid hazard head, a sparsity prior on $\sum_t h_t$ (Assumption~\ref{as:sparse}), and the policy decision of Section~\ref{sec:future:prelim} as the step unit. Steps are discrete events, so no continuous-time machinery is needed---the neural CDE of \textsc{Oat} earns its place for irregularly sampled signals, which agent logs are not; what matters is causality (prefix only) and sparsity. Fit once at L1 and once with the rollout prefixes of L1$^{+}$ added, to measure what synthetic branching buys. Report the attribution posterior against the set-valued labels (MP-Bench consensus ranking with nDCG, AgentRx failure events, TRAIL spans, $t_{\mathrm{err}}$ and $t_{\mathrm{lock}}$ of Failure-as-a-Process) and exact / $\pm k$ step accuracy on Who\&When and TrajErrBench; report the calibration of $P(S{=}0\mid\tau)$, which the model yields for free.
+\item[U2 --- Fully unsupervised change-point model (L0).] Same corpora, outcomes hidden. The question is not whether it beats U1---it cannot---but \emph{which error classes are identifiable from the dominant mode alone}. The generator-likelihood argument predicts that errors visible only in the action stream are not (a hallucinated summary is a typical summary), whereas errors that change the \emph{observation} stream are: tool exceptions, empty pages, repeated queries (MAST FM-1.3), stalled ledgers, premature termination. Measure recall per category on the taxonomy datasets (TrajErrBench modules, Who\&When~Pro families, TRAIL and AgentRx categories), fitting $q_0$ on observations and on actions separately.
 \item[U3 --- Prefix monitor.] Because $h_t$ depends on the prefix only, the cumulative hazard $1-\prod_{s\le t}(1-h_s)$ is an online estimate of lock-in. Evaluate its lead time against $t_{\mathrm{lock}}$ (Failure-as-a-Process's prompted monitor reaches 82\% precision at 18\% recall with median lead time 0) and against the orchestrator's own ledger flags in Magentic-One traces (\S\ref{ds:traceelephant}).
 \end{description}
+
+\paragraph{Evaluation suite} Three tiers, so that the method is scored where its target is measurable, where it must transfer, and where labels are exact.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Tier A, measured} (train and test in the same replayable system; rows 1--5 of Table~\ref{tab:engine}). $h_\theta$ is fitted on self-collected runs and scored on the released human labels of TrajErrBench, AgentErrorBench and the SWE-Agent / SWE-Bench~Pro traces; on a subset the rollout screen of Proposal~1 supplies $\hat p_0$ curves, so $\bar S_t$ is scored directly by Brier score and calibration---the only tier where the object itself, not a proxy, is the reference.
+\item \emph{Tier B, transfer} (log-only; row 6). Frozen model, new systems: Who\&When (both subsets), MP-Bench (nDCG@5 against the consensus ranking), LongRCA (long horizon, $\pm5$ window), AgentRx (set-F1 over failure events) and AgentHallu, whose 250 clean runs allow an L1 fit from the dataset's own logs.
+\item \emph{Tier C, exact labels} (synthetic). Who\&When~Pro text split, CORRECT-Error, TracerTraj test, and our own injections with the absorbed branches retained; results stratified by injected position.
+\end{itemize}
+Metrics: exact and $\pm k$ step accuracy; distance to $t_{\mathrm{err}}$ and to $t_{\mathrm{lock}}$ reported separately (Assumption~\ref{as:absorb} predicts a late bias against the former); set metrics where the label is a set; lead time for U3; calibration of $P(S{=}0\mid\tau)$. Baselines, all on the same frozen encoder: position priors (first step, last decision step, per-source histogram---the last decision step alone is inside the tolerance span of 16.9\% of SearchAuditBench labels and the last fifth holds 52\% of CORRECT-Error labels); All-at-Once prompting; \textsc{Oat} re-implemented; Isolation Forest and one-class SVM on step embeddings; and a value regression trained on rollouts only \cite{wang2024mathshepherd}, i.e.\ L1$^{+}$ without L1. Robustness: outcome labels flipped at rates up to the 12.9\% verifier--judge disagreement observed in HORIZON, and judge-only against verifier-only outcomes on the same runs.
 
 \paragraph{Pitfalls specific to this data}
 \begin{itemize}[leftmargin=1.1em]
@@ -239,7 +310,8 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
 
 \paragraph{Feasibility with the surveyed data}
 \begin{itemize}[leftmargin=1.1em]
-\item \emph{L1 corpora with both outcomes.} AgentHallu (443 hallucinated / 250 clean), HORIZON (2\,498 / 1\,284 by judge) and Failure-as-a-Process (1\,184 / 610, annotations only---the CodeTracer trajectories must be re-joined). The core MAS benchmarks release failures only (TraceElephant withholds its 160 successful runs; Who\&When~Pro and Aegis do not ship their successful seeds), so for the Magentic-One / CaptainAgent setting the successes must be regenerated---cheap, since systems and tasks are public and succeed in 40--60\% of runs.
+\item \emph{Released corpora with both outcomes.} AgentHallu (443 hallucinated / 250 clean), HORIZON (2\,498 / 1\,284 by judge), TRAIL (148 runs not selected by outcome) and Failure-as-a-Process (1\,184 / 610, annotations only---the CodeTracer trajectories must be re-joined). The core MAS benchmarks release failures only (TraceElephant withholds its 160 successful runs; Who\&When~Pro and Aegis do not ship their successful seeds).
+\item \emph{Collection engine.} Everything else is collected, not downloaded: Table~\ref{tab:engine} lists the systems of the survey whose code and environments are public and replayable, with the verifier that supplies $S$ and the released labels that serve as test sets on them. One thousand runs of one system cost about $1{,}000\times30$ steps $\times\,5$\,k tokens $\approx1.5\times10^{8}$ tokens with an open model, the outcome is free, and the same infrastructure (state restore, LLM-call cache) is what Proposal~1 needs for its rollouts, so the two proposals share one data engine.
 \item \emph{Evaluation.} The set-labelled datasets for U1/U2 and the three timestamps of Failure-as-a-Process for U3 exist already; no new annotation is needed.
 \item \emph{Budget.} One forward pass per step for the embeddings: $\approx$2\,k trajectories $\times$ 30\,k tokens $\approx6\times10^{7}$ tokens, three to four orders of magnitude below the perturbation screen of Section~\ref{sec:future:perturb}; the hazard head trains in minutes.
 \end{itemize}
@@ -247,7 +319,23 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
 \paragraph{What would count as a result}
 \begin{itemize}[leftmargin=1.1em]
 \item An L1 estimator that matches or exceeds \textsc{Oat} and prompting on the natural benchmarks with the same encoder and no step labels, with a calibrated outcome probability as a by-product.
+\item A measured gain from synthetic branching: the L1$^{+}$ fit beats the L1 fit on Tier~A at equal label cost (zero), and the hazard model separates injected from absorbed branches where one-class detectors cannot.
 \item An identifiability map for L0: the error categories that can and cannot be recovered from the dominant mode, which tells practitioners what a label-free monitor will and will not catch.
 \item A prefix monitor with positive median lead time to $t_{\mathrm{lock}}$.
 \end{itemize}
 \end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}>{\RaggedRight\hsize=1.15\hsize}X >{\RaggedRight\hsize=0.8\hsize}X >{\RaggedRight\hsize=0.65\hsize}X >{\RaggedRight\hsize=1.2\hsize}X >{\RaggedRight\hsize=1.2\hsize}X@{}}\toprule
+System family (public agent code) & State restore for $\mathrm{Roll}$ & Verifier $S$ & Released labels usable as test set & Remark \\\midrule
+1\ \ $\tau^2$-Bench airline / retail: tool-calling agent + simulated user (TrajErrBench, AgentRx) & reset of domain DB and user simulator; seeded & DB-state constraints & TrajErrBench 400 ($\kappa$ 0.91), AgentRx 29 & cheapest: 29 messages, 20\,k characters per run \\
+2\ \ ALFWorld, WebShop: AgentDebug's modular ReAct agent & deterministic text simulators & task reward & AgentErrorBench 100 + 50 & 30-step cap; observations repeat the page \\
+3\ \ SWE-bench Verified / Pro, Terminal-Bench 2: SWE-Agent with TraceElephant's tracing middleware, OpenHands, mini-SWE-agent, Terminus~2 & container snapshot (Harbor) & hidden tests & TraceElephant 44, TrajErrBench 86, Failure-as-a-Process $t_{\mathrm{err}}/t_{\mathrm{lock}}$ for 1,184 runs once re-joined with the CodeTracer release & long: 120--300 steps, 200\,k characters; dominates the budget \\
+4\ \ MASLab systems (LLM Debate, MacNet, AgentVerse, DyLAN, SmolAgents, Magentic-One) on GSM8K / MATH / HumanEval / MMLU-Pro: Aegis wrappers and injection factory; MetaGPT / AFlow runs of TracerTraj & no environment state; LLM-call cache, temperature 0 & answer match, unit tests & Aegis 600 (agent + mode, no step), TracerTraj test 790 (synthetic) & injector released; the natural setting for $\Delta_{\mathrm{inj}}$ with absorbed branches kept \\
+5\ \ WebArena (Verified), AgentBench-OS, BIRD: HORIZON agents; LongRCA's planner--surfer--verifier controller & docker reset per task & environment verifier & HORIZON 294 judge step labels, LongRCA WebArena 177 & HORIZON agents public; LongRCA system code not released \\
+6\ \ Live-web GAIA / AssistantBench / BrowseComp: Magentic-One, CaptainAgent, smolagents, deep-search scaffolds & none (recorded-prefix replay only) & answer match & Who\&When 184, TraceElephant 176, MP-Bench 289, TRAIL 117, AgentHallu 36, SearchAuditBench 1,243 & Assumption~\ref{as:replay} fails: transfer tests only \\\bottomrule
+\end{tabularx}
+\captionof{table}{The data engine shared by both proposals: systems of the survey on which unlabelled trajectories can be collected with replay, the verifier that gives the outcome for free, and the released labels that score the result on them.}
+\label{tab:engine}
+\end{minipage}\medskip
