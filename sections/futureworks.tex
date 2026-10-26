@@ -1,8 +1,15 @@
-\section{A research direction that follows from the data}\label{sec:future}
+\section{Future work}\label{sec:future}
 
 \subsection{Counterfactual perturbation prediction on agent trajectories}\label{sec:future:perturb}
 
-\paragraph{Motivation} Every dataset in this survey defines the decisive step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant verifies that counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure and discard the ones the system absorbed. Three observations from the raw data make the gap concrete. (i)~Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs, i.e.\ the root cause of a task failure is run-specific. (ii)~In LongRCA, 364 of 1,140 reasons state no causal link to the outcome and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan---the label was never tested. (iii)~Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time, so absorption is the common case, yet no dataset records it. The questions below turn attribution from a human-labelled classification target into an \emph{interventional quantity that can be measured}.
+\begin{multicols}{2}
+\paragraph{Motivation} Every dataset in this survey defines the decisive step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant verifies that counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure and discard the ones the system absorbed. Three observations from the raw data make the gap concrete:
+\begin{itemize}[leftmargin=1.1em]
+\item Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs, i.e.\ the root cause of a task failure is run-specific.
+\item In LongRCA, 364 of 1,140 reasons state no causal link to the outcome and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan---the label was never tested.
+\item Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time, so absorption is the common case, yet no dataset records it.
+\end{itemize}
+The questions below turn attribution from a human-labelled classification target into an \emph{interventional quantity that can be measured}.
 
 \paragraph{Setting and notation} An agent system $\pi$ (single- or multi-agent, stochastic) interacts with an environment $\mathcal{E}$ on a task $x$ with an automatic success predicate $S\in\{0,1\}$ (ground-truth answer, unit tests, verifier). A trajectory is $\tau=(s_1,\dots,s_T)$ where step $s_t=(a_t,u_t,o_t)$ records the acting agent $a_t\in\mathcal{A}$, its output $u_t$ (message, tool call or code) and the resulting observation $o_t$ (tool result, page, test log). $\tau_{<k}$ denotes the prefix $(s_1,\dots,s_{k-1})$. We write $\mathrm{Roll}(\tau_{<k}\oplus s_k')$ for the random continuation obtained by restoring the state reached after $\tau_{<k}$, executing the (possibly modified) step $s_k'$ and letting $\pi$ and $\mathcal{E}$ run to termination; randomness comes from sampling in $\pi$ and from $\mathcal{E}$.
 
@@ -29,6 +36,7 @@ The two questions that motivate the direction are now unambiguous:
 \item \textbf{Injection (Q2).} Given a \emph{successful} $\tau$, a step $k$ and $\delta\in\Delta_{\mathrm{inj}}$: what is $1-p_\delta(\tau,k)$, the probability that the perturbation cascades into failure rather than being absorbed?
 \end{enumerate}
 Neither asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures.
+\end{multicols}
 
 \begin{table}[h]\centering\small
 \begin{tabularx}{\linewidth}{@{}l l >{\RaggedRight}X@{}}\toprule
@@ -47,7 +55,7 @@ $\Delta_{\mathrm{inj}}$ & \textsc{corrupt-output} & rewrite $u_k$ with a context
 \end{table}
 
 \begin{figure}[h]\centering
-\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth]
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth,scale=0.95,every node/.style={transform shape}]
 % prefix
 \foreach \i in {1,...,5}{\node[draw=rule,fill=surface,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (s\i) at (\i*0.85,0) {$s_{\i}$};}
 \node[draw=critical,fill=critical!8,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (sk) at (6*0.85,0) {$s_k$};
@@ -66,6 +74,7 @@ $\Delta_{\mathrm{inj}}$ & \textsc{corrupt-output} & rewrite $u_k$ with a context
 \label{fig:perturb}
 \end{figure}
 
+\begin{multicols}{2}
 \paragraph{Learning tasks}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
 \item[T1 --- Outcome prediction (the surrogate).] Learn $f(\tau_{<k},s_k,\delta)\approx p_\delta(\tau,k)$ \emph{without executing}. Evaluate against Monte-Carlo estimates with Brier score, calibration and AUROC; report separately for $\Delta_{\mathrm{fix}}$ and $\Delta_{\mathrm{inj}}$. Baselines: process-reward-model value estimates \cite{wang2024mathshepherd}, the system's own self-monitoring signals (orchestrator ledger flags precede the labelled step in 24 of 90 Magentic-One traces, \S\ref{ds:traceelephant}), and per-source position priors.
@@ -74,6 +83,7 @@ $\Delta_{\mathrm{inj}}$ & \textsc{corrupt-output} & rewrite $u_k$ with a context
 \end{description}
 
 \paragraph{The analogy to perturbation biology} The programme is a trajectory-level version of pooled genetic perturbation screens and their in-silico predictors. Perturb-seq \cite{dixit2016perturbseq} applies a library of CRISPR perturbations to a population of cells and reads out the transcriptional phenotype of each cell; GEARS \cite{roohani2024gears} and scGen \cite{lotfollahi2019scgen} then learn to predict the phenotype of \emph{unseen} perturbations from the measured ones, so that most of the screen can be run in silico. Table~\ref{tab:analogy} maps the objects. The correspondence is useful for borrowing methodology (replicate-based effect estimation, essentiality and buffering as graded rather than binary properties, interaction effects between two perturbations) and for seeing where it breaks: a gene library is finite and fixed, whereas edits to a step are open-ended---hence Assumption~\ref{as:vocab}; cells are independent replicates, whereas rollouts share a prefix and a policy, so $N$ must be chosen per prefix; and a rollout costs tokens rather than reagents, which makes the ``screen'' cheap enough to run exhaustively on small benchmarks.
+\end{multicols}
 
 \begin{table}[h]\centering\small
 \begin{tabularx}{\linewidth}{@{}>{\RaggedRight}X >{\RaggedRight}X >{\RaggedRight}X@{}}\toprule
@@ -91,8 +101,28 @@ in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (task T1) & repl
 \label{tab:analogy}
 \end{table}
 
-\paragraph{Feasibility with the surveyed data} Assumption~\ref{as:replay} holds for SWE-bench / SWE-Bench~Pro (TraceElephant's SWE-Agent runs, TrajErrBench), ALFWorld and WebShop (AgentErrorBench), the TravelPlanner and VitaBench sandboxes (LongRCA) and $\tau^2$-Bench with its simulated user (TrajErrBench, AgentRx); it fails for live-web GAIA, which should be used only to test the surrogate's transfer. Injectors for $\Delta_{\mathrm{inj}}$ exist (Aegis, Who\&When~Pro, TracerTraj) and only need to be run with the negatives retained. A first dataset of 200 failed and 200 successful trajectories, interventions at the labelled step plus four control positions, two interventions each and $N=8$ rollouts is $\approx$25\,k continuations; at the tail lengths observed here (medians of 10--145 steps, 30\,k--260\,k tokens per full trace) this is of the order of $10^9$ tokens, affordable with small open models and well below the cost of the human annotation it replaces.
+\begin{multicols}{2}
+\paragraph{Feasibility with the surveyed data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Environments.} Assumption~\ref{as:replay} holds for SWE-bench / SWE-Bench~Pro (TraceElephant's SWE-Agent runs, TrajErrBench), ALFWorld and WebShop (AgentErrorBench), the TravelPlanner and VitaBench sandboxes (LongRCA) and $\tau^2$-Bench with its simulated user (TrajErrBench, AgentRx); it fails for live-web GAIA, which should be used only to test the surrogate's transfer.
+\item \emph{Injectors.} Injectors for $\Delta_{\mathrm{inj}}$ exist (Aegis, Who\&When~Pro, TracerTraj) and only need to be run with the negatives retained.
+\item \emph{Budget.} A first dataset of 200 failed and 200 successful trajectories, interventions at the labelled step plus four control positions, two interventions each and $N=8$ rollouts is $\approx$25\,k continuations; at the tail lengths observed here (medians of 10--145 steps, 30\,k--260\,k tokens per full trace) this is of the order of $10^9$ tokens, affordable with small open models and well below the cost of the human annotation it replaces.
+\end{itemize}
 
-\paragraph{Difficulties to design for} \emph{Stochasticity}: $p_0$ for a failed run is not zero---a plain re-run can succeed---so effects must be reported with confidence intervals and the evaluation metric must be probabilistic. \emph{Exposed downstream errors}: a repair at $k$ can succeed up to step $k+m$ and then fail for a new reason; each rollout should therefore be re-attributed (cheaply, by the surrogate) so that ``no flip'' is separable into ``wrong step'' and ``several independent errors''. \emph{Oracle fixes leak the answer}: \textsc{oracle-action} must be constructed from the ground truth but must not inject it verbatim; \textsc{hint} is the weaker, safer variant and both should be reported. \emph{Vocabulary coverage}: some labelled errors (a wrong team composition before the log begins, 20 of 126 Who\&When Algorithm-Generated labels sit on step~0 for this reason) have no single-step intervention and must be declared out of scope rather than silently scored as zero effect. \emph{Cost concentration}: long-horizon sources (LongRCA) dominate the token budget; stratify the rollout budget by trajectory length rather than by trajectory.
+\paragraph{Difficulties to design for}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Stochasticity}: $p_0$ for a failed run is not zero---a plain re-run can succeed---so effects must be reported with confidence intervals and the evaluation metric must be probabilistic.
+\item \emph{Exposed downstream errors}: a repair at $k$ can succeed up to step $k+m$ and then fail for a new reason; each rollout should therefore be re-attributed (cheaply, by the surrogate) so that ``no flip'' is separable into ``wrong step'' and ``several independent errors''.
+\item \emph{Oracle fixes leak the answer}: \textsc{oracle-action} must be constructed from the ground truth but must not inject it verbatim; \textsc{hint} is the weaker, safer variant and both should be reported.
+\item \emph{Vocabulary coverage}: some labelled errors (a wrong team composition before the log begins, 20 of 126 Who\&When Algorithm-Generated labels sit on step~0 for this reason) have no single-step intervention and must be declared out of scope rather than silently scored as zero effect.
+\item \emph{Cost concentration}: long-horizon sources (LongRCA) dominate the token budget; stratify the rollout budget by trajectory length rather than by trajectory.
+\end{itemize}
 
-\paragraph{What would count as a result} A calibrated surrogate (T1) that predicts, from the prefix alone, which steps of a failed run are worth repairing and which steps of a successful run are load-bearing; effect-based labels (T2) that agree with human consensus where humans agree and resolve the cases where they do not; and fragility curves (T3) that characterise, for the first time with an interventional definition, how far into a run a multi-agent system can still recover from an error. The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
+\paragraph{What would count as a result}
+\begin{itemize}[leftmargin=1.1em]
+\item A calibrated surrogate (T1) that predicts, from the prefix alone, which steps of a failed run are worth repairing and which steps of a successful run are load-bearing.
+\item Effect-based labels (T2) that agree with human consensus where humans agree and resolve the cases where they do not.
+\item Fragility curves (T3) that characterise, for the first time with an interventional definition, how far into a run a multi-agent system can still recover from an error.
+\end{itemize}
+The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
+\end{multicols}
