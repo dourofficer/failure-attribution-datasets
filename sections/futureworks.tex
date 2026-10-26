@@ -135,3 +135,119 @@ in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (task T1) & repl
 \end{itemize}
 The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
 \end{multicols}
+
+\subsection{Label-free attribution from the flow of trajectories}\label{sec:future:unsup}
+
+\begin{multicols}{2}
+\paragraph{Motivation} Every human-labelled dataset in this survey is a \emph{test} set; the only training-scale resources are injected (Section~\ref{sec:g2}) and carry the positional skew of Fig.~\ref{fig:errpos}. \citet{yeh2026oat} show that step labels can be dispensed with altogether: \textsc{Oat} fits a one-class model of \emph{successful} trajectories---about 100 of them, embedded step by step with an LLM and modelled by a neural controlled differential equation \cite{kidger2020ncde}---and flags the steps of a failed run that deviate from the learned dynamics. On the authors' own tool-use set it reaches F1 0.44 against 0.21 for GPT-4o prompting, on Who\&When 0.23 against 0.15 for GPT-5, and it runs 200--5\,000$\times$ faster. Two features of the result matter more than the model.
+\begin{itemize}[leftmargin=1.1em]
+\item The signal comes from \emph{selection}, not from the dynamics: non-sequential one-class detectors on the same step embeddings reach F1 0.41, and a model of \emph{all} trajectories would simply recover the agent's own policy, under which its mistakes are ordinary, high-probability actions.
+\item Selecting successes already requires an outcome label per trajectory, after which \textsc{Oat} discards the failed half of the data.
+\end{itemize}
+The direction below asks what the principled estimator is at each level of supervision, down to none, and which errors remain identifiable there. It rests on an observation that holds across the survey: at step level, errors are sparse in \emph{both} outcome classes (Table~\ref{tab:contam}). Successful runs are not clean either---Failure-as-a-Process PASS runs contain 2.3 error events per 22.8 steps, all recovered---so ``success'' is a property of the trajectory, not of its steps.
+
+\paragraph{Three levels of supervision} With the notation of Section~\ref{sec:future:perturb} (trajectory $\tau=(s_1,\dots,s_T)$, success predicate $S$), a corpus can carry
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{L2}: the step label $t^\star$ (every dataset of Sections~\ref{sec:g1}--\ref{sec:g4});
+\item \textbf{L1}: the outcome $S$ only, from the benchmark verifier, unit tests or a judge---free wherever the task has a ground truth;
+\item \textbf{L0}: raw logs, neither $S$ nor $t^\star$.
+\end{itemize}
+\textsc{Oat} sits between L1 and L0: it uses $S$ to select the training set and then ignores it.
+
+\begin{assumption}[Sparse errors]\label{as:sparse}
+The fraction $\varepsilon$ of erroneous steps is small in every trajectory, failed or not; Table~\ref{tab:contam} puts it between 1\% and 20\% on the surveyed data.
+\end{assumption}
+\begin{assumption}[Absorption]\label{as:absorb}
+A trajectory fails if and only if it contains an unrecovered error, and the earliest such error $t^\star$ determines the outcome: later steps may be wrong but are not causal. This is the decisive-step definition of Who\&When, TrajErrBench and LongRCA and the $t_{\mathrm{lock}}$ of Failure-as-a-Process.
+\end{assumption}
+
+\begin{definition}[Step hazard]\label{def:hazard}
+Let $h_t=h_\theta(\tau_{<t},s_t)\in[0,1]$ be the probability that step $t$ is the first unrecovered error given its prefix. Under Assumption~\ref{as:absorb} the outcome likelihood is the discrete-time survival model
+\begin{align*}
+P(S{=}1\mid\tau)&=\textstyle\prod_{t=1}^{T}(1-h_t),\\
+P(S{=}0,\,t^\star{=}t\mid\tau)&=h_t\textstyle\prod_{s<t}(1-h_s),
+\end{align*}
+and the attribution is the posterior
+$P(t^\star{=}t\mid S{=}0,\tau)=h_t\prod_{s<t}(1-h_s)\big/\big(1-\prod_{s}(1-h_s)\big)$.
+\end{definition}
+
+The three levels are three ways of fitting $h_\theta$ to the same likelihood (Fig.~\ref{fig:hazard}).
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{L2.} The posterior is supervised directly.
+\item \textbf{L1.} $t^\star$ is marginalised out and $\theta$ maximises $\sum_\tau\log P(S_\tau\mid\tau)$ over \emph{all} trajectories: a failed run contributes ``some step was fatal'', a successful run ``no step was''. This is multiple-instance learning \cite{dietterich1997mil} with the survival link in place of the usual noisy-OR, or equivalently positive--unlabelled learning at step level \cite{elkan2008pu,kiryo2017nnpu}, where the steps of successful runs are (nearly) positive examples of correctness and the class prior is the $\varepsilon$ of Table~\ref{tab:contam}.
+\item \textbf{L0.} $S$ is latent as well. The likelihood then needs a model of the steps themselves and becomes a \emph{change-point mixture}: every trajectory follows a shared pre-change dynamics $p_0(s_t\mid\tau_{<t})$---the dominant mode---up to $t^\star\in\{1,\dots,T,\infty\}$, after which a second regime $p_1$ applies; $t^\star$ and $S=\mathbb{1}[t^\star{=}\infty]$ are inferred jointly by EM or by Bayesian change-point detection \cite{adams2007bocpd}.
+\end{itemize}
+\textsc{Oat} is the special case in which $p_0$ is fitted on known successes and the posterior is replaced by a threshold on reconstruction error.
+\end{multicols}
+
+\begin{table}[h]\centering\small
+\begin{tabular}{@{}llrrr@{}}\toprule
+Dataset & Error unit & per trajectory & steps per trajectory & $\varepsilon$ \\\midrule
+LongRCA & root step & 1 & 156 & 0.6\% \\
+Failure as a Process (FAIL) & $t_{\mathrm{err}}$ / error events & 1 / 2.5 & 41.7 & 2.4\% / 6.0\% \\
+Failure as a Process (PASS) & recovered error events & 2.3 & 22.8 & 10.1\% \\
+TraceElephant & decisive LLM call & 1 & 27.1 & 3.7\% \\
+Who\&When & decisive step & 1 & 22.2 & 4.5\% \\
+AgentRx (public subset) & failure events & 4.6 & 44.7 & 10.3\% \\
+TRAIL & spans carrying $\ge$1 error & 577 of 4\,626 spans & 31.3 & 12.5\% \\
+AgentHallu & responsible step & 1 & 7.5 & 13.3\% \\
+MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
+\end{tabular}
+\caption{Step-level error rate $\varepsilon$ on the surveyed data (means from the statistics tables of Sections~\ref{sec:g1}--\ref{sec:g4}). Even under the most generous labelling, more than 80\% of the steps of a failed trajectory are correct, and successful trajectories contain recovered errors at a comparable rate.}
+\label{tab:contam}
+\end{table}
+
+\begin{figure}[h]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth]
+\def\dx{0.9}
+\foreach \i in {1,...,5}{\node[draw=rule,fill=surface,minimum width=0.72cm,minimum height=0.42cm,inner sep=1pt] (s\i) at (\i*\dx,0) {$s_{\i}$};}
+\node[draw=critical,fill=critical!10,minimum width=0.72cm,minimum height=0.42cm,inner sep=1pt] (s6) at (6*\dx,0) {$s_{t^\star}$};
+\foreach \i in {7,8,9}{\node[draw=critical!50,fill=critical!4,minimum width=0.72cm,minimum height=0.42cm,inner sep=1pt] (s\i) at (\i*\dx,0) {$s_{\i}$};}
+\node[right=2pt of s9,text=ink2] {$S=0$};
+\draw[decorate,decoration={brace,amplitude=3pt},rule!80!black] (s1.north west) -- (s5.north east) node[midway,above=3pt,text=ink2]{shared flow $p_0$ (dominant mode)};
+\draw[decorate,decoration={brace,amplitude=3pt},critical!70!black] (s6.north west) -- (s9.north east) node[midway,above=3pt,text=critical!70!black]{post-change regime $p_1$};
+\foreach \i/\h in {1/0.05,2/0.08,3/0.06,4/0.12,5/0.10,6/0.75,7/0.30,8/0.25,9/0.40}{
+  \fill[s1!70] (\i*\dx-0.18,-1.35) rectangle (\i*\dx+0.18,-1.35+\h);}
+\draw[rule!80!black] (0.5,-1.35) -- (9*\dx+0.45,-1.35);
+\node[anchor=east,text=ink2] at (0.4,-1.1) {hazard $h_t$};
+\foreach \i/\h in {1/0.053,2/0.080,3/0.055,4/0.104,5/0.076,6/0.520,7/0.052,8/0.030,9/0.036}{
+  \fill[critical!70] (\i*\dx-0.18,-2.35) rectangle (\i*\dx+0.18,-2.35+\h);}
+\draw[rule!80!black] (0.5,-2.35) -- (9*\dx+0.45,-2.35);
+\node[anchor=east,text=ink2] at (0.4,-2.1) {$P(t^\star{=}t\mid S{=}0,\tau)$};
+\node[anchor=north west,text=ink2,align=left] at (9*\dx+1.6,0.0) {L2: $t^\star$ observed\\L1: $S$ observed, $t^\star$ marginalised\\L0: $S$ and $t^\star$ latent,\\\phantom{L0: }$p_0$ and $p_1$ fitted jointly};
+\end{tikzpicture}
+\caption{The hazard model. Each step receives a prefix-conditional hazard $h_t$; the survival product turns the hazards into an outcome probability (what L1 supervises) and, for a failed run, into a posterior over the first fatal step (the attribution). At L0 the same posterior is a change point between a shared dynamics $p_0$ and a post-error regime $p_1$.}
+\label{fig:hazard}
+\end{figure}
+
+\begin{multicols}{2}
+\paragraph{Learning tasks}
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
+\item[U1 --- Outcome-supervised hazard (L1).] Fit $h_\theta$ by maximum likelihood on all trajectories of a corpus with outcomes, using the same frozen step embeddings as \textsc{Oat} so that the comparison isolates the estimator. Report the attribution posterior against the set-valued labels (MP-Bench consensus ranking with nDCG, AgentRx failure events, TRAIL spans, $t_{\mathrm{err}}$ and $t_{\mathrm{lock}}$ of Failure-as-a-Process) and exact / $\pm k$ step accuracy on Who\&When and TrajErrBench; report the calibration of $P(S{=}0\mid\tau)$, which the model yields for free.
+\item[U2 --- Fully unsupervised change-point model (L0).] Same corpora, outcomes hidden. The question is not whether it beats U1---it cannot---but \emph{which error classes are identifiable from the dominant mode alone}. The generator-likelihood argument predicts that errors visible only in the action stream are not (a hallucinated summary is a typical summary), whereas errors that change the \emph{observation} stream are: tool exceptions, empty pages, repeated queries (MAST FM-1.3), stalled ledgers, premature termination. Measure recall per category on the taxonomy datasets (TrajErrBench modules, Who\&When~Pro families, TRAIL and AgentRx categories), fitting $p_0$ on observations and on actions separately.
+\item[U3 --- Prefix monitor.] Because $h_t$ depends on the prefix only, the cumulative hazard $1-\prod_{s\le t}(1-h_s)$ is an online estimate of lock-in. Evaluate its lead time against $t_{\mathrm{lock}}$ (Failure-as-a-Process's prompted monitor reaches 82\% precision at 18\% recall with median lead time 0) and against the orchestrator's own ledger flags in Magentic-One traces (\S\ref{ds:traceelephant}).
+\end{description}
+
+\paragraph{Pitfalls specific to this data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{The last-step shortcut.} The final answer reveals the outcome, so an L1 model will put hazard on it; the injected datasets show how strong that prior is (median relative position 0.83 in Who\&When~Pro, 0.95 in CORRECT-Error). Mask the last $k$ steps from the hazard input and report accuracy with the final step excluded.
+\item \emph{Task difficulty as a confound.} Hard tasks produce both failures and unusual steps, so an outcome model can learn ``this task is hard'' instead of ``this step is wrong''. A matched design---the same task run to both outcomes---removes it; the 89 tasks $\times$ 21 systems of Section~\ref{ds:failure_as_process} are the template.
+\item \emph{Recovered errors.} The survival likelihood tolerates them (a success only requires that no error was fatal); the plain multiple-instance assumption ``success bags are clean'' does not. Use the positive--unlabelled formulation with the prior from Table~\ref{tab:contam} when the any-error target is wanted.
+\item \emph{Identifiability and model selection at L0.} A change-point mixture can converge to a split that is not error-related (planning phase versus execution phase, say). Use a small L2 set for model selection and calibration only, never for training, and say so.
+\item \emph{Anomaly is not causality.} Both \textsc{Oat} and U2 flag deviation; only the counterfactual rollouts of Section~\ref{sec:future:perturb} can confirm that a flagged step is decisive. The two directions close a loop: the hazard posterior is a cheap proposal distribution for where to intervene, and the rollouts return labels that re-fit $h_\theta$ at L2.
+\end{itemize}
+
+\paragraph{Feasibility with the surveyed data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{L1 corpora with both outcomes.} AgentHallu (443 hallucinated / 250 clean), HORIZON (2\,498 / 1\,284 by judge) and Failure-as-a-Process (1\,184 / 610, annotations only---the CodeTracer trajectories must be re-joined). The core MAS benchmarks release failures only (TraceElephant withholds its 160 successful runs; Who\&When~Pro and Aegis do not ship their successful seeds), so for the Magentic-One / CaptainAgent setting the successes must be regenerated---cheap, since systems and tasks are public and succeed in 40--60\% of runs.
+\item \emph{Evaluation.} The set-labelled datasets for U1/U2 and the three timestamps of Failure-as-a-Process for U3 exist already; no new annotation is needed.
+\item \emph{Budget.} One forward pass per step for the embeddings: $\approx$2\,k trajectories $\times$ 30\,k tokens $\approx6\times10^{7}$ tokens, three to four orders of magnitude below the perturbation screen of Section~\ref{sec:future:perturb}; the hazard head trains in minutes.
+\end{itemize}
+
+\paragraph{What would count as a result}
+\begin{itemize}[leftmargin=1.1em]
+\item An L1 estimator that matches or exceeds \textsc{Oat} and prompting on the natural benchmarks with the same encoder and no step labels, with a calibrated outcome probability as a by-product.
+\item An identifiability map for L0: the error categories that can and cannot be recovered from the dominant mode, which tells practitioners what a label-free monitor will and will not catch.
+\item A prefix monitor with positive median lead time to $t_{\mathrm{lock}}$.
+\end{itemize}
+\end{multicols}
