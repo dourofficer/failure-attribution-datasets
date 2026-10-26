@@ -23,10 +23,10 @@ Interventions come from a finite, declared set $\Delta=\Delta_{\mathrm{fix}}\cup
 
 \begin{definition}[Intervention effect]\label{def:effect}
 For a trajectory $\tau$, a step index $k$ and an intervention $\delta\in\Delta$, define the \emph{baseline success rate} and the \emph{intervened success rate}
-\[
-p_0(\tau,k)=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus s_k))=1\big],\qquad
-p_\delta(\tau,k)=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus\delta(s_k)))=1\big],
-\]
+\begin{align*}
+p_0(\tau,k)&=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus s_k))=1\big],\\
+p_\delta(\tau,k)&=\Pr\big[S(\mathrm{Roll}(\tau_{<k}\oplus\delta(s_k)))=1\big],
+\end{align*}
 and the \emph{effect} $\phi(\tau,k,\delta)=p_\delta(\tau,k)-p_0(\tau,k)\in[-1,1]$. Both probabilities are estimated by $N$ independent rollouts; $p_0$ is estimated with the original step re-executed (not read from the observed outcome), which is what makes the quantity robust to run-to-run stochasticity. A step $k$ is \emph{$\alpha$-decisive} for a failed $\tau$ if $\max_{\delta\in\Delta_{\mathrm{fix}}}\phi(\tau,k,\delta)\ge\alpha$, and \emph{$\alpha$-fragile} for a successful $\tau$ if $\min_{\delta\in\Delta_{\mathrm{inj}}}\phi(\tau,k,\delta)\le-\alpha$.
 \end{definition}
 
