@@ -3,7 +3,7 @@
 \subsection{Preliminaries: a working definition of failure attribution}\label{sec:future:prelim}
 
 \begin{multicols}{2}
-\paragraph{Why a definition is needed} The two proposals that follow need a target that stays fixed from one dataset to the next. The survey shows that the current targets do not:
+\paragraph{Why a definition is needed} The three proposals that follow need a target that stays fixed from one dataset to the next. The survey shows that the current targets do not:
 \begin{itemize}[leftmargin=1.1em]
 \item Every dataset defines its labelled step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant ever tests the counterfactual by re-execution (\S\ref{ds:traceelephant}).
 \item The summary that is labelled differs: the earliest decisive step (Who\&When, TrajErrBench, LongRCA), the first \emph{unrecovered} failure (AgentRx), a set of steps with per-annotator votes (MP-Bench), every error span (TRAIL), three timestamps $t_{\mathrm{err}}/t_{\mathrm{lock}}/t_{\mathrm{obs}}$ (Failure-as-a-Process), a step with a tolerance span (SearchAuditBench) or a set of (edge, fault side, mode) triples (MegaRCA-Mix).
@@ -311,7 +311,7 @@ Metrics: exact and $\pm k$ step accuracy; distance to $t_{\mathrm{err}}$ and to 
 \paragraph{Feasibility with the surveyed data}
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Released corpora with both outcomes.} AgentHallu (443 hallucinated / 250 clean), HORIZON (2\,498 / 1\,284 by judge), TRAIL (148 runs not selected by outcome) and Failure-as-a-Process (1\,184 / 610, annotations only---the CodeTracer trajectories must be re-joined). The core MAS benchmarks release failures only (TraceElephant withholds its 160 successful runs; Who\&When~Pro and Aegis do not ship their successful seeds).
-\item \emph{Collection engine.} Everything else is collected, not downloaded: Table~\ref{tab:engine} lists the systems of the survey whose code and environments are public and replayable, with the verifier that supplies $S$ and the released labels that serve as test sets on them. One thousand runs of one system cost about $1{,}000\times30$ steps $\times\,5$\,k tokens $\approx1.5\times10^{8}$ tokens with an open model, the outcome is free, and the same infrastructure (state restore, LLM-call cache) is what Proposal~1 needs for its rollouts, so the two proposals share one data engine.
+\item \emph{Collection engine.} Everything else is collected, not downloaded: Table~\ref{tab:engine} lists the systems of the survey whose code and environments are public and replayable, with the verifier that supplies $S$ and the released labels that serve as test sets on them. One thousand runs of one system cost about $1{,}000\times30$ steps $\times\,5$\,k tokens $\approx1.5\times10^{8}$ tokens with an open model, the outcome is free, and the same infrastructure (state restore, LLM-call cache) is what Proposal~1 needs for its rollouts, so the proposals share one data engine.
 \item \emph{Evaluation.} The set-labelled datasets for U1/U2 and the three timestamps of Failure-as-a-Process for U3 exist already; no new annotation is needed.
 \item \emph{Budget.} One forward pass per step for the embeddings: $\approx$2\,k trajectories $\times$ 30\,k tokens $\approx6\times10^{7}$ tokens, three to four orders of magnitude below the perturbation screen of Section~\ref{sec:future:perturb}; the hazard head trains in minutes.
 \end{itemize}
@@ -336,6 +336,8 @@ System family (public agent code) & State restore for $\mathrm{Roll}$ & Verifier
 5\ \ WebArena (Verified), AgentBench-OS, BIRD: HORIZON agents; LongRCA's planner--surfer--verifier controller & docker reset per task & environment verifier & HORIZON 294 judge step labels, LongRCA WebArena 177 & HORIZON agents public; LongRCA system code not released \\
 6\ \ Live-web GAIA / AssistantBench / BrowseComp: Magentic-One, CaptainAgent, smolagents, deep-search scaffolds & none (recorded-prefix replay only) & answer match & Who\&When 184, TraceElephant 176, MP-Bench 289, SymFail 536, TRAIL 117, AgentHallu 36, SearchAuditBench 1,243 & Assumption~\ref{as:replay} fails: transfer tests only \\\bottomrule
 \end{tabularx}
-\captionof{table}{The data engine shared by both proposals: systems of the survey on which unlabelled trajectories can be collected with replay, the verifier that gives the outcome for free, and the released labels that score the result on them.}
+\captionof{table}{The data engine shared by the three proposals: systems of the survey on which unlabelled trajectories can be collected with replay, the verifier that gives the outcome for free, and the released labels that score the result on them.}
 \label{tab:engine}
 \end{minipage}\medskip
+
+\input{8_proposals/training_signal}
