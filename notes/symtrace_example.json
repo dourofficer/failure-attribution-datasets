@@ -1,0 +1,1115 @@
+{
+ "dir": "symtrace/extracted/SymFail/initial_failure_logs_536/ag2/webarena_verified_hard_96/attempt_000",
+ "record": {
+  "annotation": {
+   "annotation_id": "ad96c0e01cc9a103",
+   "annotation_method": "human_annotation",
+   "annotation_prose_in_public_export": false,
+   "annotation_protocol_version": "source_failure_manual_3annotator_1reviewer_v1",
+   "annotation_status": "human_reviewed_final",
+   "annotator_count": 3,
+   "annotator_identity_withheld_for_double_blind_review": true,
+   "annotator_role": "human_annotator_panel",
+   "benchmark_case_id": "8ee8cd407e6ec4b7",
+   "case_id": "70d341f0df06a009",
+   "confidence": "high",
+   "failure_labels": [
+    "c1",
+    "c2",
+    "c3",
+    "c4"
+   ],
+   "failure_node_exists": true,
+   "failure_node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+   "failure_node_kind": "agent_action",
+   "inter_annotator_agreement": {
+    "annotation_count": 3,
+    "primary_failure_label_unanimous": true,
+    "failure_label_set_unanimous": false,
+    "failure_node_unanimous": true,
+    "failure_node_kind_unanimous": true,
+    "strict_annotation_unanimous": false,
+    "final_primary_failure_label_support_count": 0,
+    "final_failure_label_set_support_count": 1,
+    "final_failure_node_support_count": 3,
+    "final_strict_annotation_support_count": 0
+   },
+   "mas": "ag2",
+   "primary_failure_label": "c3",
+   "task_id": "webarena_verified_hard_96",
+   "individual_annotation_source": "raw_data/data/01_initial_600_annotator_annotation_3x.csv",
+   "individual_annotations": [
+    {
+     "annotator_index": 1,
+     "annotation_id": "385d037e344b04ec",
+     "annotation_method": "manual_human_annotation",
+     "annotation_protocol_version": "source_failure_manual_3annotator_v1",
+     "annotator_identity_withheld_for_double_blind_review": true,
+     "confidence": "high",
+     "failure_labels": [
+      "c1",
+      "c2",
+      "c3",
+      "c4"
+     ],
+     "primary_failure_label": "c1",
+     "failure_node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "failure_node_kind": "agent_action",
+     "failure_node_exists": true,
+     "failure_node_present_in_graph": true
+    },
+    {
+     "annotator_index": 2,
+     "annotation_id": "4495d832e07fc1b3",
+     "annotation_method": "manual_human_annotation",
+     "annotation_protocol_version": "source_failure_manual_3annotator_v1",
+     "annotator_identity_withheld_for_double_blind_review": true,
+     "confidence": "high",
+     "failure_labels": [
+      "c1",
+      "c3"
+     ],
+     "primary_failure_label": "c1",
+     "failure_node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "failure_node_kind": "agent_action",
+     "failure_node_exists": true,
+     "failure_node_present_in_graph": true
+    },
+    {
+     "annotator_index": 3,
+     "annotation_id": "3d2bd5d6581532ff",
+     "annotation_method": "manual_human_annotation",
+     "annotation_protocol_version": "source_failure_manual_3annotator_v1",
+     "annotator_identity_withheld_for_double_blind_review": true,
+     "confidence": "high",
+     "failure_labels": [
+      "c1",
+      "c3"
+     ],
+     "primary_failure_label": "c1",
+     "failure_node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "failure_node_kind": "agent_action",
+     "failure_node_exists": true,
+     "failure_node_present_in_graph": true
+    }
+   ],
+   "reviewer_count": 1,
+   "human_participant_count": 4,
+   "reviewer_role": "human_reviewer",
+   "reviewer_identity_withheld_for_double_blind_review": true,
+   "review_status": "human_reviewed_final",
+   "reviewer_final_annotation_id": "ad96c0e01cc9a103"
+  },
+  "graph": {
+   "edges": [
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_c46fc66c",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_fb50edba",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "child_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:final_result",
+     "confidence": 1.0,
+     "parent_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+     "reason": "adapter_dependency",
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    }
+   ],
+   "metadata": {
+    "adapter": "ag2",
+    "capture_summary": {
+     "adapter": "ag2",
+     "fallback_graph_adapter": false,
+     "framework_event_count": 6,
+     "hook_declared_but_not_observed": false,
+     "hook_event_count": 3,
+     "instrumentation_actual": "ag2_hook_plus_graph_adapter_native_events_observed",
+     "instrumentation_declared": "ag2_hook_plus_graph_adapter",
+     "llm_call_count": 3,
+     "native_event_count": 9,
+     "native_event_sources": {
+      "ag2:hook_events": 3,
+      "ag2:native_events": 6
+     },
+     "tool_failure_count": 2,
+     "tool_result_count": 2,
+     "tool_success_count": 0
+    },
+    "fallback_graph_adapter": false,
+    "instrumentation_actual": "ag2_hook_plus_graph_adapter_native_events_observed",
+    "instrumentation_level": "ag2_hook_plus_graph_adapter",
+    "mode": "snapshot",
+    "native_event_count": 9,
+    "replay_plan": null,
+    "replay_prompt_injection_applied": false,
+    "task_id": "webarena_verified_hard_96"
+   },
+   "nodes": [
+    {
+     "action": {},
+     "agent_id": "ag2",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002"
+     ],
+     "created_at": "2026-06-14T08:53:44.566546+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "sys_prompt",
+     "metadata": {
+      "source": "masd_adapter"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+     "observation": {
+      "content": "MASD controlled experiment prompt and adapter constraints."
+     },
+     "parent_node_ids": [],
+     "sequence_index": 0,
+     "step_id": "step_0000",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 0,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {},
+     "agent_id": "user",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002"
+     ],
+     "created_at": "2026-06-14T08:53:44.566546+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "user_input",
+     "metadata": {
+      "source": "benchmark_task"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+     "observation": {
+      "content": "Mode: snapshot\nTask id: webarena_verified_hard_96\nBenchmark: webarena_verified / hard\nTask: Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.\nStart URLs or tools: ['__SHOPPING__']\nReturn only the final answer and a short note about what evidence would be needed.",
+      "task": {
+       "difficulty_tag": "hard",
+       "evaluator": {
+        "eval": [
+         {
+          "evaluator": "AgentResponseEvaluator",
+          "expected": {
+           "error_details": null,
+           "retrieved_data": [
+            {
+             "arrival_date": null,
+             "status": "canceled"
+            }
+           ],
+           "status": "SUCCESS",
+           "task_type": "RETRIEVE"
+          },
+          "ordered": false,
+          "results_schema": {
+           "items": {
+            "properties": {
+             "arrival_date": {
+              "format": "date",
+              "type": "string"
+             },
+             "status": {
+              "type": "string"
+             }
+            },
+            "type": "object"
+           },
+           "type": "array"
+          }
+         }
+        ],
+        "type": "webarena_verified"
+       },
+       "raw": {
+        "eval": "[{\"evaluator\": \"AgentResponseEvaluator\", \"expected\": {\"error_details\": null, \"retrieved_data\": [{\"arrival_date\": null, \"status\": \"canceled\"}], \"status\": \"SUCCESS\", \"task_type\": \"RETRIEVE\"}, \"ordered\": false, \"results_schema\": {\"items\": {\"properties\": {\"arrival_date\": {\"format\": \"date\", \"type\": \"string\"}, \"status\": {\"type\": \"string\"}}, \"type\": \"object\"}, \"type\": \"array\"}}]",
+        "instantiation_dict": "{\"retrieved_data_format_spec\": \"Return a list of objects with keys \\\"status\\\" and \\\"arrival_date\\\" (YYYY-MM-DD format or null if not available), without any additional details\"}",
+        "intent": "Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.",
+        "intent_template": "Get the status of my latest order and when will it arrive. {{retrieved_data_format_spec}}.",
+        "intent_template_id": 193,
+        "revision": 2,
+        "sites": "[\"shopping\"]",
+        "start_urls": "[\"__SHOPPING__\"]",
+        "task_id": 96
+       },
+       "reference_answer": [
+        {
+         "evaluator": "AgentResponseEvaluator",
+         "expected": {
+          "error_details": null,
+          "retrieved_data": [
+           {
+            "arrival_date": null,
+            "status": "canceled"
+           }
+          ],
+          "status": "SUCCESS",
+          "task_type": "RETRIEVE"
+         },
+         "ordered": false,
+         "results_schema": {
+          "items": {
+           "properties": {
+            "arrival_date": {
+             "format": "date",
+             "type": "string"
+            },
+            "status": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          },
+          "type": "array"
+         }
+        }
+       ],
+       "selection_reason": "WebArena Verified task with deterministic evaluator and web/tool interaction.",
+       "sites_tools": [
+        "shopping"
+       ],
+       "source_benchmark": "webarena_verified",
+       "source_split": "hard",
+       "source_task_id": "96",
+       "start_urls": [
+        "__SHOPPING__"
+       ],
+       "task": "Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.",
+       "task_id": "webarena_verified_hard_96",
+       "task_type": "retrieve"
+      }
+     },
+     "parent_node_ids": [],
+     "sequence_index": 1,
+     "step_id": "step_0001",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 1,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "message": {
+       "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}"
+      },
+      "type": "ag2_process_message_before_send"
+     },
+     "agent_id": "masd_ag2_multistep_assistant",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [],
+     "created_at": "2026-06-14T08:53:49.406469+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "hook_args_count": 0,
+      "hook_kwargs": [
+       "message",
+       "recipient",
+       "sender",
+       "silent"
+      ],
+      "message_type": "dict",
+      "recipient": "masd_ag2_hook_sink",
+      "silent": true,
+      "source": "ag2_register_hook"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+     ],
+     "sequence_index": 2,
+     "step_id": "step_0002",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 2,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+      "parsed_action": {
+       "action": "browse",
+       "reason": "Start at the shopping site to access account and view latest order status.",
+       "url": "__SHOPPING__"
+      },
+      "type": "ag2_agent_step"
+     },
+     "agent_id": "ag2",
+     "api_messages": [
+      {
+       "content": "You are a multi-step MASD agent. Use browser tools when URLs or web evidence are needed. If you need a page, return JSON like {\"action\":\"browse\",\"url\":\"https://...\",\"reason\":\"...\"}. When done, return JSON like {\"final\":\"...\"}. Do not claim a web action succeeded unless a tool result was provided.",
+       "role": "system"
+      },
+      {
+       "content": "Mode: snapshot\nTask id: webarena_verified_hard_96\nBenchmark: webarena_verified / hard\nTask: Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.\nStart URLs or tools: ['__SHOPPING__']\nReturn only the final answer and a short note about what evidence would be needed.",
+       "role": "user"
+      }
+     ],
+     "api_response": {
+      "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+      "hook_events": [
+       {
+        "hook_args_count": 0,
+        "hook_kwargs": [
+         "message",
+         "recipient",
+         "sender",
+         "silent"
+        ],
+        "message": {
+         "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}"
+        },
+        "message_type": "dict",
+        "recipient": "masd_ag2_hook_sink",
+        "sender": "masd_ag2_multistep_assistant",
+        "silent": true
+       }
+      ],
+      "native_events": [
+       {
+        "agent": "masd_ag2_multistep_assistant",
+        "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+        "reply_type": "str",
+        "type": "ag2_generate_reply"
+       },
+       {
+        "hook_event_count_after_send": 1,
+        "type": "ag2_hook_emit_send"
+       }
+      ]
+     },
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000"
+     ],
+     "created_at": "2026-06-14T08:53:49.407446+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "api_record_index": 0,
+      "context_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+      ],
+      "source": "adapter_agent_tool_loop",
+      "state_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+      ]
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+     ],
+     "sequence_index": 3,
+     "step_id": "step_0003",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 3,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "type": "browser_http_get",
+      "url": "__SHOPPING__"
+     },
+     "agent_id": "ag2",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000"
+     ],
+     "created_at": "2026-06-14T08:53:49.407446+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "tool_call",
+     "metadata": {
+      "source": "agent_requested_tool"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000"
+     ],
+     "sequence_index": 4,
+     "step_id": "step_0004",
+     "thought": {},
+     "tool_call": {
+      "reason": "Start at the shopping site to access account and view latest order status.",
+      "type": "browser_http_get",
+      "url": "__SHOPPING__"
+     },
+     "tool_result": null,
+     "topological_timestamp": 4,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {},
+     "agent_id": "browser_tool",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_c46fc66c",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001"
+     ],
+     "created_at": "2026-06-14T08:53:49.409006+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "tool_result",
+     "metadata": {
+      "source": "browser_http_get"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000",
+     "observation": {
+      "content": "{'type': 'browser_http_get', 'status': 'failed', 'url': '__SHOPPING__', 'latency': 0.0015594959259033203, 'error': {'type': 'MissingSchema', 'message': \"Invalid URL '__SHOPPING__': No scheme supplied. Perhaps you meant https://__SHOPPING__\"}}"
+     },
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000"
+     ],
+     "sequence_index": 5,
+     "step_id": "step_0005",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": {
+      "error": {
+       "message": "Invalid URL '__SHOPPING__': No scheme supplied. Perhaps you meant https://__SHOPPING__",
+       "type": "MissingSchema"
+      },
+      "latency": 0.0015594959259033203,
+      "status": "failed",
+      "type": "browser_http_get",
+      "url": "__SHOPPING__"
+     },
+     "topological_timestamp": 5,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "message": {
+       "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}"
+      },
+      "type": "ag2_process_message_before_send"
+     },
+     "agent_id": "masd_ag2_multistep_assistant",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [],
+     "created_at": "2026-06-14T08:53:50.907524+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "hook_args_count": 0,
+      "hook_kwargs": [
+       "message",
+       "recipient",
+       "sender",
+       "silent"
+      ],
+      "message_type": "dict",
+      "recipient": "masd_ag2_hook_sink",
+      "silent": true,
+      "source": "ag2_register_hook"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_c46fc66c",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000"
+     ],
+     "sequence_index": 6,
+     "step_id": "step_0006",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 6,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+      "parsed_action": {
+       "action": "browse",
+       "reason": "Need to access the shopping site. The placeholder needs a scheme.",
+       "url": "https://__SHOPPING__"
+      },
+      "type": "ag2_agent_step"
+     },
+     "agent_id": "ag2",
+     "api_messages": [
+      {
+       "content": "You are a multi-step MASD agent. Use browser tools when URLs or web evidence are needed. If you need a page, return JSON like {\"action\":\"browse\",\"url\":\"https://...\",\"reason\":\"...\"}. When done, return JSON like {\"final\":\"...\"}. Do not claim a web action succeeded unless a tool result was provided.",
+       "role": "system"
+      },
+      {
+       "content": "Mode: snapshot\nTask id: webarena_verified_hard_96\nBenchmark: webarena_verified / hard\nTask: Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.\nStart URLs or tools: ['__SHOPPING__']\nReturn only the final answer and a short note about what evidence would be needed.",
+       "role": "user"
+      },
+      {
+       "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+       "role": "assistant"
+      },
+      {
+       "content": "Tool result for __SHOPPING__:\n{\"type\": \"browser_http_get\", \"status\": \"failed\", \"url\": \"__SHOPPING__\", \"latency\": 0.0015594959259033203, \"error\": {\"type\": \"MissingSchema\", \"message\": \"Invalid URL '__SHOPPING__': No scheme supplied. Perhaps you meant https://__SHOPPING__\"}}",
+       "role": "user"
+      }
+     ],
+     "api_response": {
+      "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+      "hook_events": [
+       {
+        "hook_args_count": 0,
+        "hook_kwargs": [
+         "message",
+         "recipient",
+         "sender",
+         "silent"
+        ],
+        "message": {
+         "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}"
+        },
+        "message_type": "dict",
+        "recipient": "masd_ag2_hook_sink",
+        "sender": "masd_ag2_multistep_assistant",
+        "silent": true
+       }
+      ],
+      "native_events": [
+       {
+        "agent": "masd_ag2_multistep_assistant",
+        "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+        "reply_type": "str",
+        "type": "ag2_generate_reply"
+       },
+       {
+        "hook_event_count_after_send": 1,
+        "type": "ag2_hook_emit_send"
+       }
+      ]
+     },
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001"
+     ],
+     "created_at": "2026-06-14T08:53:50.907524+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "api_record_index": 1,
+      "context_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+      ],
+      "source": "adapter_agent_tool_loop",
+      "state_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000"
+      ]
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000"
+     ],
+     "sequence_index": 7,
+     "step_id": "step_0007",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 7,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "type": "browser_http_get",
+      "url": "https://__SHOPPING__"
+     },
+     "agent_id": "ag2",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001"
+     ],
+     "created_at": "2026-06-14T08:53:50.908522+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "tool_call",
+     "metadata": {
+      "source": "agent_requested_tool"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001"
+     ],
+     "sequence_index": 8,
+     "step_id": "step_0008",
+     "thought": {},
+     "tool_call": {
+      "reason": "Need to access the shopping site. The placeholder needs a scheme.",
+      "type": "browser_http_get",
+      "url": "https://__SHOPPING__"
+     },
+     "tool_result": null,
+     "topological_timestamp": 8,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {},
+     "agent_id": "browser_tool",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_fb50edba",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002"
+     ],
+     "created_at": "2026-06-14T08:53:58.195915+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "tool_result",
+     "metadata": {
+      "source": "browser_http_get"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001",
+     "observation": {
+      "content": "{'type': 'browser_http_get', 'status': 'failed', 'url': 'https://__SHOPPING__', 'latency': 7.287393808364868, 'error': {'type': 'ConnectionError', 'message': 'HTTPSConnectionPool(host=\\'__shopping__\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'__shopping__\\', port=443): Failed to resolve \\'__shopping__\\' ([Errno 11001] getaddrinfo failed)\"))'}}"
+     },
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001"
+     ],
+     "sequence_index": 9,
+     "step_id": "step_0009",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": {
+      "error": {
+       "message": "HTTPSConnectionPool(host='__shopping__', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='__shopping__', port=443): Failed to resolve '__shopping__' ([Errno 11001] getaddrinfo failed)\"))",
+       "type": "ConnectionError"
+      },
+      "latency": 7.287393808364868,
+      "status": "failed",
+      "type": "browser_http_get",
+      "url": "https://__SHOPPING__"
+     },
+     "topological_timestamp": 9,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "message": {
+       "content": "{\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}"
+      },
+      "type": "ag2_process_message_before_send"
+     },
+     "agent_id": "masd_ag2_multistep_assistant",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [],
+     "created_at": "2026-06-14T08:54:08.784366+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "hook_args_count": 0,
+      "hook_kwargs": [
+       "message",
+       "recipient",
+       "sender",
+       "silent"
+      ],
+      "message_type": "dict",
+      "recipient": "masd_ag2_hook_sink",
+      "silent": true,
+      "source": "ag2_register_hook"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_fb50edba",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001"
+     ],
+     "sequence_index": 10,
+     "step_id": "step_0010",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 10,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "content": "{\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}",
+      "parsed_action": {
+       "final": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication."
+      },
+      "type": "ag2_agent_step"
+     },
+     "agent_id": "ag2",
+     "api_messages": [
+      {
+       "content": "You are a multi-step MASD agent. Use browser tools when URLs or web evidence are needed. If you need a page, return JSON like {\"action\":\"browse\",\"url\":\"https://...\",\"reason\":\"...\"}. When done, return JSON like {\"final\":\"...\"}. Do not claim a web action succeeded unless a tool result was provided.",
+       "role": "system"
+      },
+      {
+       "content": "Mode: snapshot\nTask id: webarena_verified_hard_96\nBenchmark: webarena_verified / hard\nTask: Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.\nStart URLs or tools: ['__SHOPPING__']\nReturn only the final answer and a short note about what evidence would be needed.",
+       "role": "user"
+      },
+      {
+       "content": "{\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+       "role": "assistant"
+      },
+      {
+       "content": "Tool result for __SHOPPING__:\n{\"type\": \"browser_http_get\", \"status\": \"failed\", \"url\": \"__SHOPPING__\", \"latency\": 0.0015594959259033203, \"error\": {\"type\": \"MissingSchema\", \"message\": \"Invalid URL '__SHOPPING__': No scheme supplied. Perhaps you meant https://__SHOPPING__\"}}",
+       "role": "user"
+      },
+      {
+       "content": "{\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+       "role": "assistant"
+      },
+      {
+       "content": "Tool result for https://__SHOPPING__:\n{\"type\": \"browser_http_get\", \"status\": \"failed\", \"url\": \"https://__SHOPPING__\", \"latency\": 7.287393808364868, \"error\": {\"type\": \"ConnectionError\", \"message\": \"HTTPSConnectionPool(host='__shopping__', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\\\"HTTPSConnection(host='__shopping__', port=443): Failed to resolve '__shopping__' ([Errno 11001] getaddrinfo failed)\\\"))\"}}",
+       "role": "user"
+      }
+     ],
+     "api_response": {
+      "content": "{\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}",
+      "hook_events": [
+       {
+        "hook_args_count": 0,
+        "hook_kwargs": [
+         "message",
+         "recipient",
+         "sender",
+         "silent"
+        ],
+        "message": {
+         "content": "{\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}"
+        },
+        "message_type": "dict",
+        "recipient": "masd_ag2_hook_sink",
+        "sender": "masd_ag2_multistep_assistant",
+        "silent": true
+       }
+      ],
+      "native_events": [
+       {
+        "agent": "masd_ag2_multistep_assistant",
+        "content": "{\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}",
+        "reply_type": "str",
+        "type": "ag2_generate_reply"
+       },
+       {
+        "hook_event_count_after_send": 1,
+        "type": "ag2_hook_emit_send"
+       }
+      ]
+     },
+     "child_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:final_result"
+     ],
+     "created_at": "2026-06-14T08:54:08.784366+00:00",
+     "error": null,
+     "final_answer": null,
+     "kind": "agent_action",
+     "metadata": {
+      "api_record_index": 2,
+      "context_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input"
+      ],
+      "source": "adapter_agent_tool_loop",
+      "state_parent_ids": [
+       "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001"
+      ]
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001"
+     ],
+     "sequence_index": 11,
+     "step_id": "step_0011",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 11,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    },
+    {
+     "action": {
+      "answer": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication."
+     },
+     "agent_id": "ag2",
+     "api_messages": null,
+     "api_response": null,
+     "child_node_ids": [],
+     "created_at": "2026-06-14T08:54:08.787368+00:00",
+     "error": null,
+     "final_answer": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+     "kind": "final_result",
+     "metadata": {
+      "source": "adapter_final"
+     },
+     "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:final_result",
+     "observation": {},
+     "parent_node_ids": [
+      "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002"
+     ],
+     "sequence_index": 12,
+     "step_id": "step_0012",
+     "thought": {},
+     "tool_call": null,
+     "tool_result": null,
+     "topological_timestamp": 12,
+     "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+    }
+   ],
+   "schema_version": "masd.graph.v1",
+   "topological_order": [
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:sys_prompt",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:user_input",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_5df340b5",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0000",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0000",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0000",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_c46fc66c",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0001",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_call_0001",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:tool_result_0001",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:ag2_hook_0001_fb50edba",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:agent_action_0002",
+    "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:final_result"
+   ],
+   "trace_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1"
+  },
+  "result_record": {
+   "action": "ag2_instrumented_run",
+   "agent_id": "ag2",
+   "api_call_count": 3,
+   "attempt_id": 0,
+   "edge_count": 17,
+   "error": null,
+   "evaluator_evidence": {
+    "evaluator_names": [
+     "AgentResponseEvaluator"
+    ],
+    "expected_retrieved_data": [
+     {
+      "arrival_date": null,
+      "status": "canceled"
+     }
+    ],
+    "has_real_tool_event": false,
+    "method": "webarena_verified_evaluator",
+    "missing_retrieved_data": [
+     {
+      "expected": {
+       "arrival_date": null,
+       "status": "canceled"
+      },
+      "missing_values": [
+       "None",
+       "canceled"
+      ]
+     }
+    ],
+    "observed_answer_excerpt": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+    "observed_tool_result": {
+     "error": {
+      "message": "HTTPSConnectionPool(host='__shopping__', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='__shopping__', port=443): Failed to resolve '__shopping__' ([Errno 11001] getaddrinfo failed)\"))",
+      "type": "ConnectionError"
+     },
+     "latency": 7.287393808364868,
+     "status": "failed",
+     "type": "browser_http_get",
+     "url": "https://__SHOPPING__"
+    },
+    "requires_environment_event": false,
+    "task_types": [
+     "RETRIEVE"
+    ]
+   },
+   "failure_type": null,
+   "final_answer": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+   "graph_manifest_path": "result/recovery_200_full/ag2/snapshot_delta_60/trajectories/webarena_verified_hard_96/attempt_000/graph_manifest.json",
+   "graph_path": "result/recovery_200_full/ag2/snapshot_delta_60/trajectories/webarena_verified_hard_96/attempt_000/graph.json",
+   "input": "Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.",
+   "instrumentation_level": "ag2_hook_plus_graph_adapter",
+   "latency": 15.448949575424194,
+   "mas": "ag2",
+   "mode": "snapshot",
+   "model": "deepseek-v4-flash",
+   "node_count": 13,
+   "node_id": "webarena_verified_hard_96:attempt_000:snapshot:31ff9ace4b7fbae1:final_result",
+   "node_kind": "final_result",
+   "parent_node_ids": [],
+   "provenance": {
+    "adapter": "ag2",
+    "api_records_path": "result/recovery_200_full/ag2/snapshot_delta_60/trajectories/webarena_verified_hard_96/attempt_000/api_records.jsonl",
+    "graph_path": "result/recovery_200_full/ag2/snapshot_delta_60/trajectories/webarena_verified_hard_96/attempt_000/graph.json",
+    "is_real_api": true
+   },
+   "recovery_condition": {
+    "mode": "snapshot",
+    "source_attempt_id": null,
+    "source_mas": null,
+    "source_result_path": null,
+    "source_run_id": null
+   },
+   "replay_plan": null,
+   "rq": "recovery_200_full",
+   "run_id": "snapshot_delta_60",
+   "step_id": "final_result",
+   "success": false,
+   "suspicious_labels": [],
+   "task_id": "webarena_verified_hard_96",
+   "temperature": 0.0,
+   "thought_summary": "",
+   "timestamp": "2026-06-14T08:54:08.807039+00:00",
+   "token_usage": {},
+   "tool_call": {
+    "type": "browser_http_get"
+   },
+   "tool_result": {
+    "error": {
+     "message": "HTTPSConnectionPool(host='__shopping__', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='__shopping__', port=443): Failed to resolve '__shopping__' ([Errno 11001] getaddrinfo failed)\"))",
+     "type": "ConnectionError"
+    },
+    "latency": 7.287393808364868,
+    "status": "failed",
+    "type": "browser_http_get",
+    "url": "https://__SHOPPING__"
+   }
+  }
+ }
+}

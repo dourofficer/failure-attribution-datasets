@@ -1,0 +1,32 @@
+{
+  "n_trajectories": 50,
+  "availability": "NOT RELEASED (no GitHub/HF/project link in arXiv 2609.13463v1/v2, HF papers page, GitHub search or HF dataset search as of 2026-10-16); all numbers below are from the paper",
+  "steps_per_traj": [],
+  "error_step_rel_pos": [],
+  "agents_per_traj": [],
+  "faulty_agent_counts": {},
+  "category_counts": {},
+  "source_benchmark_counts": {
+    "GAIA": null, "SWE-Bench": null, "HLE": null, "OpenRCA": null, "15 additional Harbor-Index benchmarks": null,
+    "_note": "paper lists GAIA, SWE-Bench, HLE, OpenRCA + '15 additional benchmarks' (Table 1) but gives no per-benchmark counts; Harbor Index spans 29 benchmarks / 7 domains"
+  },
+  "model_counts": {"Opus-4.8 (Claude Code)": null, "GPT-5.5 (Claude Code)": null, "_note": "per-model counts not reported"},
+  "splits": {"MegaRCA-Mix": 50},
+  "from_paper": {
+    "n_trials": 50,
+    "all_failed": true,
+    "annotation": "human-annotated first consequential error; label = (edge, fault_side, failure_mode) taxonomy triple + first-divergence citation; multiple acceptable gold cluster sets per trial",
+    "median_log_tokens": 286000,
+    "median_log_size_MiB": 1.05,
+    "domains": 7,
+    "source_meta_benchmark": "Harbor Index (arXiv 2609.04298; 82 tasks from 29 benchmarks)",
+    "agent_harness": "Claude Code under the Harbor evaluation framework",
+    "taxonomy": "interaction-centric taxonomy, 41 failure modes (arXiv 2607.28802)",
+    "metric": "per-trial max-over-gold-sets set-F1, averaged over trials",
+    "baselines_F1": {
+      "GPT-5.5": {"single_turn": 0.356, "passive_continuation_4_turns": 0.569, "continual_search_4_turns": 0.569, "abstract_quotes": "0.349 -> 0.498"},
+      "Opus-4.8": {"single_turn": 0.471, "passive_continuation_4_turns": 0.479, "continual_search_4_turns": 0.608}
+    },
+    "evidence_coverage": {"turn1_both": 0.705, "continual_search_turn3": 0.952, "continual_search_turn4": 0.985, "passive_continuation_plateau": 0.756, "trajectory_inspected_by_turn2": "38/50 trials"}
+  }
+}

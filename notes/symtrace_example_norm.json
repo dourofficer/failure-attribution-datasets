@@ -1,0 +1,201 @@
+{
+ "dataset": "symtrace",
+ "source_id": "initial_failure_logs_536/ag2/webarena_verified_hard_96",
+ "task": "Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.",
+ "ground_truth": [
+  {
+   "evaluator": "AgentResponseEvaluator",
+   "expected": {
+    "error_details": null,
+    "retrieved_data": [
+     {
+      "arrival_date": null,
+      "status": "canceled"
+     }
+    ],
+    "status": "SUCCESS",
+    "task_type": "RETRIEVE"
+   },
+   "ordered": false,
+   "results_schema": {
+    "items": {
+     "properties": {
+      "arrival_date": {
+       "format": "date",
+       "type": "string"
+      },
+      "status": {
+       "type": "string"
+      }
+     },
+     "type": "object"
+    },
+    "type": "array"
+   }
+  }
+ ],
+ "final_output": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+ "steps": [
+  {
+   "idx": 0,
+   "agent": "ag2 [sys_prompt]",
+   "content": "MASD controlled experiment prompt and adapter constraints.",
+   "node_id": "sys_prompt",
+   "kind": "sys_prompt"
+  },
+  {
+   "idx": 1,
+   "agent": "user [user_input]",
+   "content": "Mode: snapshot\nTask id: webarena_verified_hard_96\nBenchmark: webarena_verified / hard\nTask: Get the status of my latest order and when will it arrive. Return a list of objects with keys \"status\" and \"arrival_date\" (YYYY-MM-DD format or null if not available), without any additional details.\nStart URLs or tools: ['__SHOPPING__']\nReturn only the final answer and a short note about what evidence would be needed.",
+   "node_id": "user_input",
+   "kind": "user_input"
+  },
+  {
+   "idx": 2,
+   "agent": "masd_ag2_multistep_assistant [agent_action]",
+   "content": "[ag2_process_message_before_send] {\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+   "node_id": "ag2_hook_0001_5df340b5",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 3,
+   "agent": "ag2 [agent_action]",
+   "content": "[ag2_agent_step] {\"action\":\"browse\",\"url\":\"__SHOPPING__\",\"reason\":\"Start at the shopping site to access account and view latest order status.\"}",
+   "node_id": "agent_action_0000",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 4,
+   "agent": "ag2 [tool_call]",
+   "content": "{\"reason\": \"Start at the shopping site to access account and view latest order status.\", \"type\": \"browser_http_get\", \"url\": \"__SHOPPING__\"}",
+   "node_id": "tool_call_0000",
+   "kind": "tool_call"
+  },
+  {
+   "idx": 5,
+   "agent": "browser_tool [tool_result]",
+   "content": "{'type': 'browser_http_get', 'status': 'failed', 'url': '__SHOPPING__', 'latency': 0.0015594959259033203, 'error': {'type': 'MissingSchema', 'message': \"Invalid URL '__SHOPPING__': No scheme supplied. Perhaps you meant https://__SHOPPING__\"}}",
+   "node_id": "tool_result_0000",
+   "kind": "tool_result"
+  },
+  {
+   "idx": 6,
+   "agent": "masd_ag2_multistep_assistant [agent_action]",
+   "content": "[ag2_process_message_before_send] {\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+   "node_id": "ag2_hook_0001_c46fc66c",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 7,
+   "agent": "ag2 [agent_action]",
+   "content": "[ag2_agent_step] {\"action\":\"browse\",\"url\":\"https://__SHOPPING__\",\"reason\":\"Need to access the shopping site. The placeholder needs a scheme.\"}",
+   "node_id": "agent_action_0001",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 8,
+   "agent": "ag2 [tool_call]",
+   "content": "{\"reason\": \"Need to access the shopping site. The placeholder needs a scheme.\", \"type\": \"browser_http_get\", \"url\": \"https://__SHOPPING__\"}",
+   "node_id": "tool_call_0001",
+   "kind": "tool_call"
+  },
+  {
+   "idx": 9,
+   "agent": "browser_tool [tool_result]",
+   "content": "{'type': 'browser_http_get', 'status': 'failed', 'url': 'https://__SHOPPING__', 'latency': 7.287393808364868, 'error': {'type': 'ConnectionError', 'message': 'HTTPSConnectionPool(host=\\'__shopping__\\', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host=\\'__shopping__\\', port=443): Failed to resolve \\'__shopping__\\' ([Errno 11001] getaddrinfo failed)\"))'}}",
+   "node_id": "tool_result_0001",
+   "kind": "tool_result"
+  },
+  {
+   "idx": 10,
+   "agent": "masd_ag2_multistep_assistant [agent_action]",
+   "content": "[ag2_process_message_before_send] {\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}",
+   "node_id": "ag2_hook_0001_fb50edba",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 11,
+   "agent": "ag2 [agent_action]",
+   "content": "[ag2_agent_step] {\"final\":\"[\\n  {\\\"status\\\": \\\"unknown\\\", \\\"arrival_date\\\": null}\\n]\\n\\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.\"}",
+   "node_id": "agent_action_0002",
+   "kind": "agent_action"
+  },
+  {
+   "idx": 12,
+   "agent": "ag2 [final_result]",
+   "content": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+   "node_id": "final_result",
+   "kind": "final_result"
+  }
+ ],
+ "annotation": {
+  "faulty_agent": "ag2",
+  "faulty_step": 7,
+  "category": "C3 Unresolved runtime condition (primary); label set {C1, C2, C3, C4}",
+  "reason": "(annotation rationales and evidence excerpts are withheld from the public export: annotation_prose_in_public_export = false; the label is the earliest trace-supported actionable node carrying the symptom)",
+  "extra": {
+   "mas": "AG2",
+   "source_benchmark": "WebArena-Verified Hard",
+   "task_type": "retrieve",
+   "difficulty": "hard",
+   "failure_node_id": "agent_action_0001",
+   "failure_node_kind": "agent_action",
+   "confidence": "high",
+   "inter_annotator_agreement": {
+    "annotation_count": 3,
+    "primary_failure_label_unanimous": true,
+    "failure_label_set_unanimous": false,
+    "failure_node_unanimous": true,
+    "failure_node_kind_unanimous": true,
+    "strict_annotation_unanimous": false,
+    "final_primary_failure_label_support_count": 0,
+    "final_failure_label_set_support_count": 1,
+    "final_failure_node_support_count": 3,
+    "final_strict_annotation_support_count": 0
+   },
+   "evaluator_evidence": {
+    "evaluator_names": [
+     "AgentResponseEvaluator"
+    ],
+    "expected_retrieved_data": [
+     {
+      "arrival_date": null,
+      "status": "canceled"
+     }
+    ],
+    "has_real_tool_event": false,
+    "method": "webarena_verified_evaluator",
+    "missing_retrieved_data": [
+     {
+      "expected": {
+       "arrival_date": null,
+       "status": "canceled"
+      },
+      "missing_values": [
+       "None",
+       "canceled"
+      ]
+     }
+    ],
+    "observed_answer_excerpt": "[\n  {\"status\": \"unknown\", \"arrival_date\": null}\n]\n\nNote: Evidence needed would be the user's order history page on the shopping site after authentication.",
+    "observed_tool_result": {
+     "error": {
+      "message": "HTTPSConnectionPool(host='__shopping__', port=443): Max retries exceeded with url: / (Caused by NameResolutionError(\"HTTPSConnection(host='__shopping__', port=443): Failed to resolve '__shopping__' ([Errno 11001] getaddrinfo failed)\"))",
+      "type": "ConnectionError"
+     },
+     "latency": 7.287393808364868,
+     "status": "failed",
+     "type": "browser_http_get",
+     "url": "https://__SHOPPING__"
+    },
+    "requires_environment_event": false,
+    "task_types": [
+     "RETRIEVE"
+    ]
+   },
+   "llm_call_count": 3,
+   "tool_failure_count": 2,
+   "step_indexing": "0-based position of the node in graph.json topological_order (sys_prompt = 0, user_input = 1)"
+  }
+ }
+}

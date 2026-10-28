@@ -1,0 +1,150 @@
+{
+ "dataset": "failure_as_process",
+ "source_id": "acl-permissions-inheritance__miniswe__gemini",
+ "from_paper": true,
+ "task": "Terminal-Bench task `acl-permissions-inheritance` (system-administration, medium): create /srv/shared with setgid; configure POSIX ACLs with default inheritance; ensure alice and bob mutual access; block others",
+ "ground_truth": "hidden test suite: https://github.com/laude-institute/terminal-bench/blob/main/original-tasks/acl-permissions-inheritance/solution.sh",
+ "final_output": null,
+ "steps": [
+  {
+   "idx": 1,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "Thought: I'll create the directory /srv/shared as requested. I'll use sudo because creating directories in /srv requires root privileges.\nAction: $ sudo mkdir -p /srv/shared\nObservation: /bin/sh: 1: sudo: not found",
+   "source": "paper_figure"
+  },
+  {
+   "idx": 2,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "Thought: It seems I don't have sudo privileges. I'll try creating /srv/shared without it, and also create the research group since it probably doesn't exist.\nAction: $ mkdir -p /srv/shared && sudo groupadd research\nObservation: /bin/sh: 1: sudo: not found",
+   "source": "paper_figure"
+  },
+  {
+   "idx": 3,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "Thought: I lack permissions to create /srv/shared. I'll use /tmp/srv/shared instead, and create the group and users alice and bob to test the ACL requirements.\nAction: $ mkdir -p /tmp/srv/shared && sudo groupadd research && sudo useradd alice && sudo useradd bob\nObservation: /bin/sh: 1: sudo: not found",
+   "source": "paper_figure"
+  },
+  {
+   "idx": 4,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "Thought: I'm blocked — I can't create directories in /srv or /tmp and sudo is off-limits. I'll pivot and try to create the research group and the users without sudo.\nAction: $ groupadd research && useradd alice && useradd bob\nObservation: groupadd: group 'research' already exists",
+   "source": "paper_figure"
+  },
+  {
+   "idx": 5,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code X = execute/run]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 6,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code X = execute/run]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 7,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code W = write/edit]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 8,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code W = write/edit]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 9,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code W = write/edit]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 10,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; summarised there as \"steps 5–10: builds ~/srv/shared, sets its group and owner, applies the setfacl ACL rules\"; annotated action code W = write/edit]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 11,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "Thought: I've set up the shared directory with permissions and ACLs. Now I'll verify the configuration by checking the ACLs with getfacl.\nAction: $ getfacl ~/srv/shared\nObservation: # file: root/srv/shared\n# owner: root\n...  (ACLs all set, but dir is under /root)",
+   "source": "paper_figure"
+  },
+  {
+   "idx": 12,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; annotated action code V = verify/test]",
+   "source": "summary_only"
+  },
+  {
+   "idx": 13,
+   "agent": "coding agent (mini-swe-agent scaffold, Gemini 2.5 Pro)",
+   "content": "[step not reproduced in the paper figure; annotated action code C = completion claim]",
+   "source": "summary_only"
+  }
+ ],
+ "annotation": {
+  "faulty_agent": "coding agent (single agent)",
+  "faulty_step": 2,
+  "category": "misread_output",
+  "reason": "In step 2, the agent ran `mkdir -p /srv/shared && sudo groupadd research`. The output `sudo: not found` actually implies mkdir succeeded (the && chain reached sudo), but the agent misread this as evidence that it lacked permissions for /srv/shared, triggering the path pivot.",
+  "extra": {
+   "t_err_evidence": "mkdir -p /srv/shared && sudo groupadd research; output: sudo: not found; agent concluded it lacked permissions for /srv/shared",
+   "t_commit": 3,
+   "t_commit_evidence": "I lack permissions to create /srv/shared. I'll use /tmp/srv/shared instead.",
+   "t_surface": 11,
+   "t_surface_evidence": "getfacl output: # file: root/srv/shared, # owner: root — revealing agent was root the whole time",
+   "primary_failure_layer": "agent",
+   "primary_failure_category": "spec_violation",
+   "primary_failure_subtype": "incorrect_path_pivot",
+   "root_cause_label": "Incorrect Path Pivot Due to Root User Misunderstanding",
+   "one_sentence_failure_summary": "The agent pivoted to ~/srv/shared instead of /srv/shared after misreading the step-2 output and falsely concluding mkdir had failed, never realizing it was already running as root.",
+   "forewarning_present": true,
+   "forewarning_types": [
+    "empty_or_unexpected_output"
+   ],
+   "awareness": "aware_too_late",
+   "first_awareness_step": 11,
+   "num_recovery_attempts": 0,
+   "tail_dominant_behavior": "cosmetic_progress",
+   "fabrication_present": false,
+   "fabrication_type": null,
+   "verification_ever": true,
+   "action_segments": [
+    [
+     1,
+     1,
+     "X"
+    ],
+    [
+     2,
+     3,
+     "X"
+    ],
+    [
+     4,
+     6,
+     "X"
+    ],
+    [
+     7,
+     10,
+     "W"
+    ],
+    [
+     11,
+     12,
+     "V"
+    ],
+    [
+     13,
+     13,
+     "C"
+    ]
+   ],
+   "timepoint_confidence": "high"
+  }
+ }
+}

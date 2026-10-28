@@ -1,0 +1,25 @@
+"""Where each dataset lives inside report/: report/<GROUP[slug]>/<slug>/ holds <slug>.tex, traj.tex, figures/, refs.bib."""
+GROUP = {
+    'who_and_when': '3_core',
+    'traceelephant': '3_core',
+    'mp_bench': '3_core',
+    'who_and_when_pro': '3_core',
+    'longrca': '3_core',
+    'agentrx': '3_core',
+    'symtrace': '3_core',
+    'tracertraj': '4_injected',
+    'aegis': '4_injected',
+    'correct_error': '4_injected',
+    'agenterrata': '4_injected',
+    'mast_data': '5_taxonomy',
+    'trail': '5_taxonomy',
+    'agenterrorbench': '6_related',
+    'searchauditbench': '6_related',
+    'failure_as_process': '6_related',
+    'trajerrbench': '6_related',
+    'agenthallu': '6_related',
+    'memtrace': '6_related',
+    'horizon': '6_related',
+    'megarca_mix': '6_related',
+}
+OVERVIEW_FIGURES = '2_overview/figures'

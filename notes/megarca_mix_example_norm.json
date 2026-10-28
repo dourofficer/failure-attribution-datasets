@@ -1,0 +1,26 @@
+{
+  "dataset": "megarca_mix",
+  "from_paper": true,
+  "source_id": "scenario_universe_21_5e0gvz (GAIA2 adaptability trial used as the worked example in Appendix A.1 / Figure 10 of arXiv 2609.13463; NOT one of the 50 unreleased MegaRCA-Mix trials)",
+  "task": "Cancel the user's Saturday appointments and schedule a 'Film Production Day' event with a friend. Reschedule based on the friend's reply; if the friend cannot make it and proposes no alternative, cancel the plan.",
+  "ground_truth": null,
+  "final_output": "Agent finalised after a single short wait returned no reply from the friend, without rescheduling or cancelling as instructed (task failed the GAIA2 verifier).",
+  "steps": [
+    {"idx": 1, "agent": "Claude Code agent (model)", "content": "Action: cancel the user's Saturday appointments and send the friend a message proposing the 'Film Production Day' event. (Reconstructed from the paper's prose; the paper does not print the raw turns.)"},
+    {"idx": 2, "agent": "Claude Code agent (model)", "content": "Action: set up a trigger gated on a message-count check and issue one short wait (about 180 simulated seconds) for the friend's reply."},
+    {"idx": 3, "agent": "environment (external)", "content": "Observation: the wait returns after roughly 3 real seconds with no notifications; the environment's notification/settings state is empty (config.json / console log show empty environment settings)."},
+    {"idx": 4, "agent": "Claude Code agent (model)", "content": "Thought/Action: no reply observed, conclude there is nothing further to do and finish the task without rescheduling or cancelling."}
+  ],
+  "annotation": {
+    "faulty_agent": "environment (external service)",
+    "faulty_step": 3,
+    "category": "edge=model–external environment; fault_side=environment; failure_mode=Stale State Delivery",
+    "reason": "The environment reported a healthy, completed wait but delivered stale/empty state (no notifications), so the agent's belief that the friend had not replied was induced by the environment rather than by the model cutting scope. A trajectory-only reading (judge turn 2) wrongly blamed the model ('Satisficing'); opening config.json and the console log (judge turn 3) revealed the empty environment settings and corrected the attribution.",
+    "extra": {
+      "single_turn_trajectory_only_diagnosis": {"edge": "model–owner", "fault_side": "model", "failure_mode": "Satisficing"},
+      "final_diagnosis_after_continual_search": {"edge": "model–external environment", "fault_side": "environment", "failure_mode": "Stale State Delivery"},
+      "taxonomy": "Interaction-centric taxonomy of Raj et al. 2026 (arXiv 2607.28802): 41 failure modes, each tied to an edge between the model and another component (owner, grader, third party, context, memory, tool, peer/subagent model, local/external environment) and a fault side (model | harness | environment | grader).",
+      "label_format_megarca_mix": "gold = set(s) of acceptable taxonomy clusters + first-divergence citation; scored by max-over-gold-sets set-F1 per trial, averaged over 50 trials"
+    }
+  }
+}

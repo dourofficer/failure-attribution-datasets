@@ -1,0 +1,23 @@
+{
+  "from_paper": true,
+  "note": "MegaRCA-Mix itself is NOT publicly released (as of 2026-10-16). This record is reconstructed from the paper's Appendix A.1 / Figure 10 worked example (arXiv 2609.13463v2), which illustrates the Continual-Search judge on a GAIA2 trial. It is NOT one of the 50 MegaRCA-Mix trials (GAIA2 is not among the listed sources), but it uses the same taxonomy triple (edge, fault_side, failure_mode) + first-divergence citation that MegaRCA-Mix gold labels use.",
+  "trial_id": "scenario_universe_21_5e0gvz",
+  "benchmark": "GAIA2 (adaptability config)",
+  "task": "Cancel the user's Saturday appointments and schedule a 'Film Production Day' event with a friend; reschedule based on the friend's reply, or cancel the plan if the friend cannot make it and proposes no alternative.",
+  "trajectory_summary": [
+    {"turn": "agent", "summary": "Agent cancels the Saturday appointments and messages the friend about the 'Film Production Day'."},
+    {"turn": "agent", "summary": "Agent sets up a trigger gated on a message-count check and issues a single short wait (~180 s simulated) for the friend's reply."},
+    {"turn": "environment", "summary": "The wait returns (in ~3 real seconds) with no notifications; the environment's settings/notification state is empty."},
+    {"turn": "agent", "summary": "Agent concludes no reply arrived and finalises without rescheduling or cancelling as instructed."}
+  ],
+  "judge_search_trace": [
+    {"judge_turn": 2, "evidence_opened": "agent trajectory only", "diagnosis": {"edge": "model-owner", "fault_side": "model", "failure_mode": "Satisficing"}, "rationale": "Trigger gated on a message-count check and a single 180-second wait; no evidence of a broken environment, so the model is blamed for declaring the task done while work remained."},
+    {"judge_turn": 3, "evidence_opened": "config.json and console log", "diagnosis": {"edge": "model-external environment", "fault_side": "environment", "failure_mode": "Stale State Delivery"}, "rationale": "The wait returned no notifications and the environment settings were empty; the judge corrects its earlier premise (which assumed the ~3 s real-time return was the model's choice) and attributes the failure to the environment delivering stale/empty state while reporting healthy."}
+  ],
+  "final_attribution": {"edge": "model-external environment", "fault_side": "environment", "failure_mode": "Stale State Delivery", "marked_correct_in_figure": true},
+  "answer_format_used_by_judges_on_megarca_mix": {
+    "trial_id": "<string>", "task_id": "<string>", "edge": "<exact string from taxonomy.py>", "fault_side": "model | harness | environment | grader",
+    "failure_mode": "<exact string from taxonomy.py>", "first_divergence": "<turn/step where execution first diverged>", "evidence_quote": "<verbatim quote from the logs>",
+    "rationale": "<free text>", "changed_from_turn1": "<bool, turn 2> / changed_from_prev (turns 3-4)"
+  }
+}
