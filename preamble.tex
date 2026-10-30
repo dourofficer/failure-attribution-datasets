@@ -7,7 +7,7 @@
 \usepackage{microtype}
 \setlength{\emergencystretch}{2em} % let narrow columns wrap long tokens instead of overflowing
 \usepackage{amsmath,amssymb,amsthm}
-\theoremstyle{definition}\newtheorem{definition}{Definition}\newtheorem{assumption}{Assumption}\newtheorem{task}{Task}
+% theorem-like statements are boxed tcolorbox environments; see the end of this file
 % Computer Modern math (text stays Times): default math fonts + CM for \mathrm/operators
 \DeclareSymbolFont{operators}{OT1}{cmr}{m}{n}\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
 \SetMathAlphabet{\mathrm}{normal}{OT1}{cmr}{m}{n}\SetMathAlphabet{\mathbf}{normal}{OT1}{cmr}{bx}{n}
@@ -20,12 +20,13 @@
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{caption}
-\usepackage{tcolorbox}\tcbuselibrary{skins,breakable}
+\usepackage{tcolorbox}\tcbuselibrary{skins,breakable,theorems}
 \usepackage{tikz}\usetikzlibrary{positioning,arrows.meta,shapes,calc,fit,backgrounds,decorations.pathreplacing}
 \usepackage{pgfplots}\pgfplotsset{compat=1.18}
 \usepackage{fontawesome5}
 \usepackage{ragged2e}
 \usepackage{CJKutf8}\newcommand{\cjk}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+\ifdefined\loadxrhyper\usepackage{xr-hyper}\fi % proposals.tex: external references into main.aux
 \usepackage[colorlinks,linkcolor=linkc,urlcolor=linkc,citecolor=linkc]{hyperref}
 
 % ---------- palette (dataviz reference palette) ----------
@@ -113,3 +114,15 @@ System output & #6\\
 \newcommand{\badgerow}[1]{{\raggedright\noindent#1\par}} % badge rows wrap instead of overflowing
 
 \newcommand{\note}[1]{\leavevmode{\color{purple}[\textsc{Note}: #1]}} 
+
+% ---------- boxed statements for the proposals document (8_proposals/proposals.tex) ----------
+% definitions: blue; assumptions: amber; research questions: purple. Unbreakable, so they also work inside multicols.
+\tcbset{stmt/.style={enhanced,boxrule=0.4pt,arc=1.5pt,left=4pt,right=4pt,top=2.5pt,bottom=2.5pt,before skip=4pt,after skip=4pt,
+  fontupper=\small,fonttitle=\footnotesize\bfseries,coltitle=white,toptitle=1pt,bottomtitle=1pt,
+  separator sign={},description font=\mdseries,description delimiters={(}{)},terminator sign={}}}
+\newtcbtheorem{definition}{Definition}{stmt,colback=s1!5,colframe=s1!65!black,colbacktitle=s1!65!black}{def}
+\newtcbtheorem{assumption}{Assumption}{stmt,colback=warning!10,colframe=warning!60!black,colbacktitle=warning!60!black}{as}
+% \begin{rqbox}{<proposal number>} ... \end{rqbox}: the research questions of one proposal, stated in full sentences
+\newtcolorbox{rqbox}[1]{stmt,breakable,colback=s7!5,colframe=s7!65!black,colbacktitle=s7!65!black,title={\faQuestionCircle\ Research questions of Proposal #1}}
+\newcommand{\RQ}[1]{\textbf{RQ\,#1}}   % research question p.i
+\newcommand{\EXP}[1]{\textbf{E\,#1}}   % experiment p.j
