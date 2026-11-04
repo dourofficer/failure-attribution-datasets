@@ -9,7 +9,6 @@ License & code MIT (``U Lab @UIUC''); no license file on the Drive data (ALFWorl
 Status & downloaded in full: the Drive folder yielded 196 of 200 trajectories (98 ALFWorld / 48 GAIA / 50 WebShop) + 3 label files, the 4 missing ones were filled from the HF mirror; 124 MB; \code{data/agenterrorbench/\{gdrive, hf\_davide221, repo\_AgentDebug\}/}. The camera-ready additionally announces \textbf{AgentDebug-Traj2k} ($\approx$2\,k proposer--reviewer-annotated trajectories) and the \textbf{AgentDebugger-4B} detector: \nobadge\ --- no artefact on GitHub, HF or Drive as of 2026-10-16.\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} AgentErrorBench is the test-bed of the \emph{AgentDebug} framework: given a failed single-agent rollout, predict (i) the step of the first critical (root-cause) error, (ii) the agent \emph{module} that produced it and (iii) the fine-grained error type from the accompanying \emph{AgentErrorTaxonomy}; AgentDebug then re-rolls the agent from that step with corrective feedback. The authors ran their own modular ReAct-style agent (each turn emits \code{<memory>}, \code{<reflection>}, \code{<plan>}, \code{<action>} blocks; 30-step cap) with GPT-4o, Llama-3.3-70B-Turbo and Qwen3-8B on three environments, collected $>$500 natural failures, derived the taxonomy from them and curated \textbf{200 representative failed trajectories}:
 \begin{itemize}
 \item \textbf{ALFWorld} (100): embodied household text game; every released run hits the 30-step cap.
@@ -32,7 +31,6 @@ AgentDebug & \textbf{35 / 28 / 21} & \textbf{42 / 22 / 14} & \textbf{58 / 44 / 3
 Brute-force re-rolling (substitute a corrected action at each step until the run succeeds) is \emph{worse} than prompting. TrajDebug later re-evaluates the same 200 runs: direct prompting 9--19\% (ALFWorld), 20--35\% (GAIA), 14--32\% (WebShop) step accuracy; TrajDebug 26.0 / 38.8 / 26.0. Downstream, AgentDebug feedback plus up to five re-rolls yields up to 26\% relative task-success gain (paper).
 
 \paragraph{Schema} \code{Label/\{alfworld,gaia,webshop\}\_labels.json}: list of \{\code{trajectory\_id}, \code{LLM}, \code{task\_type}, \code{critical\_failure\_step} (1-based agent turn $k$ = message index $2k{-}1$), \code{critical\_failure\_module}, \code{step\_annotations} = [\{\code{step}, \code{<module>}: \{\code{failure\_type}, \code{reasoning}\}\}]\}. \code{Original\_Failure\_Trajectory/<Env>/<id>.json}: \code{messages} (alternating \code{user} = task prompt + observation + admissible actions, or tool/web output on GAIA, and \code{assistant} = the tagged blocks, with \code{<think>} for Qwen3) and \code{metadata} (\code{model}, \code{steps}, \code{won} = False, \code{env\_id}, \dots). The HF mirror flattens this to one parquet row per trajectory (\code{full\_trajectory} as a JSON string, \code{failure\_types[]}, \code{num\_steps}) with an uploader-made 139 / 31 / 30 split; the official release has no split.
-\end{multicols}
 
 \paragraph{Statistics} computed from the downloaded data.\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.54\linewidth}\vspace{0pt}\small\setlength{\tabcolsep}{4pt}

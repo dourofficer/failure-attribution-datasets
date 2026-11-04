@@ -9,7 +9,6 @@ License & MIT (dataset card, code and paper); source conversations from LoCoMo, 
 Status & downloaded in full, ungated; 6.0 GB; \code{data/memtrace/\{rag,mem0,evermemos,long\_context\}/*.json} (103 execution graphs, 6.6 MB -- 532 MB each)\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} MemTrace moves failure attribution from the planner/tool loop into the \emph{memory system}. A memory pipeline (extraction $\to$ update/delete $\to$ retrieval $\to$ answer) is instrumented so that each run becomes an \emph{execution graph}: a bipartite DAG of variable nodes (messages, extracted facts, memory units, retrieved sets, prompts, predictions) and operation nodes (extraction, update, deletion, retrieval, filtering, judging, answering) joined by information-flow edges. Given a failed query (prediction $\neq$ gold), the task is to name the \emph{earliest decisive faulty operation} $o^*$ and its error type. Four systems were run with GPT-4.1-mini (Claude Opus 4.5 as answer judge) on three multi-session memory-QA sets (LoCoMo, LongMemEval, RealMem):
 \begin{itemize}
 \item \textbf{Long-Context} (whole history in the prompt), \textbf{Naive RAG}, \textbf{Mem0}, \textbf{EverMemOS} (Qwen3-Embedding-4B / Reranker-4B).
@@ -31,7 +30,6 @@ GPT-5.4 & MemTrace & \textbf{54.4} & 38.1\\\bottomrule
 Per system (GPT-5.4, OBS OIA): RAG 87.5, Mem0 55.0, EverMemOS 35.0, Long-Context 7.5 --- localisation collapses when all evidence sits in one giant prompt. Attribution signals used to rewrite Mem0 prompts raised LoCoMo accuracy by up to 7.62 points.
 
 \paragraph{Schema} One file per (system, conversation), named \code{<split>/} \code{<source>\_<conv-id>.json}: a serialised \code{smartcomment} graph with \code{graph\_id}, \code{metadata} (\code{memtracebench\_system}, \code{memtracebench\_dataset\_source}) and \code{data} holding five lists: \code{nodes} (\code{full\_node\_id} = \code{name@version}, \code{category}, \code{value}, \code{comment}, source \code{filename}/\code{lineno}), \code{operations} (\code{op\_id}, \code{op\_name} such as \code{memory\_system.extract\_facts}, \code{update\_memory\_decision}, \code{search\_vector\_store}, \code{agentic\_final\_rerank}, \code{question-answering}; \code{category}), \code{edges} (\code{source\_full\_node\_id} $\to$ \code{target\_full\_node\_id}, producing \code{op\_id}), \code{sessions}, and \code{annotations} (\code{query}, \code{golden\_answers}, \code{prediction\_id}, \code{source\_evidence(\_ids)}, \code{final\_error\_type}, \code{final\_op\_id}, \code{reason}). No trajectory is stored explicitly: we materialise it as the backward dependency slice of \code{prediction\_id} through \code{edges}, in chronological order.
-\end{multicols}
 
 \paragraph{Statistics} computed from the downloaded data (slice = operations feeding the prediction).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.48\linewidth}\vspace{0pt}\small\setlength{\tabcolsep}{4pt}

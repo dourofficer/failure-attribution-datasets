@@ -1,6 +1,5 @@
 \section{Proposal 3: Attribution-guided policy improvement}\label{sec:future:train}
 
-\begin{multicols}{2}
 \paragraph{Motivation} The datasets of this survey are built to score \emph{attributors}. The obvious consumer of a good attributor is the agent that produced the failure: a label $(a^\star,k^\star)$ says which parameters to move and from which state to try again. A literature search on this direction (notes in \code{notes/attribution\_as\_training\_signal.md}) gives three findings.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{The mechanism exists, under other names.} The strongest 2026 agent-RL methods locate a ``pivotal'', ``critical'' or ``irrecoverable'' step of a failed rollout and use it to restart rollouts there \cite{tian2026mirl,guo2026pivoarl,shi2026r3l,liu2026sprout,liang2026elpo}, to reweight the advantage at that step \cite{zhu2026fault,huang2026etro,jung2026prover,agentevolver2025,zhu2026lvrl} or to build preference pairs there \cite{li2026cso,yuan2025agentr,steca2025,cuarecovery2026}. None cites a failure-attribution benchmark as a source of signal, and none uses an attributor trained on one.
@@ -56,7 +55,6 @@ For a fixed recipe, budget $B$ of environment steps and seeds, let $\pi^{\mathca
 \item \emph{oracle}: the rollout-measured $k^\star$ with large $N$, affordable only on a test subset.
 \end{enumerate}
 Each rung is scored twice: by the attribution metrics of this survey on held-out labels of the same system, and by its training value.
-\end{multicols}
 
 \begin{figure}[h]\centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth]
@@ -115,7 +113,6 @@ AgentGrad \cite{chu2026agentgrad} & sequential intervention: first agent whose f
 \end{description}
 \end{rqbox}
 
-\begin{multicols}{2}
 \paragraph{Experiments}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
 \item[\EXP{3.1} --- The accuracy-to-value curve (answers \RQ{3.1}, \RQ{3.2}).] Recipe: entry points R and C (restart from $\hat k$, prefix-only credit, truncation after $\hat k$) on a GiGPO-style learner \cite{feng2025gigpo}, 4B policy, matched rollout budget. Every rung of the ladder is trained, plus \emph{synthetically degraded} attributors: the oracle label shifted forward by $d$ steps toward the symptom, and the oracle mixed with random steps at precision $p$. The output is the curve of Definition~\ref{def:trainval}, its slope, and the precision below which attribution hurts. The evidence of \cite{shen2026epv} predicts that rung 4 sits below rung 2 on SWE-bench and that the shift $d$, not the precision $p$, is the damaging error.
@@ -123,7 +120,6 @@ AgentGrad \cite{chu2026agentgrad} & sequential intervention: first agent whose f
 \item[\EXP{3.3} --- Culprit-only updates in a multi-agent system (answers \RQ{3.4}).] Entry point M on the MASLab systems of row 4 of Table~\ref{tab:engine} (Aegis wrappers, verifiable answers) and, for transfer, Magentic-One on GAIA (row 6, log-only). Blame from the trained attributor (rung 5) and from counterfactual message replay \cite{chen2026c3}. Conditions: shared reward to all agents, per-agent leave-one-out credit \cite{li2026sharp}, repair-every-agent data \cite{zhao2025sirius}, culprit-only gradient and culprit-only preference pairs \cite{yang2025blame}.
 \item[\EXP{3.4} --- Closing the loop (answers \RQ{3.5}).] After each run of \EXP{3.1}--\EXP{3.3}, the failures of the trained policy are re-attributed and re-labelled with the failure-mode taxonomies of Section~\ref{sec:g3} (MAST modes through the Aegis labeller, AgentErrorTaxonomy). Two numbers: how much the targeted modes shrink, which MiRL reports as 43--57\% on unseen prefixes \cite{tian2026mirl}, and how much the other modes grow---the ``whack-a-mole'' risk no paper reports.
 \end{description}
-\end{multicols}
 
 \medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -138,7 +134,6 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \label{tab:eval_p3}
 \end{minipage}\medskip
 
-\begin{multicols}{2}
 \paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p3} lists them per experiment; three conventions apply.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Two scores per attributor.} Every rung is scored by the attribution metrics of this survey on held-out labels of the same system \emph{and} by its training value; the relation between the two is the result.
@@ -170,4 +165,3 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \item A culprit-only update that beats the shared reward on a multi-agent system with blame from an attributor trained on the datasets of this survey, which would be the first use of those datasets to improve an agent.
 \item A closed-loop measurement showing the targeted failure modes shrink without the others growing, which is the practical meaning of ``learning from failure attribution''.
 \end{itemize}
-\end{multicols}

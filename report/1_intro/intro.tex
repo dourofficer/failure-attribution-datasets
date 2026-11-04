@@ -1,6 +1,5 @@
 \section{The failure-attribution problem}\label{sec:intro}
 
-\begin{multicols}{2}
 \paragraph{Setting} An LLM-based \emph{agentic system} solves a task by executing a sequence of \emph{steps}: model calls, tool calls, code execution and environment observations. In a \emph{multi-agent system} (MAS) these steps are emitted by several roles (orchestrator, coder, web-surfer, verifier, \dots) that communicate through messages. Such systems fail often---on GAIA-style tasks the strongest open MAS still fail on a large share of tasks---and because a trajectory can span hundreds of steps and several agents, finding out \emph{why} a run failed is labour-intensive.
 
 \paragraph{Task definition (Who\&When)} \citet{zhang2025who} formalised \emph{automated failure attribution}: given a failed trajectory $\tau=(s_1,\dots,s_T)$ with each step $s_t$ produced by an agent $a_t\in\mathcal{A}$, predict
@@ -20,4 +19,3 @@ A dataset for this task therefore stores, per failed trajectory, the full log, t
 \end{itemize}
 
 \paragraph{Attribution strategies in the literature} (i) \emph{all-at-once}: feed the whole log to a judge LLM and ask for $(a^\star,t^\star)$; (ii) \emph{step-by-step}: walk the log and stop at the first step judged erroneous---better step accuracy, higher cost; (iii) \emph{binary search}: recursively halve the log; (iv) \emph{trained attributors}: small models fine-tuned (often with RL) on injected-fault data such as TracerTraj, Aegis or Who\&When~Pro; (v) \emph{counterfactual replay}: re-execute from a candidate step with a corrected action and check whether the outcome flips---the most reliable but requires a reproducible environment (TraceElephant); (vi) \emph{label-free detectors}: models of trajectory dynamics fitted without step labels---on successful runs only \cite{yeh2026oat} or, as Proposal~2 of the companion proposals document suggests, on all runs with their outcomes---that score each step by how far it departs from the learned flow.
-\end{multicols}

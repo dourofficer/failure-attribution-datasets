@@ -18,11 +18,9 @@ Compile tooling: `export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH` then `pdfla
 \subsection{<Name>}\label{ds:<slug>}
 <badges line>          % \naturalbadge or \injected (or \lbl{taxonomy}); \okbadge / \gatedbadge / \nobadge / \partialbadge; then 2–4 \lbl{...} chips: label granularity (agent + step / step only / failure modes / ...), single-/multi-agent, source benchmarks
 \begin{identity} Paper & ... \\ Links & ... \\ License & ... \\ Status & ... \\ \end{identity}
-\begin{multicols}{2}
 \paragraph{Description} ...  (purpose; how built: frameworks, benchmarks, natural vs injected, annotation protocol & agreement; label types; itemize subsets if any)
 \paragraph{Metrics and baselines} ... (small booktabs tabular of reported baseline numbers if the notes have them; otherwise 2–3 sentences)
 \paragraph{Schema} ... (file layout + key fields with \code{})
-\end{multicols}
 \paragraph{Statistics} computed from the downloaded data.\par\nobreak\vspace{1pt}   % or "from the paper" if not downloaded — say which
 \noindent\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}\small  <booktabs table of the key stats>  \smallskip <one short paragraph of extra numbers> \end{minipage}\hfill
 \begin{minipage}[t]{0.42\linewidth}\vspace{0pt}\includegraphics[width=\linewidth]{<group>/<slug>/figures/<cat|agent|bench|fw>.pdf}\end{minipage}
@@ -37,7 +35,7 @@ Choose the two widths so the row fills the line: the table minipage is the table
 - Use `\code{...}` for field names / repo ids (escape `_` as `\_` inside \code and elsewhere; `&` as `\&`; `%` as `\%`; `#` as `\#`).
 - Cite the paper once with `\cite{<bibkey>}` in the identity box (keys below). Also write a corrected BibTeX entry (same key; real authors from the notes, real title, venue, year, arXiv id) to `report/<group>/<slug>/refs.bib` (every `*/refs*.bib` under `report/` is merged over `bib/refs.bib` by key; later paths in sorted order win).
 - Links with `\href{url}{text}`. Use `\textperiodcentered` between links.
-- No `\section` (only `\subsection`, `\paragraph`). No new packages. No `\newcommand`.
+- No `\section` (only `\subsection`, `\paragraph`). No new packages. No `\newcommand`. One-column layout: no `multicols`.
 - Availability badge must reflect reality: `\okbadge` (downloaded, public), `\gatedbadge` (needs approval), `\partialbadge` (only a subset is public / downloaded), `\nobadge` (no public release yet — then statistics come from the paper and the example may be reconstructed from the paper; say so explicitly).
 - Be honest about what is paper-reported vs computed; write "(paper)" after paper-only numbers.
 

@@ -9,7 +9,6 @@ License & MIT (HF card and GitHub)\\
 Status & downloaded in full, ungated; 222 MB; 9,533 trajectories = 600 test (\emph{Aegis-Bench}) + 7,146 train + 1,787 val; \code{data/aegis/}\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} AEGIS is the largest fully synthetic dataset in this survey, built for \emph{fine-grained error attribution}: given a failed MAS trajectory, predict the set of \textbf{(faulty agent, error mode)} pairs. It supports SFT, RL (GRPO with a hierarchical pair/agent/error reward) and contrastive learning on success/failure pairs; Aegis-Bench is the 600-trajectory test split (100 per benchmark). Construction:
 \begin{itemize}
 \item \textbf{Successful baselines} are run deterministically (all agents GPT-4o-mini, temperature 0) for six MAS on MASLab---LLM Debate, MacNet (chain/star/tree/full topologies), AgentVerse, DyLAN, SmolAgents, Magentic-One---over MATH, GSM8K, HumanEval, SciBench, MMLU-Pro and GAIA (GAIA only for the last two systems).
@@ -36,8 +35,7 @@ DCL (contrastive) & 8.3 & 22.9 & 24.7\\\bottomrule
 \end{center}
 Pair-level F1 is in single digits for every untuned model; SFT overfits the synthetic style after two epochs (Who\&When scores drop). Debate/AgentVerse are easier than DyLAN/MacNet.
 
-\paragraph{Schema} \code{Aegis-Bench/test.jsonl}, \code{Aegis-Training/\allowbreak\{train,val\}.jsonl}, one object per line: \code{id} (\code{<Benchmark>\_<model>\_}\allowbreak\code{<framework>\_<idx>\_<hash>}), \code{metadata} (\code{framework}, \code{benchmark}, \code{model}, \code{task\_type}, \code{num\_agents}, \code{num\_injected\_agents}), \code{input.query}, \code{input.conversation\_history} (turns with 1-based \code{step}, \code{agent\_name}, \code{content}, \code{phase}; DyLAN adds \code{agent\_role}, MacNet \code{is\_injected}), \code{input.final\_output} (present in 83.5\%), \code{output.faulty\_agents} = labels \{\code{agent\_name}, \code{error\_type}, \code{injection\_strategy}\}, \code{ground\_truth.correct\_answer}, \code{ground\_truth.injected\_agents} (same pairs plus a short \code{malicious\_action\_description}), \code{ground\_truth.is\_injection\_successful} (always true).
-\end{multicols}
+\paragraph{Schema} \code{Aegis-Bench/test.jsonl}, \code{Aegis-Training/\allowbreak\{train,val\}.jsonl}, one object per line: \code{id} (\code{<Benchmark>\_<model>\_}\allowbreak\code{<framework>\_<idx>\_<hash>}), \code{metadata} (\code{framework}, \code{benchmark}, \code{model}, \code{task\_type}, \code{num\_agents}, \code{num\_injected\_agents}), \code{input.\allowbreak query}, \code{input.\allowbreak conversation\_history} (turns with 1-based \code{step}, \code{agent\_name}, \code{content}, \code{phase}; DyLAN adds \code{agent\_role}, MacNet \code{is\_injected}), \code{input.\allowbreak final\_output} (present in 83.5\%), \code{output.faulty\_agents} = labels \{\code{agent\_name}, \code{error\_type}, \code{injection\_strategy}\}, \code{ground\_truth.correct\_answer}, \code{ground\_truth.injected\_agents} (same pairs plus a short \code{malicious\_action\_description}), \code{ground\_truth.is\_injection\_successful} (always true).
 
 \paragraph{Statistics} computed from the downloaded JSONL.\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.54\linewidth}\vspace{0pt}\small

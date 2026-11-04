@@ -1,6 +1,5 @@
 \section{Preliminaries: a working definition of failure attribution}\label{sec:future:prelim}
 
-\begin{multicols}{2}
 \paragraph{Why a definition is needed} The four proposals need a target that stays fixed from one dataset to the next. The survey shows that the current targets do not:
 \begin{itemize}[leftmargin=1.1em]
 \item Every dataset defines its labelled step \emph{counterfactually}---``the earliest step such that, had it been correct, the run would have succeeded''---but only TraceElephant ever tests the counterfactual by re-execution (\S\ref{ds:traceelephant}).
@@ -93,7 +92,6 @@ In one sentence: failure attribution is the estimation of a step-level repair-ef
 \item row 6 (live web) supports recorded-prefix replay only and is used for transfer tests;
 \item the same infrastructure---state restore and an LLM-call cache---serves the rollouts of Proposal~1, the corpora of Proposal~2, the restarts of Proposal~3 and the injections of Proposal~4, which is what makes the four proposals one programme rather than four.
 \end{itemize}
-\end{multicols}
 
 \medskip\noindent\begin{minipage}{\linewidth}\centering\small
 \begin{tabularx}{\linewidth}{@{}l l >{\RaggedRight}X@{}}\toprule

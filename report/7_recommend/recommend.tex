@@ -1,6 +1,5 @@
 \section{Cross-cutting observations and recommendations}\label{sec:reco}
 
-\begin{multicols}{2}
 \paragraph{No two datasets agree on what a ``step'' is} Who\&When counts every message, including orchestrator thoughts and the human question; TraceElephant counts trace events including tool I/O; TRAIL uses OpenTelemetry spans; MemTrace uses memory operations; AgentRx indexes 1-based from the system message; TracerTraj mixes 0- and 1-based indices across domains. Any evaluation that pools datasets must normalise the indexing explicitly---the normalised examples in \code{notes/*\_example\_norm.json} keep the dataset's own numbering for this reason.
 
 \paragraph{Agent naming is a hidden evaluation knob} Agent-level accuracy is exact string match, yet names are inconsistent inside datasets (\code{WebSurfer}/\code{Websurfer} in Who\&When, \code{Assistant}/\code{assistant} in AgentRx) and generic in others (TracerTraj's agentic split labels every step \code{assistant}, making agent-level accuracy trivial). Normalise case and collapse orchestrator variants before scoring.
@@ -22,4 +21,3 @@
 \item \textbf{Generalisation checks}: AgentErrorBench (embodied/web), SearchAuditBench (deep search), Failure-as-a-Process (CLI coding), AgentHallu (hallucination), MemTrace (memory).
 \item \textbf{Licensing}: several datasets carry no explicit license (Who\&When, LongRCA, TracerTraj, HORIZON); AgentRx and HORIZON-tasks are gated; MegaRCA-Mix and AgentErrata (and parts of AgentRx) are not public as of 16 Oct 2026. Verify before redistribution.
 \end{enumerate}
-\end{multicols}

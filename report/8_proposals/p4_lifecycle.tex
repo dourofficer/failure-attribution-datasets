@@ -1,6 +1,5 @@
 \section{Proposal 4: Error propagation and absorption---the lifecycle of an error}\label{sec:future:lifecycle}
 
-\begin{multicols}{2}
 \paragraph{Motivation} Proposals 1--3 treat an error as a point event with a binary consequence: a step is intervened on and the outcome either flips or it does not. The survey data say that what happens \emph{between} the error and the outcome is the common case, not the exception, and that no dataset measures it.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Successful runs contain errors.} Failure-as-a-Process PASS runs carry 2.3 error events per 22.8 steps, every one of them recovered, with a detour length and a near-miss flag per run (\S\ref{ds:failure_as_process}); in AgentRx the root cause is not the first annotated failure in 27\% of public trajectories and 41\% of Magentic-One logs, because the orchestrator recovers from the earlier ones (\S\ref{ds:agentrx}).
@@ -24,7 +23,6 @@ The programme transfers these quantities to agent trajectories and gives the qua
 \item \emph{Quickest change detection} \cite{page1954cusum,lorden1971,tartakovsky2014sequential} gives the detection-delay versus false-alarm trade-off for the online monitor of \EXP{2.3}.
 \end{itemize}
 None of them has been applied to an agent trajectory with a replayable environment, which is what makes every quantity below measurable rather than judged.
-\end{multicols}
 
 \begin{table}[h]\centering\small
 \begin{tabularx}{\linewidth}{@{}>{\RaggedRight\hsize=0.7\hsize}X >{\RaggedRight\hsize=0.95\hsize}X >{\RaggedRight\hsize=1.2\hsize}X >{\RaggedRight\hsize=1.15\hsize}X@{}}\toprule
@@ -42,7 +40,6 @@ Safe RL \cite{moldovan2012safe,grinsztajn2021reversibility} & recoverability and
 \label{tab:lifecycle_models}
 \end{table}
 
-\begin{multicols}{2}
 \paragraph{Setting} Fix a successful trajectory $\tau$, a step $k$ and an injection $\delta\in\Delta_{\mathrm{inj}}$ (Table~\ref{tab:vocab}), and let $\omega\sim\mathrm{Roll}(\tau_{<k}\oplus\delta(s_k))$ be one continuation. Three things can happen to the injected error, at three different lags $i\ge1$ after $k$:
 \begin{itemize}[leftmargin=1.1em]
 \item \textbf{detection} $D$: the first lag at which a step of $\omega$ \emph{refers} to the inconsistency (an observation contradicts the perturbed content, a verifier flags it, the agent says so)---the only one of the three that is visible in the text, and the quantity $P_{\mathrm{detect}}(k{+}i\mid k)=\Pr[D{=}i]$;
@@ -115,7 +112,6 @@ predicts that $r(k/T)$ is a step function aligned with the checkpoints rather th
 \item Proposal~2's hazard model is the $h_{\mathrm{rec}}\equiv0$ case of Fig.~\ref{fig:lifecycle}; the multi-state version fits the PASS runs that Table~\ref{tab:contam} shows to be contaminated, and the recovered errors that Proposal~2 lists as a pitfall become a labelled target (\EXP{4.6}).
 \item For Proposal~3, the fate labels change the credit: a recovered error should not carry the negative advantage of a fatal one, and the recovering step is a positive example of the capability the hypothesis names, which recovery-targeted training already exploits without localising it \cite{cuarecovery2026,reterm2026}.
 \end{itemize}
-\end{multicols}
 
 \begin{figure}[h]\centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth,
@@ -171,7 +167,6 @@ predicts that $r(k/T)$ is a step function aligned with the checkpoints rather th
 \end{description}
 \end{rqbox}
 
-\begin{multicols}{2}
 \paragraph{Experiments}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
 \item[\EXP{4.1} --- Fate screen (answers \RQ{4.2}, \RQ{4.4}; supplies \RQ{4.1}, \RQ{4.8}).] The injection half of \EXP{1.1} with every continuation \emph{kept} and labelled with Definition~\ref{def:fate}. The consumption test is a second, cheap counterfactual: for each step $k{+}i$ of $\omega$, re-issue that single LLM call with $\delta(s_k)$ removed from its context and compare the output (one call per step, not a rollout). Detection $D$ is a judge pass over the text with the injection known; recovery $R$ is the first lag at which the consumption test stays negative for the rest of the run and $V^\delta$ has returned to $V^0-\alpha$; lock-in $L$ is estimated by the surrogate of \EXP{1.2} and verified by rollouts on a subset. Output: the fate distribution per system, mode, position and fault side, the triples $(D,R,L)$ with censoring indicators, and the resilience loss $\mathcal{R}$ with its depth and rapidity.
@@ -182,7 +177,6 @@ predicts that $r(k/T)$ is a step function aligned with the checkpoints rather th
 \item[\EXP{4.6} --- Recovered-error detection from logs (answers \RQ{4.9}).] Train on outcome-only data (level L1 of Definition~\ref{def:levels}) a hidden semi-Markov model \cite{yu2010hsmm} with an ``error live'' state that can switch back, and a value curve $V_t$ with a temporal-difference consistency loss, and score recovery segments against the four released sources of recovered errors: Failure-as-a-Process passes, AgentRx non-root events (\S\ref{ds:agentrx}), TRAIL traces that end correctly but carry error spans (\S\ref{ds:trail}) and MP-Bench steps flagged by one annotator of three (\S\ref{ds:mp_bench}).
 \item[\EXP{4.7} --- Online monitor with a delay guarantee (answers \RQ{4.9}).] A CUSUM \cite{page1954cusum} on the hazard or value sequence of \EXP{2.3}, scored by lead time to $t_{\mathrm{lock}}$ and by false alarms on passes with recovered errors, the hardest negatives; the Lorden delay--false-alarm bound \cite{lorden1971} gives the curve a monitor cannot beat.
 \end{description}
-\end{multicols}
 
 \medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -200,7 +194,6 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \label{tab:eval_p4}
 \end{minipage}\medskip
 
-\begin{multicols}{2}
 \paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p4} lists them per experiment; three conventions apply.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Survival estimators, not averages.} Every lifetime quantity is estimated with censoring handled (Aalen--Johansen, Cox), because a run that ends with the error live and $S{=}1$ carries no $R$ and no $L$.
@@ -231,4 +224,3 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \item Per-agent profiles $(g_a,\pi_a,c_a,x_a)$ for the roles of the surveyed systems and a propagation matrix whose spectral radius predicts absorption, which would turn ``which agent is responsible'' into ``which agent to harden''.
 \item A label-free detector of recovered errors with a measured delay--false-alarm curve for the online monitor, placed against the Lorden bound.
 \end{itemize}
-\end{multicols}

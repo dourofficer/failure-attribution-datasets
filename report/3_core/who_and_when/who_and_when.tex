@@ -9,7 +9,6 @@ License & none stated on the dataset card or repo (paper CC BY 4.0); underlying 
 Status & downloaded in full, ungated; 9.5 MB; \code{data/who\_and\_when/} (184 JSON logs + 2 parquet files)\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} Who\&When is the benchmark that defined the task (\S\ref{sec:intro}): every record is the output log of a multi-agent run that \emph{failed} a GAIA or AssistantBench query, plus three labels---\code{mistake\_agent} (who), \code{mistake\_step} (when: a 0-based index into \code{history}) and a free-text \code{mistake\_reason}. Failures are natural (no injection). Two subsets come from two very different MAS:
 \begin{itemize}
 \item \textbf{Algorithm-Generated} (126 logs): teams assembled automatically per task by \emph{CaptainAgent} (AG2, GPT-4o)---a handful of \code{*\_Expert} agents plus a \code{Computer\_terminal}. 82 distinct expert names appear as blamed agents.
@@ -31,7 +30,6 @@ Binary Search & 44.1 / 24.0 & 51.7 / 6.9\\\bottomrule
 Reasoning models do not help much (o1 41.4\,/\,10.3, DeepSeek-R1 56.9\,/\,3.5 All-at-Once on Hand-Crafted). Step accuracy collapses on the long Hand-Crafted logs.
 
 \paragraph{Schema} One JSON object per log: \code{question}, \code{question\_ID}, \code{ground\_truth}, \code{level} (GAIA 1--3 / AssistantBench Medium--Hard), \code{history} (list of \{\code{role}, \code{name}, \code{content}\}), \code{system\_prompt} (AG only), and the three labels. In Hand-Crafted logs \code{history[0]} is the human question, and orchestrator thoughts, orchestrator instructions and specialist replies are separate steps; in Algorithm-Generated logs the first entry is already an expert message.
-\end{multicols}
 
 \paragraph{Statistics} computed from the downloaded data.\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.48\linewidth}\vspace{0pt}\small

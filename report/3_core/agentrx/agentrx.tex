@@ -9,7 +9,6 @@ License & HF card CC BY 4.0; GitHub repository MIT\\
 Status & HF download denied (approval required); the GitHub repo ships 73 of the paper's 170 annotated trajectories (29 $\tau$-bench retail + 44 Magentic-One) with identical schema---downloaded, 14 MB, \code{data/agentrx/github/data/}. Flash (42, internal Microsoft traces) and RelWork (45) are not released\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} AgentRx redefines the target as the \emph{critical failure step}---the first failure by any agent from which the run never recovers---and adds a \textbf{root-cause category}. The dataset is the evaluation set of the AgentRx debugging framework (constraint synthesis $\to$ step-wise checking $\to$ LLM judge). All failures are natural, from four domains:
 \begin{itemize}
 \item \textbf{$\tau$-bench retail} (39, 29 public): single tool-calling agent (gpt-4o) + simulated user under a domain policy; median 36 steps.
@@ -34,7 +33,6 @@ RelWork & AgentRx & 65.9 & 61.5 & 59.3\\\bottomrule
 A judge-only ablation (no constraint evidence) drops step accuracy to 29.9 ($\tau$) and 32.6 (Magentic).
 
 \paragraph{Schema} GitHub \code{data/}: \code{ground\_truth/tau\_ground\_truth.json} (29) and \code{magentic\_one\_ground\_truth.json} (44), each a list of \{\code{trajectory\_id}, \code{failure\_summary}, \code{failures}: [\{\code{failure\_id}, \code{step\_number}, \code{step\_reason}, \code{failure\_category}, \code{category\_reason}, \code{failed\_agent}\}], \code{root\_cause}: \{\code{failure\_id}, \code{reason\_for\_root\_cause}\}\}. Trajectories: \code{tau\_retail/tau\_dataset\_failed.json} (OpenAI chat messages with \code{tool\_calls}; \code{step\_number} is 1-based and counts the system message) and \code{magentic\_dataset/<id>.json} (lists of \{\code{content}, \code{role}\} with roles such as \code{Orchestrator (thought)}, \code{Orchestrator (-> WebSurfer)}, \code{WebSurfer}). Domain policies and tool schemas are included. The gated HF files (\code{tau\_retail.jsonl}, \code{magentic\_one.jsonl}) use the same fields plus \code{num\_failures}.
-\end{multicols}
 
 \paragraph{Statistics} computed from the public GitHub subset (73 trajectories); Flash and RelWork numbers are paper-only.\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.48\linewidth}\vspace{0pt}\small

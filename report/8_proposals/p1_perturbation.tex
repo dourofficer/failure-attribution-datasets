@@ -1,6 +1,5 @@
 \section{Proposal 1: Counterfactual perturbation screens on agent trajectories}\label{sec:future:perturb}
 
-\begin{multicols}{2}
 \paragraph{Motivation} Every dataset in this survey defines the decisive step counterfactually, but only TraceElephant verifies the counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure. Five observations from the raw data make the gap concrete:
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{The root cause is run-specific.} Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs.
@@ -21,7 +20,6 @@ Absorption and run-to-run drift are large effects, not noise. The proposal turns
 \item \emph{Perturbation biology.} Perturb-seq \cite{dixit2016perturbseq} applies a library of CRISPR perturbations to a population of cells and reads out the phenotype of each cell; GEARS \cite{roohani2024gears} and scGen \cite{lotfollahi2019scgen} then predict the phenotype of \emph{unseen} perturbations, so that most of the screen runs in silico. Table~\ref{tab:analogy} maps the objects; the correspondence supplies replicate-based effect estimation, graded essentiality and buffering, and interaction effects between two perturbations.
 \end{itemize}
 What is missing from all of them is an effect size per (trajectory, step, intervention), estimated from repeated rollouts, on failed \emph{and} successful natural runs.
-\end{multicols}
 
 \begin{table}[h]\centering\small
 \begin{tabularx}{\linewidth}{@{}>{\RaggedRight}X >{\RaggedRight}X >{\RaggedRight}X@{}}\toprule
@@ -39,7 +37,6 @@ in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (Definition~\ref
 \label{tab:analogy}
 \end{table}
 
-\begin{multicols}{2}
 \paragraph{Setting} The objects are those of Section~\ref{sec:future:prelim}: effect $\phi$, profile $e_\tau$, decisive step $k^\star$ and lock-in $k_{\mathrm{lock}}$ (Definitions~\ref{def:effect} and \ref{def:fa}) under Assumptions~\ref{as:replay} and \ref{as:vocab}. Fig.~\ref{fig:perturb} shows the measurement. Two further objects are needed: a model that replaces the rollouts, and a curve that summarises the injection side.
 
 \begin{definition}{Effect surrogate}{surrogate}
@@ -53,7 +50,6 @@ is the probability that an error injected at relative position $k/T$ is absorbed
 \end{definition}
 
 Neither object asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures. The topology comparison of \citet{huang2024resilience} and SymTrace's rerun regressions \cite{luan2026symtrace} are single points on fragility curves.
-\end{multicols}
 
 \begin{figure}[h]\centering
 \begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth,scale=0.95,every node/.style={transform shape}]
@@ -85,7 +81,6 @@ Neither object asks for a binary answer: a single re-run is one Bernoulli draw f
 \end{description}
 \end{rqbox}
 
-\begin{multicols}{2}
 \paragraph{Experiments}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
 \item[\EXP{1.1} --- The screen (answers \RQ{1.1}, \RQ{1.2}).] Collect natural failed and successful trajectories on the replayable systems of Table~\ref{tab:engine}; for each, intervene at the human-labelled step (failures) or at stratified positions (successes) plus four control positions, with two interventions from each of $\Delta_{\mathrm{fix}}$ and $\Delta_{\mathrm{inj}}$ and $N=8$ rollouts per cell; estimate $\hat p_0$, $\hat p_\delta$ and $\hat\phi$ with intervals. Every continuation is stored with its outcome, which is the raw material of Proposals 2 and 4.
@@ -93,7 +88,6 @@ Neither object asks for a binary answer: a single re-run is one Bernoulli draw f
 \item[\EXP{1.3} --- Attribution by effect (answers \RQ{1.4}).] Predict $k^\star=\arg\max_k e_\tau(k)$ from the screen and compare with the human labels of Who\&When, TraceElephant, MP-Bench and LongRCA and with the single-rollout counterfactual verifiers of EMFA and Causal Agent Replay \cite{liao2026emfa,shah2026car}. Disagreements between effect-based and human labels, adjudicated by further rollouts, are the interesting output; MP-Bench's three annotators make it possible to ask whether effect size tracks annotator consensus.
 \item[\EXP{1.4} --- Fragility and lock-in (answers \RQ{1.5}).] From the injection half of \EXP{1.1}, estimate the fragility curve $r(k/T)$ of Definition~\ref{def:fragility} per system, per agent and per injected mode, and its point of no return; compare systems with and without a verifier agent and compare topologies as in \citet{huang2024resilience}. Proposal~4 refines this experiment by keeping the absorbed branches and labelling what happened to the error.
 \end{description}
-\end{multicols}
 
 \medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -108,7 +102,6 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \label{tab:eval_p1}
 \end{minipage}\medskip
 
-\begin{multicols}{2}
 \paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p1} lists them per experiment; three conventions apply throughout.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Everything is probabilistic.} $p_0$ for a failed run is not zero (6.90\% of failed runs pass within three unguided reruns \cite{luan2026symtrace}), so effects carry intervals and the surrogate is scored as a probability, not a classification.
@@ -139,4 +132,3 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \item Fragility curves (\EXP{1.4}) that characterise, for the first time with an interventional definition, how far into a run a multi-agent system can still recover from an error.
 \end{itemize}
 The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
-\end{multicols}

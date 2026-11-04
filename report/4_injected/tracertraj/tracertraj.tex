@@ -9,7 +9,6 @@ License & none stated in the archive, README or repository\\
 Status & downloaded in full (24 MB zip, 135 MB JSONL); 3,208 train + 790 test = 3,998 trajectories; \code{data/tracertraj/extracted/agentracer-data-v1.0.0/}. The release is larger than, and ``not identical'' to, the paper's TracerTraj-2.5K\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} TracerTraj is the \emph{training} resource behind AgenTracer-8B (Qwen3-8B tuned with GRPO and a step-Gaussian + agent-match reward), with held-out test splits per domain. Target = Who\&When's (responsible agent, decisive step). Labels are produced fully automatically, with no human review:
 \begin{itemize}
 \item \textbf{Collection}: six MAS---MetaGPT, AutoGen, Smolagents (hand-crafted), AgentPrune, AFlow, OWL-Workforce (automated)---on coding (MBPP+, KodCode, Blackjack), maths (MATH, GSM8K) and agentic (GAIA, HotpotQA) tasks.
@@ -34,7 +33,6 @@ AgenTracer-8B & \textbf{73.0} / \textbf{18.9} & \textbf{59.3} / \textbf{57.6} & 
 On Who\&When (w/\,G) AgenTracer-8B reaches 69.1\,/\,20.7 (Hand-Crafted) and 69.6\,/\,42.9 (Alg.-Generated) versus 56.9\,/\,17.2 and 57.9\,/\,40.7 for Claude-Sonnet-4. Step accuracy on code is low for every model.
 
 \paragraph{Schema} \code{\{agentic,coding,math\}/\{train,test\}.jsonl} plus \code{MANIFEST.json} (row counts, SHA-256, redaction counts). Row fields: \code{question\_ID} (not unique: 118 math ids recur as injected variants, 21 ids occur in both splits), \code{question}, \code{history} (list of \{\code{step}, \code{content}, \code{role}, \code{name}\}), \code{mistake\_agent}, \code{mistake\_step} (stored as a \emph{string}; \code{step} is 1-based in agentic, 0-based in coding/math), \code{mistake\_reason} and \code{ground\_truth} (coding/math), \code{error\_source} (agentic). Agentic rows have no \code{name}: every step is the generic \code{assistant}. Coding roles are MetaGPT's Team Leader / Product Manager / Architect / Engineer / Data Analyst; math ``agents'' are AFlow operators (\code{Custom}, \code{reasoning expert}, \ldots).
-\end{multicols}
 
 \paragraph{Statistics} computed from the released archive (train + test pooled).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.55\linewidth}\vspace{0pt}\small

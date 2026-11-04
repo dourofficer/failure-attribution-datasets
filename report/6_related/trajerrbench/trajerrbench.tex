@@ -9,7 +9,6 @@ License & MIT for the TrajDebug code and annotations (\code{LICENSE}, \code{CITA
 Status & downloaded in full (git clone), ungated; 486 zh + 486 en JSON files = 63 MB (clone 215 MB); \code{data/trajerrbench/repo\_TrajDebug/data/trajerrbench/\{en,zh\}/\{tau2bench,swebenchpro\}/*.json} + \code{manifest.jsonl}\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} TrajErrBench is a benchmark for \emph{critical error step detection} in long-horizon single-agent trajectories, using Who\&When's counterfactual definition: the critical step is the \emph{earliest} decisive error, i.e.\ the step whose action, if replaced by a correct one (earlier steps fixed, later steps unfolding correctly), would have turned the failure into a success. Detection uses the failed trajectory alone, without task ground truth. Failures are natural (reward 0 under the source benchmark's own evaluation). Two domains:
 \begin{itemize}
 \item \textbf{$\tau^2$-Bench} (400): airline and retail customer-service tool-use tasks with a simulated user; rollouts by DeepSeek-Reasoner, GPT-5 and Qwen3-Max; 29.3 messages on average.
@@ -33,7 +32,6 @@ TrajDebug & \textbf{52.8} & \textbf{24.4} & 22.4 / \textbf{48.4} & \textbf{26.0}
 SWE-Bench Pro is by far the hardest split (best 24.4\%), consistent with its lower human agreement.
 
 \paragraph{Schema} One JSON file per trajectory in the unified TrajDebug schema (\code{data\_processing/schema.py}): \code{messages} = list of \{\code{step} (0-based, = array index), \code{role} (\code{system} / \code{user} / \code{assistant} / \code{tool}), \code{name}, \code{content} (tool calls rendered as \code{[tool\_calls]\textbackslash n- fn(\{json\})}), \code{judgable} (may this step be the critical one), \code{compress\_role}\}; \code{metadata}: \code{dataset} = \code{trajerrbench}, \code{task\_id}, \code{task\_description}, \code{reward} (0), \code{annotation.\{critical\_error\_step, critical\_error\_type\}}, \code{extra.\{agent\_framework\_description, language, source\_benchmark, pair\_id\}}. \code{manifest.jsonl} pairs the zh and en files; labels and message counts are identical across editions (0 mismatches). The same folder layout holds the converted \code{whoandwhen/} (58 + 126) and \code{agentdebugbench/} (100 + 50 + 50) copies.
-\end{multicols}
 
 \paragraph{Statistics} computed from the downloaded English edition (identical labels to zh).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}\small\setlength{\tabcolsep}{4pt}

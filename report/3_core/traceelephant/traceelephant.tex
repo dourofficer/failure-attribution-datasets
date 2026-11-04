@@ -9,7 +9,6 @@ License & CC BY 4.0 (HF card and repository); upstream tasks keep their own lice
 Status & downloaded in full, ungated; 597 MB zip, 799 MB extracted (440 JSON + 2,070 PNG); only the 220 failed traces of the paper's 380 runs are released; \code{data/traceelephant/}\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} TraceElephant asks the Who\&When question (responsible agent + decisive step) under \emph{full execution observability}. Instead of agent outputs only, each step is one LLM-API call recorded by a non-intrusive middleware: the complete request (system prompt, all prior messages, tool results, screenshots), the raw response, token usage and tool-call logs, plus system metadata and the runnable agent code, so the run can be re-executed. The paper's claim: full traces raise step-level accuracy by up to 76\% relative over output-only observation. Three systems, GPT-4o backbone, temperature 0.3, natural failure distribution:
 \begin{itemize}
 \item \textbf{Captain-Agent} (AG2; Orchestrator + generated \code{*\_Expert} agents + terminal): 147 GAIA/AssistantBench runs, 85 failed.
@@ -32,8 +31,7 @@ Dynamic Agentic (theirs) & \textbf{66.7} / \textbf{33.3} & \textbf{60.6} / \text
 \end{center}
 Ablation: removing inputs and metadata from All-at-Once drops step accuracy from 0.28 to 0.16 and agent accuracy by $\approx$22\%. Other backbones (Claude-4.5-Sonnet, DeepSeek-R1, GPT-4o-mini, Qwen3-32B, GPT-OSS-20B) appear only in a radar chart; Claude-4.5-Sonnet and DeepSeek-R1 are strongest.
 
-\paragraph{Schema} One directory per run, \code{data/<system-runs-dir>/<run\_id>/}, with five system$\times$benchmark directories named like \code{captain-runs-gaia} or \code{swe-agent-runs-swe-bench}. \code{trace\_metadata.json}: \code{task\_id}, \code{task\_instruction}, \code{ground\_truth} (GAIA/AssistantBench; SWE-Bench has \code{tests\_status} instead), \code{system\_name}, \code{agent\_configuration}, \code{agent\_system\_intro} (markdown architecture description), \code{run\_id}, and the three labels. \code{step\_records.json}: list of \{\code{step\_id}, \code{agent\_id}, \code{agent\_name}, \code{input} (full chat-completion request with \code{messages}, screenshots as image parts), \code{output} (raw response incl.\ \code{tool\_calls} and \code{usage}), \code{tool\_logs}\}. \code{images/step\_<k>\_image\_<j>.png}: WebSurfer screenshots (Magentic-One only).
-\end{multicols}
+\paragraph{Schema} One directory per run, \code{data/<system-runs-dir>/<run\_id>/}, with five system$\times$benchmark directories named like \code{captain-runs-gaia} or \code{swe-agent-runs-\allowbreak swe-bench}. \code{trace\_metadata.json}: \code{task\_id}, \code{task\_instruction}, \code{ground\_truth} (GAIA/\allowbreak AssistantBench; SWE-Bench has \code{tests\_status} instead), \code{system\_name}, \code{agent\_configuration}, \code{agent\_system\_intro} (markdown architecture description), \code{run\_id}, and the three labels. \code{step\_records.json}: list of \{\code{step\_id}, \code{agent\_id}, \code{agent\_name}, \code{input} (full chat-completion request with \code{messages}, screenshots as image parts), \code{output} (raw response incl.\ \code{tool\_calls} and \code{usage}), \code{tool\_logs}\}. \code{images/step\_<k>\_image\_<j>.png}: WebSurfer screenshots (Magentic-One only).
 
 \paragraph{Statistics} computed from the downloaded data (steps = LLM calls).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{0.56\linewidth}\vspace{0pt}\small

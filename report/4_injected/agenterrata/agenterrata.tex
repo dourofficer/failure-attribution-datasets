@@ -9,7 +9,6 @@ License & not stated (paper CC BY 4.0)\\
 Status & \textbf{not released}: HF datasets API, GitHub search and the web were checked on 2026-10-16 with no result. Nothing downloaded; \code{data/agenterrata/} holds only the Who\&When case file (103 KB) that the paper's Appendix~C analyses\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} AgentErrata is the evaluation set for AgentScope, a diagnosis method that abstracts a trajectory into a Reasoning--Action Graph and localises faults on it. It was built because Who\&When marks the failing step but has no failure-type label, and because---the authors argue---Who\&When's annotated step is often the \emph{earliest detectable} issue rather than the \emph{decisive} one. Trajectories come from three agent stacks, \textbf{OpenManus} (tool loop), \textbf{OWL} (two-agent user/assistant society) and \textbf{Mini SWE Agent}, on BrowseComp, SWE-bench Lite and WebArena; per-framework and per-benchmark counts are not given. Only \emph{successful} runs are kept; then taxonomy-guided \textbf{fault injection} is applied: an LLM first judges whether a run is suitable for a given mode, single-step faults are injected by instrumented replay at a chosen step, and faults with cross-step dependencies get extra post-processing to keep the text consistent. Every injected fault is decisive (the task fails). All 303 trajectories were \textbf{manually verified}, invalid ones discarded; annotator count, time and agreement are not reported. Labels per trajectory: the injected step and one of 10 modes in 3 categories:
 \begin{itemize}
 \item \textbf{Reasoning}: Wrong Context (WC), Instruction Unfollowing (IU), Insufficient Context (IC), Context Miss (CM);
@@ -34,7 +33,6 @@ GPT-5.1 & All-at-Once & 3.3 / 4.6 / 18.8 & 18.2$^*$\\
 $^*$LLM-as-a-judge classifier. With DeepSeek-V3.2 the three methods reach SLA T$\pm$0 of 0.7 / 17.8 / 35.0 and AgentScope CA 45.2. The Who\&When prompting baselines stay near chance on exact step accuracy even with the strongest backbone.
 
 \paragraph{Schema} Not available. The paper's internal representation is a DAG whose vertices are $\langle$id, role, content, ISR$\rangle$ with ISR = \{Intent \& Context, Reasoning \& Action, Signal \& Validation\}; node types: reasoning, action (tool call/output), user input, output, claim, tool response; edges: control and data dependencies. By analogy with Who\&When (benchmarked alongside), a release would hold steps with role/content, a \code{mistake\_step} and a mode label.
-\end{multicols}
 
 \paragraph{Statistics} from the paper (nothing could be computed).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{\linewidth}\vspace{0pt}\small

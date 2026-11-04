@@ -9,7 +9,6 @@ License & not stated\\
 Status & \textbf{not released} as of 2026-10-16 (no GitHub / HF / project page found); \code{data/megarca\_mix/} is empty; every number below is from the paper\\
 \end{identity}
 
-\begin{multicols}{2}
 \paragraph{Description} MegaRCA-Mix is a small, deliberately hard root-cause-attribution test set for \emph{very long} single-agent executions: 50 failed trials with a median log of 286\,K tokens (1.05 MiB), each shipped with the full evidence bundle a human debugger would have --- raw trajectory, trial configuration, agent-side console logs, verifier output and sandbox artifacts. It was built because the released RCA benchmarks the paper also evaluates on (TRAIL, TELBench, AgentRx, Who\&When algorithm-generated) have short traces and a single trajectory file, so a judge never has to \emph{search} for evidence. The paper's method, \emph{Continual Search}, prompts an LLM judge for up to four turns to keep opening unread artifacts before committing to a diagnosis.
 \begin{itemize}
 \item \textbf{Source}: failed trials from Harbor Index (82 tasks distilled from 29 benchmarks in seven domains); the paper names GAIA, SWE-Bench, HLE, OpenRCA ``+ 15 additional benchmarks''. Per-benchmark, per-domain and per-model composition of the 50 trials is not reported.
@@ -29,7 +28,6 @@ Opus-4.8 & 0.471 & 0.479 & \textbf{0.608}\\\bottomrule
 (The abstract quotes GPT-5.5 0.349 $\to$ 0.498, a different run.) Evidence coverage: 70.5\% of relevant artifacts opened at turn 1 for both strategies; Continual Search reaches 95.2\% (turn 3) and 98.5\% (turn 4) while passive continuation plateaus at 75.6\%. Config files, console logs and raw session records are opened only in later turns, and these are what fix misdiagnoses.
 
 \paragraph{Schema} Not observable. From the paper, a trial = Claude Code session trajectory + \code{config.json} / trial configuration + console logs + verifier/grader output + sandbox artifacts, with gold = acceptable set(s) of (\code{edge}, \code{fault\_side}, \code{failure\_mode}) and a first-divergence citation. There is no agent-role label (Claude Code is single-agent with sub-agents) and the ``step'' is a cited divergence point rather than an index.
-\end{multicols}
 
 \paragraph{Statistics} from the paper only (nothing downloadable; \code{notes/megarca\_mix\_stats.json} has empty lists).\par\nobreak\vspace{1pt}
 \noindent\begin{minipage}[t]{\linewidth}\vspace{0pt}\small

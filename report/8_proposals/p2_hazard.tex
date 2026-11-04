@@ -1,6 +1,5 @@
 \section{Proposal 2: Label-free attribution from the flow of trajectories}\label{sec:future:unsup}
 
-\begin{multicols}{2}
 \paragraph{Motivation} Every human-labelled dataset in this survey is a \emph{test} set; the only training-scale resources are injected (Section~\ref{sec:g2}) and carry the positional skew of Fig.~\ref{fig:errpos}. \citet{yeh2026oat} show that step labels can be dispensed with altogether.
 \begin{itemize}[leftmargin=1.1em]
 \item \textsc{Oat} fits a one-class model of \emph{successful} trajectories---about 100 of them, embedded step by step with an LLM and modelled by a neural controlled differential equation \cite{kidger2020ncde}---and flags the steps of a failed run that deviate from the learned dynamics.
@@ -75,7 +74,6 @@ The survival function $\bar S_t(\tau)=\prod_{s\le t}(1-h_s)$ is the probability 
 \item both enter the L1 likelihood as ordinary trajectories, so the corpus grows without a label;
 \item the pair is the sharpest test of the thesis: a hazard model must put high posterior on the injected step of the failed branch and low cumulative hazard on the identical step of the absorbed branch, whereas any detector of deviation from the success flow sees the same step twice and must flag both.
 \end{itemize}
-\end{multicols}
 
 \begin{table}[h]\centering\small
 \begin{tabular}{@{}llrrr@{}}\toprule
@@ -127,7 +125,6 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
 \end{description}
 \end{rqbox}
 
-\begin{multicols}{2}
 \paragraph{Experiments}
 \begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
 \item[\EXP{2.1} --- Outcome-supervised hazard at L1 and L1$^{+}$ (answers \RQ{2.1}, \RQ{2.2}, \RQ{2.5}).] Fit $h_\theta$ by maximum likelihood on all trajectories of a corpus with outcomes, using the same frozen step embeddings as \textsc{Oat} so that the comparison isolates the estimator. The estimator is small: a causal GRU or two-layer transformer over the embeddings with a sigmoid hazard head, a sparsity prior on $\sum_t h_t$ (Assumption~\ref{as:sparse}) and the policy decision of Section~\ref{sec:future:prelim} as the step unit. Steps are discrete events, so no continuous-time machinery is needed; what matters is causality (prefix only) and sparsity. Fit once at L1 and once with the rollout prefixes of L1$^{+}$ added (the by-product of \EXP{1.1}), to measure what synthetic branching buys.
@@ -135,7 +132,6 @@ MP-Bench ($\ge$2 of 3 votes) & flagged steps & 4.2 & 23.3 & 18.0\% \\\bottomrule
 \item[\EXP{2.3} --- Prefix monitor (answers \RQ{2.4}).] Because $h_t$ depends on the prefix only, the cumulative hazard $1-\prod_{s\le t}(1-h_s)$ is an online estimate of lock-in. Evaluate its lead time against $t_{\mathrm{lock}}$ and against the orchestrator's own ledger flags in Magentic-One traces (\S\ref{ds:traceelephant}). Proposal~4 (\EXP{4.7}) adds a delay guarantee to this monitor.
 \item[\EXP{2.4} --- Fully unsupervised change-point model at L0 (answers \RQ{2.3}).] Same corpora, outcomes hidden. The question is not whether it beats \EXP{2.1}---it cannot---but which error classes are identifiable from the dominant mode alone. The generator-likelihood argument predicts that errors visible only in the action stream are not (a hallucinated summary is a typical summary), whereas errors that change the \emph{observation} stream are: tool exceptions, empty pages, repeated queries (MAST FM-1.3), stalled ledgers, premature termination. Fit $q_0$ on observations and on actions separately.
 \end{description}
-\end{multicols}
 
 \medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
 \setlength{\tabcolsep}{3pt}
@@ -150,7 +146,6 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \label{tab:eval_p2}
 \end{minipage}\medskip
 
-\begin{multicols}{2}
 \paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p2} lists them per experiment; four conventions apply.
 \begin{itemize}[leftmargin=1.1em]
 \item \emph{Same encoder for every method.} Baselines, \textsc{Oat} and the hazard head share the frozen step embeddings, so differences are differences between estimators.
@@ -183,4 +178,3 @@ Exp. & Data & Metrics & Baselines / reference values \\\midrule
 \item An identifiability map for L0: the error categories that can and cannot be recovered from the dominant mode, which tells practitioners what a label-free monitor will and will not catch.
 \item A prefix monitor with positive median lead time to $t_{\mathrm{lock}}$.
 \end{itemize}
-\end{multicols}
