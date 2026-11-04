@@ -1,0 +1,173 @@
+\section{Proposal 3: Attribution-guided policy improvement}\label{sec:future:train}
+
+\begin{multicols}{2}
+\paragraph{Motivation} The datasets of this survey are built to score \emph{attributors}. The obvious consumer of a good attributor is the agent that produced the failure: a label $(a^\star,k^\star)$ says which parameters to move and from which state to try again. A literature search on this direction (notes in \code{notes/attribution\_as\_training\_signal.md}) gives three findings.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{The mechanism exists, under other names.} The strongest 2026 agent-RL methods locate a ``pivotal'', ``critical'' or ``irrecoverable'' step of a failed rollout and use it to restart rollouts there \cite{tian2026mirl,guo2026pivoarl,shi2026r3l,liu2026sprout,liang2026elpo}, to reweight the advantage at that step \cite{zhu2026fault,huang2026etro,jung2026prover,agentevolver2025,zhu2026lvrl} or to build preference pairs there \cite{li2026cso,yuan2025agentr,steca2025,cuarecovery2026}. None cites a failure-attribution benchmark as a source of signal, and none uses an attributor trained on one.
+\item \emph{The benchmarks never close the loop.} Every downstream experiment inside an attribution paper is inference-time: AgenTracer feeds its tracer's reasoning back as a prompt for three rounds (gains of 4.8--14.2\%) \cite{agentracer2026}, AgentDebug re-rolls from the critical step with guidance \cite{agentdebug2026}, SearchAuditor resumes at the critical step with a repair directive \cite{searchauditor2026}, SymTrace replays one node \cite{luan2026symtrace}. No weights change. The only multi-agent blueprint---first-error localisation followed by preference pairs on the blamed agent---is a position paper without experiments \cite{yang2025blame}.
+\item \emph{Attribution accuracy is never related to training value.} Nobody has asked whether a step metric from Sections~\ref{sec:g1}--\ref{sec:g4} predicts how much the agent improves when the label is used. The one direct measurement is negative: on 150 SWE-bench Verified runs, LLM-judge ``first mistake'' labels fall where the success probability does \emph{not} drop in 66\% of cases, only 7 of 188 judge answers name the decisive step, and restarting from the judge's step changes expected success by $-0.03$ to $-0.08$, whereas restarting from the certified point of no return raises it from 0.44 to 0.53 \cite{shen2026epv}. SearchAuditor's ablation adds that a generic hint at the predicted step repairs fewer failures (5.6\%) than an unguided retry (9.4\%), against 17.4\% with the auditor's directive \cite{searchauditor2026}: the location is necessary, not sufficient.
+\end{itemize}
+The pattern shared by the methods that work is \emph{propose, verify, then credit}: a judge or the policy proposes a step, a few current-policy continuations confirm that the outcome actually turns there, and only then does the step shape credit or data \cite{liang2026elpo,jung2026prover,li2026cso,chu2026agentgrad}. That verification step is the screen of Proposal~1 with $N$ between 1 and 8.
+
+\paragraph{Closest prior work} Table~\ref{tab:entry} places the existing methods on the entry points defined below. Four groups:
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Restart methods} (MiRL, PivoARL, R$^3$L, SPROUT, ELPO) start the next rollouts from a chosen prefix; only ELPO verifies the prefix with rollouts, by binary search for the first irrecoverable step \cite{liang2026elpo}.
+\item \emph{Credit methods} (FAULT, ETRO, ProVer, AgentEvolver, LVRL) reweight or truncate the advantage; ProVer verifies with $N=8$ continuations but uses positive segments only \cite{jung2026prover}.
+\item \emph{Data methods} (CSO, Agent-R, CUA-Recovery) build a preference pair or a spliced correction at the step; CSO checks the alternative by policy continuation \cite{li2026cso}.
+\item \emph{Multi-agent credit} (MAPPA, C3, AgentGrad) assigns per-agent credit from a coach, from counterfactual continuation of every message, or from sequential intervention, on two- to three-agent mathematics or on prompts only \cite{li2026mappa,chen2026c3,chu2026agentgrad}; nothing uses (agent, step) blame on a GAIA-style system.
+\end{itemize}
+
+\paragraph{Setting} The agent is a trainable policy $\pi_\theta$ (single- or multi-agent, each agent $a\in\mathcal{A}$ owning a parameter subset $\theta_a$) run on tasks with a success predicate $S$; the notation is that of Section~\ref{sec:future:prelim}.
+\begin{itemize}[leftmargin=1.1em]
+\item A group-relative outcome-only update (GRPO and its agentic variants \cite{feng2025gigpo}) applies to every step of a failed trajectory the same negative advantage $A_\tau<0$:
+\[g^{\mathrm{unif}}_\tau=A_\tau\sum_{t=1}^{T}\nabla_\theta\log\pi_\theta(u_t\mid\tau_{<t}).\]
+\item Under Assumption~\ref{as:absorb} only the steps in the error set are causal, so this estimator pushes down $T-|E_\alpha(\tau)|$ correct decisions per failed run; with the error rates of Table~\ref{tab:contam} that is 80--99\% of its negative gradient mass.
+\item An \emph{attributor} $\mathcal{A}$ maps a trajectory to a non-negative weight vector $\hat w_\tau\in\mathbb{R}^T$, an estimate of where the causal mass lies: a point estimate $\hat w_\tau=\mathbb{1}[t=\hat k]$, a posterior $\hat w_\tau(t)=P(t^\star{=}t\mid S{=}0,\tau)$ from the hazard model of Definition~\ref{def:hazard}, or a graded profile $\hat w_\tau\propto\hat e_\tau$ from the screen of Definition~\ref{def:fa}.
+\end{itemize}
+
+\begin{definition}{Attribution-weighted update}{attrgrad}
+Given $\hat w_\tau$ and a mixing weight $\lambda\in[0,1]$, the attribution-weighted policy gradient of a failed trajectory is
+\[g^{\hat w}_\tau=A_\tau\sum_{t=1}^{T}\big[(1-\lambda)+\lambda\,T\hat w_\tau(t)/\|\hat w_\tau\|_1\big]\nabla_\theta\log\pi_\theta(u_t\mid\tau_{<t}),\]
+so that $\lambda=0$ recovers $g^{\mathrm{unif}}_\tau$ and $\lambda=1$ with the true $w_\tau=\mathbb{1}[t=k^\star]$ concentrates the whole penalty on the decisive step. Successful trajectories are unchanged. The bias of $g^{\hat w}$ relative to the ideal $g^{w}$ is governed by the attributor's precision at the chosen tolerance---what the step metrics of this survey measure---and its variance reduction relative to $g^{\mathrm{unif}}$ by $1-\varepsilon$.
+\end{definition}
+
+\begin{definition}{Entry points}{entry}
+The weight vector can enter training in four places (Fig.~\ref{fig:entry}):
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{R --- restart.} Rollouts for the next update start from $\tau_{<k}$ with $k\sim\rho_\tau\propto\hat w_\tau$ instead of from the task prompt. This reshapes the state distribution toward decisions that matter and lets a group of continuations share a prefix, so GRPO's within-group comparison becomes a step-level comparison at $k$. Needs Assumption~\ref{as:replay}.
+\item \textbf{C --- credit.} The update of Definition~\ref{def:attrgrad}, optionally with \emph{truncation}: no dense supervision after $\hat k$, because later steps are conditioned on a state the current policy would not reach \cite{huang2026etro,guo2026pivoarl}. Needs only the log and an attributor.
+\item \textbf{D --- data.} A preference pair or a spliced correction at $\hat k$: the policy's action against an alternative from which a continuation succeeds \cite{li2026cso}, or the failed prefix followed by a successful sibling branch \cite{yuan2025agentr}. Needs one rollout from $\tau_{<\hat k}\oplus\delta(s_{\hat k})$ with $\delta\in\Delta_{\mathrm{fix}}$.
+\item \textbf{M --- culprit-only update} (multi-agent). $\hat w$ is indexed by (agent, step); the gradient is applied to $\theta_{a^\star}$ and the advantages of the other agents are masked, the weight-space analogue of intervention-guided prompt optimisation \cite{chu2026agentgrad}.
+\end{itemize}
+\end{definition}
+
+\begin{definition}{Training value of an attributor}{trainval}
+For a fixed recipe, budget $B$ of environment steps and seeds, let $\pi^{\mathcal{A}}_B$ be the policy after training with weights from $\mathcal{A}$ and $\pi^{\mathrm{unif}}_B$ the outcome-only policy at the same budget. The \emph{training value} is $V_B(\mathcal{A})=J(\pi^{\mathcal{A}}_B)-J(\pi^{\mathrm{unif}}_B)$, with $J$ the held-out success rate; the \emph{accuracy-to-value curve} is $V_B$ plotted against the attributor's step accuracy at the tolerance used by the recipe.
+\end{definition}
+
+\emph{The attributor ladder.} The experiments hold the training recipe fixed and vary only $\mathcal{A}$, ordered by cost and by how much of the outcome it has seen:
+\begin{enumerate}[leftmargin=1.4em,itemsep=1pt]
+\item \emph{position priors}: last decision step, per-source histogram (Proposal~2);
+\item \emph{outcome variance, no attribution}: start states where the reference policy sometimes fails \cite{pivotrl2026};
+\item \emph{the policy's own reflection} \cite{guo2026pivoarl};
+\item \emph{prompted judge}: the all-at-once protocol of Who\&When with a frontier model;
+\item \emph{trained attributors}: an 8B model trained on TracerTraj, Aegis or Who\&When~Pro with the AgenTracer recipe \cite{agentracer2026}, and the hazard model of Proposal~2 fitted at L1 on the same system's runs;
+\item \emph{rollout-verified}: any of 3--5 followed by the screen of Proposal~1 with $N\le8$ at the proposed step and its neighbours \cite{liang2026elpo,jung2026prover};
+\item \emph{oracle}: the rollout-measured $k^\star$ with large $N$, affordable only on a test subset.
+\end{enumerate}
+Each rung is scored twice: by the attribution metrics of this survey on held-out labels of the same system, and by its training value.
+\end{multicols}
+
+\begin{figure}[h]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth]
+\def\dx{0.85}
+\foreach \i in {1,...,4}{\node[draw=rule,fill=surface,minimum width=0.68cm,minimum height=0.4cm,inner sep=1pt] (s\i) at (\i*\dx,0) {$s_{\i}$};}
+\node[draw=critical,fill=critical!10,minimum width=0.68cm,minimum height=0.4cm,inner sep=1pt] (s5) at (5*\dx,0) {$s_{\hat k}$};
+\foreach \i in {6,7}{\node[draw=rule,fill=surface,minimum width=0.68cm,minimum height=0.4cm,inner sep=1pt] (s\i) at (\i*\dx,0) {$s_{\i}$};}
+\node[right=2pt of s7,text=ink2] {failed run, $S=0$};
+\foreach \i/\h in {1/0.04,2/0.06,3/0.05,4/0.12,5/0.58,6/0.07,7/0.04}{\fill[s1!70] (\i*\dx-0.17,-1.0) rectangle (\i*\dx+0.17,-1.0+\h);}
+\draw[rule!80!black] (0.5,-1.0) -- (7*\dx+0.4,-1.0);
+\node[anchor=east,text=ink2] at (0.45,-0.75) {attribution $\hat w_\tau(t)$};
+\coordinate (p) at (5*\dx,-1.08);
+\node[draw=s3,fill=s3!8,rounded corners=2pt,inner sep=3pt,text width=4.6cm,align=left] (R) at (5*\dx-5.3,-2.55) {\textbf{R --- restart.} Next rollouts start from $\tau_{<k}$ with $k\sim\rho_\tau\propto\hat w_\tau$. Needs state restore.};
+\node[draw=s2,fill=s2!8,rounded corners=2pt,inner sep=3pt,text width=4.6cm,align=left] (C) at (5*\dx,-2.55) {\textbf{C --- credit.} Advantage of step $t$ scaled by \mbox{$(1-\lambda)+\lambda T\hat w_\tau(t)$}, truncated after $\hat k$. Needs only the log.};
+\node[draw=s7,fill=s7!8,rounded corners=2pt,inner sep=3pt,text width=4.6cm,align=left] (D) at (5*\dx+5.3,-2.55) {\textbf{D --- data.} Pair $(u_{\hat k},\delta(u_{\hat k}))$, kept if a rollout from $\delta(u_{\hat k})$ succeeds. Needs one verifying rollout.};
+\draw[->,ink3] (p) -- (R.north);
+\draw[->,ink3] (p) -- (C.north);
+\draw[->,ink3] (p) -- (D.north);
+\end{tikzpicture}
+\caption{Entry points of an attribution estimate $\hat w_\tau$ into agent training (Definition~\ref{def:entry}). All three consume the same object and differ in what they need from the environment. In a multi-agent system the same vector, indexed by agent and step, also selects whose parameters are updated (entry point M).}
+\label{fig:entry}
+\end{figure}
+
+\begin{table}[h]\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l >{\RaggedRight\hsize=1.05\hsize}X l >{\RaggedRight\hsize=0.95\hsize}X l@{}}\toprule
+Method & Attributor (who proposes $\hat k$) & Verified? & Entry & Gain vs.\ outcome-only \\\midrule
+MiRL \cite{tian2026mirl} & 27B judge, clustered into 8 misbehaviours & replay only & R + judge-gated reward & TB-Lite 51.8 vs 43.4 \\
+PivoARL \cite{guo2026pivoarl} & the policy's own reflection & no & R + C (prefix credit) & 83.9 vs 73.9 (GiGPO) \\
+R$^3$L \cite{shi2026r3l} & the policy's own diagnosis & no & R + C (prefix mask) & ALFWorld 0.72 $\to$ 0.93 \\
+SPROUT \cite{liu2026sprout} & policy as reviewer, with test diagnostics & no & R (snapshots) & TB-2.1 64.0 vs 39.3 \\
+ELPO \cite{liang2026elpo} & binary-search rollouts: first irrecoverable step & MC & R + C (suffix clip) & 60.7 vs 51.2 \\
+FAULT \cite{zhu2026fault} & self-diagnoser with step and quote, evidence-checked & quote match & C (priced penalties) & ALFWorld 91.0 vs 49.3 \\
+ETRO \cite{huang2026etro} & 27B writer: earliest unrecovered decisive error & no & C (truncated distillation) & WebShop 85.8 vs 73.7 \\
+ProVer \cite{jung2026prover} & agentic judge proposes a segment & MC, $N{=}8$ & C (positive only) & $+7$ to $+10\%$ rel. \\
+AgentEvolver \cite{agentevolver2025} & judge labels every step good/bad & no & C ($\alpha{=}0.1$--$0.2$) & 47.6 vs 41.3 \\
+LVRL \cite{zhu2026lvrl} & frozen LLM value function, credit = value drop & no & C & up to $+13.6$ pp \\
+CSO \cite{li2026cso} & PRM candidates, expert alternative & MC, policy continuation & D (DPO at $\hat k$) & GAIA 49.5 vs 38.9 \\
+Agent-R \cite{yuan2025agentr} & the policy's own first-error judgement & no & D (splice) & 70.7 vs 62.4 (splice at end) \\
+CUA-Recovery \cite{cuarecovery2026} & gold per-step lineage, human-checked & yes & D (recovery SFT) & 35.2 vs 23.6 (token-matched) \\
+MAPPA \cite{li2026mappa} & LLM coach scores every (agent, action) & no & M (dense) & no shared-reward ablation \\
+C3 \cite{chen2026c3} & counterfactual continuation of every message & MC & M (dense) & MATH500 82.8 vs 74.5 \\
+AgentGrad \cite{chu2026agentgrad} & sequential intervention: first agent whose fix flips $S$ & yes & M (prompt only) & $+11.8$ vs $+9.2$ (GEPA) \\\bottomrule
+\end{tabularx}
+\caption{Existing methods placed on the entry points of Definition~\ref{def:entry}. ``Verified'' states whether the proposed step is checked against the outcome before it is used. Numbers are the papers' own and are not compute-matched across rows; see \code{notes/lit\_training\_signal/} for the per-paper caveats.}
+\label{tab:entry}
+\end{table}
+
+\begin{rqbox}{3}
+\begin{description}[leftmargin=3.2em,style=sameline,font=\bfseries,itemsep=1.5pt]
+\item[RQ\,3.1] How does the training value of an attributor depend on its attribution accuracy, and below which precision does attribution-weighted training become worse than outcome-only training at the same budget?
+\item[RQ\,3.2] Which error of an attributor is the damaging one for training: a label shifted toward the step where the failure becomes visible, or a label that is randomly wrong?
+\item[RQ\,3.3] Does negative credit concentrated on a rollout-verified decisive step beat unverified judge credit at equal budget, and does it avoid the reward-hacking signature of fixed process rewards?
+\item[RQ\,3.4] In a multi-agent system, does updating only the blamed agent beat a shared reward, when the blame comes from an attributor trained on the datasets of this survey?
+\item[RQ\,3.5] When a policy is trained against attributed failures, do the targeted failure modes shrink without the other modes growing?
+\end{description}
+\end{rqbox}
+
+\begin{multicols}{2}
+\paragraph{Experiments}
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
+\item[\EXP{3.1} --- The accuracy-to-value curve (answers \RQ{3.1}, \RQ{3.2}).] Recipe: entry points R and C (restart from $\hat k$, prefix-only credit, truncation after $\hat k$) on a GiGPO-style learner \cite{feng2025gigpo}, 4B policy, matched rollout budget. Every rung of the ladder is trained, plus \emph{synthetically degraded} attributors: the oracle label shifted forward by $d$ steps toward the symptom, and the oracle mixed with random steps at precision $p$. The output is the curve of Definition~\ref{def:trainval}, its slope, and the precision below which attribution hurts. The evidence of \cite{shen2026epv} predicts that rung 4 sits below rung 2 on SWE-bench and that the shift $d$, not the precision $p$, is the damaging error.
+\item[\EXP{3.2} --- Verified negative credit (answers \RQ{3.3}).] Entry point C alone, so that nothing is restarted. Compare (i) unverified judge weights \cite{agentevolver2025}, (ii) evidence-checked self-blame \cite{zhu2026fault}, (iii) the hazard posterior of Proposal~2 and (iv) the rollout-verified profile $\hat e_\tau$ of Proposal~1 used as $\hat w$, each at fixed $\lambda$ and at $\lambda$ annealed toward 0. ProVer uses only positive segments \cite{jung2026prover}; this experiment is its negative mirror on natural failures.
+\item[\EXP{3.3} --- Culprit-only updates in a multi-agent system (answers \RQ{3.4}).] Entry point M on the MASLab systems of row 4 of Table~\ref{tab:engine} (Aegis wrappers, verifiable answers) and, for transfer, Magentic-One on GAIA (row 6, log-only). Blame from the trained attributor (rung 5) and from counterfactual message replay \cite{chen2026c3}. Conditions: shared reward to all agents, per-agent leave-one-out credit \cite{li2026sharp}, repair-every-agent data \cite{zhao2025sirius}, culprit-only gradient and culprit-only preference pairs \cite{yang2025blame}.
+\item[\EXP{3.4} --- Closing the loop (answers \RQ{3.5}).] After each run of \EXP{3.1}--\EXP{3.3}, the failures of the trained policy are re-attributed and re-labelled with the failure-mode taxonomies of Section~\ref{sec:g3} (MAST modes through the Aegis labeller, AgentErrorTaxonomy). Two numbers: how much the targeted modes shrink, which MiRL reports as 43--57\% on unseen prefixes \cite{tian2026mirl}, and how much the other modes grow---the ``whack-a-mole'' risk no paper reports.
+\end{description}
+\end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l >{\RaggedRight\hsize=1.25\hsize}X >{\RaggedRight\hsize=0.95\hsize}X >{\RaggedRight\hsize=0.8\hsize}X@{}}\toprule
+Exp. & Data & Metrics & Baselines / reference values \\\midrule
+\EXP{3.1} & \emph{Systems}: rows 1--3 of Table~\ref{tab:engine} (ALFWorld and WebShop with the AgentDebug agent, $\tau^2$-Bench, SWE-bench with a snapshotting harness); \emph{accuracy reference}: released human step labels on the same systems (AgentErrorBench 200, TrajErrBench 486, TraceElephant 44); three seeds per cell & held-out success rate $J$; training value $V_B$ (Definition~\ref{def:trainval}) at matched environment steps; the accuracy-to-value curve and its slope; the break-even precision; attribution accuracy of every rung (exact, $\pm k$) on the held-out labels & outcome-only GiGPO at the same budget; variance-selected start states \cite{pivotrl2026}; recovery training forked from the end of failed runs with no localisation \cite{reterm2026}; last-node and random-node restart \cite{luan2026symtrace} \\
+\EXP{3.2} & same systems; natural failures of the current policy; weights from four attributors & $J$ and $V_B$; the \emph{reward-hacking signature}: the attributor's own score rising while $J$ falls \cite{liu2026vppo,choudhury2025agentprm,zhao2026credithurts}; fraction of negative gradient mass on the decisive step & outcome-only; unverified judge credit \cite{agentevolver2025}; ProVer-style positive-only credit \cite{jung2026prover} \\
+\EXP{3.3} & \emph{Systems}: MASLab systems of row 4 (answer match, unit tests), Magentic-One on GAIA for transfer; \emph{blame reference}: Aegis-Bench (agent, mode) labels and Who\&When-style held-out labels on the same system & $J$; agent-level accuracy of the blame on held-out labels; per-agent change in generation rate; cost in rollouts per update & shared reward; leave-one-out credit \cite{li2026sharp}; repair-every-agent data \cite{zhao2025sirius}; dense per-agent coach credit \cite{li2026mappa} \\
+\EXP{3.4} & failures of every trained policy of \EXP{3.1}--\EXP{3.3}, re-labelled with MAST modes (Aegis labeller) and AgentErrorTaxonomy & shrinkage of the targeted modes; growth of the other modes; net change in the mode distribution (total variation) & MiRL's 43--57\% reduction on unseen prefixes \cite{tian2026mirl}; the pre-training mode distribution \\\bottomrule
+\end{tabularx}
+\captionof{table}{Evaluation of Proposal 3: data, metrics and baselines per experiment. Every comparison is compute-matched on environment steps, not wall-clock, and reports both.}
+\label{tab:eval_p3}
+\end{minipage}\medskip
+
+\begin{multicols}{2}
+\paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p3} lists them per experiment; three conventions apply.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Two scores per attributor.} Every rung is scored by the attribution metrics of this survey on held-out labels of the same system \emph{and} by its training value; the relation between the two is the result.
+\item \emph{Compute matching.} Several headline gains in Table~\ref{tab:entry} come from baselines trained from the raw backbone or with fewer rollouts; here environment steps are matched and wall-clock is reported alongside.
+\item \emph{Off-policy fraction.} A corrected or teacher-written step inside a prefix is off-policy for the learner; the fraction of training tokens that are off-policy is reported with every result.
+\end{itemize}
+
+\paragraph{Feasibility with the surveyed data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Environments and labels.} Rows 1--4 of Table~\ref{tab:engine} supply replayable systems with released step labels on the same system (AgentErrorBench 200, TrajErrBench 486, TraceElephant's 44 SWE-Agent traces) and Aegis-Bench's (agent, mode) labels for the multi-agent case. MiRL releases code, checkpoint and trajectories under Apache~2.0 \cite{tian2026mirl}; PivoARL and C3 release code.
+\item \emph{Attributors.} AgenTracer-8B's weights are not released (\S\ref{ds:tracertraj}), so rung 5 is retrained from TracerTraj (3,998), Aegis (9,533) and Who\&When~Pro text (6,257), all ungated; the hazard model of Proposal~2 is fitted on the runs \EXP{3.1} collects anyway.
+\item \emph{Budget.} One RL run at MiRL's scale is 160 updates $\times$ 8 prompts $\times$ 16 rollouts $\approx 2\times10^4$ rollouts; \EXP{3.1} with seven rungs, four degraded variants, three systems and three seeds is $\approx100$ runs, $2\times10^6$ rollouts, between $10^{10}$ and $10^{11}$ tokens with a 4B policy depending on the system (MASLab and $\tau^2$ runs are 5--20\,k tokens, SWE-bench runs up to 50\,k). The verification rollouts of rungs 6--7 add $N\le8$ continuations per failed trajectory, a small fraction of that. \EXP{3.3} on MASLab systems is cheaper (median 10 turns, 5\,k tokens).
+\item \emph{Shared infrastructure.} State restore and the LLM-call cache are the components of Proposal~1's screen; the verified $(\tau,k,\delta,\hat p_\delta)$ tuples that \EXP{3.2} produces are training data for Proposal~2 at level L1$^{+}$.
+\end{itemize}
+
+\paragraph{Pitfalls to design for}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Symptom shift.} Judge labels drift to the step where the failure becomes visible \cite{shen2026epv}; injected datasets place labels late (Fig.~\ref{fig:errpos}); a policy's own reflection is bounded by its own competence. Restart entry points are the most exposed, since a restart after the point of no return explores a dead state. Verify ($N\le8$) or anneal $\lambda$; never use rung 3 or 4 alone for R.
+\item \emph{Reward hacking.} Any score the policy can raise without succeeding will be raised: VPPO's policy split steps to collect prefix reward \cite{liu2026vppo}, AgentPRM's process reward rose while success fell from 82\% to 70\% \cite{choudhury2025agentprm}. Guards used in the literature: conjunction with the outcome ($r=r_o\wedge r_e$ \cite{tian2026mirl}), a small or decaying weight \cite{agentevolver2025,zhao2026credithurts}, a penalty budget capped below the success--failure gap and no gradient through the diagnosis tokens \cite{zhu2026fault}.
+\item \emph{Baselines that get the gain without attribution.} Variance-selected start states \cite{pivotrl2026}, recovery training forked from the \emph{end} of failed runs (Terminal-Bench 34.8 vs 28.0 \cite{reterm2026}), implicit step credit from repeated states \cite{feng2025gigpo} and SymTrace's last-node and random-node protocol \cite{luan2026symtrace}; \EXP{3.1} includes all of them as rungs or controls.
+\item \emph{Off-policy prefixes.} RTI gates teacher-written steps by perplexity \cite{chen2026rti}; R$^3$L strips the guidance before training \cite{shi2026r3l}.
+\item \emph{State restore.} Deterministic replay loses two thirds of terminal prefixes \cite{tian2026mirl}; per-turn snapshots lose none \cite{liu2026sprout}. Row 3 of Table~\ref{tab:engine} uses snapshots, and live-web rows cannot use entry point R at all.
+\end{itemize}
+
+\paragraph{What would count as a result}
+\begin{itemize}[leftmargin=1.1em]
+\item A measured accuracy-to-value curve, with the attribution precision below which attribution-weighted training is worse than outcome-only training, and the finding of whether symptom shift or random error is the damaging failure of an attributor.
+\item Verified negative credit at the decisive step that beats unverified judge credit at equal budget and does not exhibit the score-up, success-down signature.
+\item A culprit-only update that beats the shared reward on a multi-agent system with blame from an attributor trained on the datasets of this survey, which would be the first use of those datasets to improve an agent.
+\item A closed-loop measurement showing the targeted failure modes shrink without the others growing, which is the practical meaning of ``learning from failure attribution''.
+\end{itemize}
+\end{multicols}

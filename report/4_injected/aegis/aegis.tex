@@ -1,0 +1,67 @@
+% ===================== AEGIS =====================
+\subsection{AEGIS / Aegis-Bench}\label{ds:aegis}
+\badgerow{\injected\ \okbadge\ \lbl{agent + failure mode (sets)}\ \lbl{MAS}\ \lbl{train / val / test}\ \lbl{MATH / GSM8K / HumanEval / SciBench / MMLU-Pro / GAIA}}
+
+\begin{identity}
+Paper & \emph{Aegis: Automated Error Generation and Attribution for Multi-Agent Systems} --- Kong, Zhang, Yin, Zhang, Zhang, Chen, Zhang, Zhang, Zhu, Feng (PKU, BIGAI, IIE CAS, NUS, Tsinghua), ICLR 2026, arXiv:2509.14295 \cite{aegis2026}\\
+Links & \href{https://huggingface.co/datasets/Fancylalala/AEGIS}{HF \code{Fancylalala/AEGIS}} \textperiodcentered\ \href{https://github.com/kfq20/AEGIS}{GitHub \code{kfq20/AEGIS}} (injection factory, MAS wrappers, evaluation) \textperiodcentered\ \href{https://kfq20.github.io/Aegis-Website/}{project page}\\
+License & MIT (HF card and GitHub)\\
+Status & downloaded in full, ungated; 222 MB; 9,533 trajectories = 600 test (\emph{Aegis-Bench}) + 7,146 train + 1,787 val; \code{data/aegis/}\\
+\end{identity}
+
+\begin{multicols}{2}
+\paragraph{Description} AEGIS is the largest fully synthetic dataset in this survey, built for \emph{fine-grained error attribution}: given a failed MAS trajectory, predict the set of \textbf{(faulty agent, error mode)} pairs. It supports SFT, RL (GRPO with a hierarchical pair/agent/error reward) and contrastive learning on success/failure pairs; Aegis-Bench is the 600-trajectory test split (100 per benchmark). Construction:
+\begin{itemize}
+\item \textbf{Successful baselines} are run deterministically (all agents GPT-4o-mini, temperature 0) for six MAS on MASLab---LLM Debate, MacNet (chain/star/tree/full topologies), AgentVerse, DyLAN, SmolAgents, Magentic-One---over MATH, GSM8K, HumanEval, SciBench, MMLU-Pro and GAIA (GAIA only for the last two systems).
+\item An LLM \textbf{adaptive manipulator} executes an injection plan, a set of (target agent, error modes), by \emph{prompt injection} (altering the agent's input) or \emph{response corruption} (replacing its output) through monkey-patched wrappers; corruptions are context-aware (plausible wrong arithmetic, infinite loops in code).
+\item \textbf{Validation}: only runs whose final answer is wrong are kept; the injection plan becomes the label (refined post hoc for dynamic DyLAN graphs). Injection success: 76.5\% (Debate) down to 34.1\% (DyLAN).
+\end{itemize}
+\textbf{Taxonomy}: the 14 MAST failure modes---FM-1.1--1.5 specification issues (disobey task/role spec, step repetition, lost history, unaware of termination), FM-2.1--2.6 inter-agent misalignment (conversation reset, no clarification, derailment, withholding, ignored input, reasoning--action mismatch), FM-3.1--3.3 verification (premature termination, no/incorrect verification)---kept near-uniform by design (1,356--2,166 pairs each). \textbf{Quality check}: 100 Aegis-Bench trajectories blind-labelled by three experts, human--human Fleiss $\kappa$ = 0.85, programmatic-vs-human $\kappa$ = 0.81; MiniLM embeddings are interspersed with MAST-Data and Who\&When. \textbf{No step label}: the ground truth is agent + mode only, except that MacNet records flag every turn of an injected agent with \code{is\_injected}.
+
+\paragraph{Metrics and baselines} Multi-label prediction of (agent, mode) pairs as JSON, scored by Micro-/Macro-F1 at three levels (Pair, Agent, Error); the paper averages 12 scores over Aegis-Bench and Who\&When (whose free-text reasons were mapped to FM modes by Gemini-2.5-Flash). Aegis-Bench, Micro-F1 in \% (paper):
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{}}\toprule
+Model & Pair & Agent & Error\\\midrule
+Random & 0.3 & 4.5 & 11.2\\
+Qwen2.5-14B-Instruct & 5.5 & 35.8 & 20.2\\
+GPT-4.1 & 7.4 & 37.5 & 20.7\\
+o3 & 7.9 & 40.3 & 22.4\\
+Gemini-2.5-Flash & 7.0 & 42.0 & 23.5\\
+Claude-Sonnet-4 & 7.7 & 40.7 & 21.2\\
+Aegis-SFT (Qwen2.5-14B) & \textbf{16.6} & \textbf{76.5} & \textbf{27.5}\\
+Aegis-GRPO (Qwen2.5-14B) & 6.8 & 49.7 & 21.2\\
+DCL (contrastive) & 8.3 & 22.9 & 24.7\\\bottomrule
+\end{tabular}
+\end{center}
+Pair-level F1 is in single digits for every untuned model; SFT overfits the synthetic style after two epochs (Who\&When scores drop). Debate/AgentVerse are easier than DyLAN/MacNet.
+
+\paragraph{Schema} \code{Aegis-Bench/test.jsonl}, \code{Aegis-Training/\allowbreak\{train,val\}.jsonl}, one object per line: \code{id} (\code{<Benchmark>\_<model>\_}\allowbreak\code{<framework>\_<idx>\_<hash>}), \code{metadata} (\code{framework}, \code{benchmark}, \code{model}, \code{task\_type}, \code{num\_agents}, \code{num\_injected\_agents}), \code{input.query}, \code{input.conversation\_history} (turns with 1-based \code{step}, \code{agent\_name}, \code{content}, \code{phase}; DyLAN adds \code{agent\_role}, MacNet \code{is\_injected}), \code{input.final\_output} (present in 83.5\%), \code{output.faulty\_agents} = labels \{\code{agent\_name}, \code{error\_type}, \code{injection\_strategy}\}, \code{ground\_truth.correct\_answer}, \code{ground\_truth.injected\_agents} (same pairs plus a short \code{malicious\_action\_description}), \code{ground\_truth.is\_injection\_successful} (always true).
+\end{multicols}
+
+\paragraph{Statistics} computed from the downloaded JSONL.\par\nobreak\vspace{1pt}
+\noindent\begin{minipage}[t]{0.54\linewidth}\vspace{0pt}\small
+\fitbox{\begin{tabular}{@{}lrr@{}}\toprule
+ & All & Test (Aegis-Bench)\\\midrule
+trajectories (all failed, injected) & 9533 & 600\\
+MATH / GSM8K / HumanEval & 2083 / 1778 / 1532 & 105 / 105 / 105\\
+SciBench / MMLU-Pro / GAIA & 1905 / 1481 / 754 & 104 / 105 / 76\\
+steps (turns): mean / median & 11.9 / 10 & 12.5 / 12\\
+steps: min -- max & 3 -- 45 & 3 -- 43\\
+distinct agents: mean (max) & 4.4 (8) & 4.3 (8)\\
+(agent, mode) pairs / traj.: mean (max) & 2.38 (4) & 2.30 (4)\\
+response corruption / prompt injection & 11964 / 10464 & 720 / 633\\
+records with \code{is\_injected} markers & 24.8\% & 26.0\%\\
+characters / traj.: mean & 20\,k & 21.5\,k\\\bottomrule
+\end{tabular}}
+
+\smallskip Per framework (all): AgentVerse 2,449, LLM Debate 2,404 (always 12 turns), MacNet 2,359 (10 turns), DyLAN 1,567, SmolAgents 481, Magentic-One 273; only the two GAIA systems are long (up to 45 turns, 56\,k characters). Blamed agents are structural: Solver 2,281, Evaluator 1,934, RoleAssigner 1,752 (AgentVerse), Node0 2,000, Node3 1,815 (MacNet), Assistant1--3 (Debate/DyLAN), MagenticOneOrchestrator 129, WebSurfer 74. Where MacNet markers exist, the first injected turn sits at relative position 0.23 on average.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.44\linewidth}\vspace{0pt}
+\includegraphics[width=\linewidth]{4_injected/aegis/figures/fw.pdf}
+\end{minipage}
+
+\paragraph{Example trajectory} \code{GSM8K\_gpt-4o-mini\_macnet\_12\_f7cdb106} (MacNet chain, 10 turns, 5 nodes, 8.4\,k characters), chosen because only MacNet records carry turn-level markers. Node1 is prompt-injected to repeat steps (FM-1.3) and Node3's responses are corrupted to terminate prematurely (FM-3.1); Node3 silently changes 10\%/20\% into 5\%/30\% and the system answers 20.5 instead of 17. All five turns of the two injected nodes are marked.
+\input{4_injected/aegis/traj}
+
+\paragraph{Notes} (i) The only dataset here whose primary label is a \emph{set} of (agent, mode) pairs (mean 2.4, up to 4); no decisive step is annotated, so step-level attribution cannot be evaluated on AEGIS (MacNet's \code{is\_injected} flags every turn of an injected agent, not one step). (ii) Failures are fully synthetic, injected into GPT-4o-mini runs and shaped after MAST modes rather than naturally occurring slips; realism rests on $\kappa$ = 0.81 and embedding overlap. (iii) Short, homogeneous trajectories (median 10 turns, $\approx$5\,k tokens) with structural agent names. (iv) Data/paper discrepancies: per-framework and per-benchmark counts differ from the paper's Table 2 (e.g.\ AgentVerse 2,449 vs 1,995, Magentic-One 273 vs 449), pair total 22,701 vs 24,843; typos \code{smoagents}, \code{magentic+gaia}; a third strategy value \code{prompt} (273 pairs); \code{num\_injected\_agents} $\ne$ number of pairs in 22\% of records; two duplicated ids. (v) Shares Magentic-One/SmolAgents + GAIA with Who\&When, MAST and TracerTraj (shared author), but all runs are the authors' own; VerifyMAS (2026) reuses Aegis-Bench with a global/local/hybrid grouping of the modes. (vi) MIT licence and modest size make it the most convenient large training set in this survey.

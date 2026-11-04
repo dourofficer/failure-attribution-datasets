@@ -1,0 +1,142 @@
+\section{Proposal 1: Counterfactual perturbation screens on agent trajectories}\label{sec:future:perturb}
+
+\begin{multicols}{2}
+\paragraph{Motivation} Every dataset in this survey defines the decisive step counterfactually, but only TraceElephant verifies the counterfactual by re-execution, and the injected datasets (Who\&When~Pro, Aegis, TracerTraj, CORRECT-Error) keep only the injections that produced a failure. Five observations from the raw data make the gap concrete:
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{The root cause is run-specific.} Same task, same system family, re-run: the blamed agent agrees between Who\&When and TraceElephant in only 18 of 86 paired runs.
+\item \emph{Labels are never tested.} In LongRCA, 364 of 1,140 reasons state no causal link to the outcome, and roughly one in five blames ``redundant/duplicate'' work in runs that still produced a final plan.
+\item \emph{Absorption is the common case.} Aegis reports that injections flip a successful run into a failure between 34\% (DyLAN) and 77\% (LLM Debate) of the time; no dataset records the absorbed branch.
+\item \emph{Re-runs drift.} SymTrace \cite{luan2026symtrace} re-ran 54 successful MAS executions three times each and saw 39 of them fail at least once, while unguided reruns of failed executions reproduced the failure in only 67.97\% of attempts.
+\item \emph{Recovery is large.} In the faulty-agent injections of \citet{huang2024resilience} a reviewing Inspector agent recovered up to 96.4\% of the injected errors.
+\end{itemize}
+Absorption and run-to-run drift are large effects, not noise. The proposal turns attribution from a human-labelled classification target into the \emph{interventional quantity} of Definition~\ref{def:effect}, measured by rollouts and then predicted.
+
+\paragraph{Closest prior work} Five strands contain parts of the programme; none contains the quantity.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Replay-based repair.} SymTrace \cite{luan2026symtrace} (\S\ref{ds:symtrace}) records a MAS execution, picks an \emph{anchor} node, serves every LLM and tool call before the anchor from the log and lets everything after it run live---the operational form of $\mathrm{Roll}(\tau_{<k}\oplus s_k')$. Its intervention augments the anchor's request with a category-specific repair instruction (the \textsc{hint} of Table~\ref{tab:vocab}). On SymFail (536 evaluator-confirmed failures of AG2, CrewAI and Magentic-One) this repairs 20.15\% of failures in one attempt, against 6.90\% for three unguided reruns and 3.7--4.3\% for self-reflection and critic-agent baselines.
+\item \emph{What replay-based repair lacks.} SymTrace runs one temperature-0 continuation per intervention, so it observes a single draw from $p_\delta$; it takes the anchor from a symptom detector rather than estimating which step is worth intervening on; and it has no injection side.
+\item \emph{Counterfactual attribution.} Causal Agent Replay \cite{shah2026car} states the same do-intervention-then-re-execute estimator with confidence intervals and a Monte-Carlo Shapley extension for interacting steps, but validates it only on synthetic structural causal models. Minimal repair families \cite{li2026mrfr} replay \emph{sets} of events and show that single-event replay misses repairs that are only jointly sufficient. EMFA \cite{liao2026emfa} verifies the candidates of an error-propagation model with counterfactual checks and is the current best step-level attributor on Who\&When (+3.45 / +4.40 pp on the two subsets); TraceElephant's dynamic setting (\S\ref{ds:traceelephant}) is the same idea with a replayable environment.
+\item \emph{Recovery as a measured property.} \citet{huang2024resilience} inject faulty agents into six MAS and find that a hierarchical topology loses 5.5\% of performance versus 10.5--23.7\% for flat ones; the hallucination-cascade study of \citet{jamshidi2026cascade} finds net attenuation along three-agent chains (0.422 $\to$ 0.272); ToolMaze \cite{zhu2026toolmaze} scores a perturbation-recovery rate separately from task success. None ties recovery to a labelled step of a natural failure.
+\item \emph{Infrastructure and training.} AgentRewind \cite{zhuang2026agentrewind} checkpoints agent context and environment state jointly---an implementation of Assumption~\ref{as:replay}; Agent-R \cite{yuan2025agentr} trains agents on trajectories spliced at the first erroneous step with a correct branch, i.e.\ it consumes exactly the (prefix, repaired step) pairs that the surrogate of \EXP{1.2} would predict.
+\item \emph{Perturbation biology.} Perturb-seq \cite{dixit2016perturbseq} applies a library of CRISPR perturbations to a population of cells and reads out the phenotype of each cell; GEARS \cite{roohani2024gears} and scGen \cite{lotfollahi2019scgen} then predict the phenotype of \emph{unseen} perturbations, so that most of the screen runs in silico. Table~\ref{tab:analogy} maps the objects; the correspondence supplies replicate-based effect estimation, graded essentiality and buffering, and interaction effects between two perturbations.
+\end{itemize}
+What is missing from all of them is an effect size per (trajectory, step, intervention), estimated from repeated rollouts, on failed \emph{and} successful natural runs.
+\end{multicols}
+
+\begin{table}[h]\centering\small
+\begin{tabularx}{\linewidth}{@{}>{\RaggedRight}X >{\RaggedRight}X >{\RaggedRight}X@{}}\toprule
+Perturbation biology & Agent trajectories & Remark \\\midrule
+cell with a genetic background & trajectory prefix $\tau_{<k}$ with restored state & the ``background'' includes the task, the system and the prior errors \\
+CRISPR knockout / activation & \textsc{delete}, \textsc{corrupt-}$\ast$ / \textsc{hint}, \textsc{oracle-action} & loss- and gain-of-function interventions on one step \\
+phenotype readout (expression, viability) & success predicate $S$, optionally the failure mode of the continuation & binary readout today; a richer readout is the new trajectory itself \\
+replicate cells & $N$ independent rollouts & estimates $p_\delta$; biology has thousands of replicates, we have $N\approx 5$--$10$ \\
+essential gene & $\alpha$-decisive step & graded by effect size, not by a single annotator \\
+genetic buffering / robustness & absorbed injection ($\phi\approx0$ on a successful run) & the data Aegis and Who\&When~Pro discard \\
+epistasis (double perturbations) & two-step interventions $(k_1,\delta_1),(k_2,\delta_2)$ & tests MP-Bench's claim of several independent causes; cf.\ minimal repair families \cite{li2026mrfr} and \RQ{4.7} \\
+in-silico perturbation predictor (GEARS, scGen) & surrogate $f$ (Definition~\ref{def:surrogate}, \EXP{1.2}) & replaces most rollouts once calibrated \\\bottomrule
+\end{tabularx}
+\caption{Correspondence between pooled perturbation screens and interventional failure attribution. Where it breaks: a gene library is finite and fixed, whereas edits to a step are open-ended (hence Assumption~\ref{as:vocab}); cells are independent replicates, whereas rollouts share a prefix and a policy, so $N$ is chosen per prefix; a rollout costs tokens rather than reagents.}
+\label{tab:analogy}
+\end{table}
+
+\begin{multicols}{2}
+\paragraph{Setting} The objects are those of Section~\ref{sec:future:prelim}: effect $\phi$, profile $e_\tau$, decisive step $k^\star$ and lock-in $k_{\mathrm{lock}}$ (Definitions~\ref{def:effect} and \ref{def:fa}) under Assumptions~\ref{as:replay} and \ref{as:vocab}. Fig.~\ref{fig:perturb} shows the measurement. Two further objects are needed: a model that replaces the rollouts, and a curve that summarises the injection side.
+
+\begin{definition}{Effect surrogate}{surrogate}
+An \emph{effect surrogate} is a model $f(\tau_{<k},s_k,\delta)\approx p_\delta(\tau,k)$ that predicts the intervened success rate from the prefix, the step and the intervention \emph{without executing} a rollout. It is trained on Monte-Carlo estimates $\hat p_\delta$ and scored as a probabilistic predictor (Brier score, calibration, AUROC of $\{\phi\ge\alpha\}$), separately for $\delta\in\Delta_{\mathrm{fix}}$ and $\delta\in\Delta_{\mathrm{inj}}$.
+\end{definition}
+
+\begin{definition}{Fragility curve and point of no return}{fragility}
+For a successful trajectory $\tau$, the \emph{fragility curve}
+\[r(k/T)=\mathbb{E}_{\delta\in\Delta_{\mathrm{inj}}}\,p_\delta(\tau,k)\]
+is the probability that an error injected at relative position $k/T$ is absorbed. The \emph{point of no return} is the first $k$ at which $r$ drops below a stated threshold; it is the interventional counterpart of Failure-as-a-Process's $t_{\mathrm{lock}}$ (\S\ref{ds:failure_as_process}). Per-agent and per-mode versions of $r$ condition on $a_k$ and on the injected mode $m$.
+\end{definition}
+
+Neither object asks for a binary answer: a single re-run is one Bernoulli draw from $p_\delta$, and Section~\ref{ds:traceelephant} shows that draws from the same prefix land on different failures. The topology comparison of \citet{huang2024resilience} and SymTrace's rerun regressions \cite{luan2026symtrace} are single points on fragility curves.
+\end{multicols}
+
+\begin{figure}[h]\centering
+\begin{tikzpicture}[x=1cm,y=1cm,font=\scriptsize,>=Stealth,scale=0.95,every node/.style={transform shape}]
+% prefix
+\foreach \i in {1,...,5}{\node[draw=rule,fill=surface,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (s\i) at (\i*0.85,0) {$s_{\i}$};}
+\node[draw=critical,fill=critical!8,minimum width=0.7cm,minimum height=0.45cm,inner sep=1pt] (sk) at (6*0.85,0) {$s_k$};
+\node[above=1pt of sk,text=critical] {intervene: $\delta(s_k)$};
+\draw[decorate,decoration={brace,amplitude=3pt,mirror},rule!80!black] (s1.south west) -- (s5.south east) node[midway,below=3pt,text=ink2]{prefix $\tau_{<k}$, state restored};
+% rollouts
+\foreach \j/\y/\c/\l in {1/0.9/good/$S=1$, 2/0.3/good/$S=1$, 3/-0.3/critical/$S=0$, 4/-0.9/good/$S=1$}{
+  \draw[->,\c!70,line width=0.6pt] (sk.east) .. controls (7.0,0) and (7.4,\y) .. (8.4,\y);
+  \foreach \i in {0,1,2}{\node[draw=\c!60,fill=\c!6,minimum width=0.45cm,minimum height=0.32cm,inner sep=0pt] at (8.7+\i*0.55,\y) {};}
+  \node[right=2pt,text=\c!70!black] at (9.85,\y) {\l};}
+\node[text=ink2,anchor=west] at (10.9,0.3) {$N$ rollouts of $\pi,\mathcal{E}$};
+\node[text=ink2,anchor=west] at (10.9,-0.2) {$\hat p_\delta=\tfrac{\#\{S=1\}}{N}$};
+\node[text=ink2,anchor=west] at (10.9,-0.7) {$\hat\phi=\hat p_\delta-\hat p_0$};
+\end{tikzpicture}
+\caption{The measured quantity (Definition~\ref{def:effect}). The state after the prefix is restored, step $k$ is replaced by $\delta(s_k)$, and $N$ independent continuations give a success rate; the same with the original $s_k$ gives the baseline. The effect is the difference.}
+\label{fig:perturb}
+\end{figure}
+
+\begin{rqbox}{1}
+\begin{description}[leftmargin=3.2em,style=sameline,font=\bfseries,itemsep=1.5pt]
+\item[RQ\,1.1] Given a failed trajectory, which steps and which repair interventions raise the success probability of the continuation, and by how much? That is, what is the profile $e_\tau$, and which $(k,\delta)$ maximise $\phi$?
+\item[RQ\,1.2] Given a successful trajectory, at which steps does an injected error cascade into failure rather than being absorbed, i.e.\ which steps are load-bearing?
+\item[RQ\,1.3] Can the intervention effect be predicted from the prefix, the step and the intervention without executing a rollout, and is the prediction calibrated enough to replace most of the screen?
+\item[RQ\,1.4] Do effect-based decisive steps agree with the human labels of the surveyed benchmarks, and where they disagree, which side do the rollouts support?
+\item[RQ\,1.5] How far into a run can an agent system still recover from an injected error, how does that depend on the agent and the error mode, and do verifier agents change it?
+\end{description}
+\end{rqbox}
+
+\begin{multicols}{2}
+\paragraph{Experiments}
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
+\item[\EXP{1.1} --- The screen (answers \RQ{1.1}, \RQ{1.2}).] Collect natural failed and successful trajectories on the replayable systems of Table~\ref{tab:engine}; for each, intervene at the human-labelled step (failures) or at stratified positions (successes) plus four control positions, with two interventions from each of $\Delta_{\mathrm{fix}}$ and $\Delta_{\mathrm{inj}}$ and $N=8$ rollouts per cell; estimate $\hat p_0$, $\hat p_\delta$ and $\hat\phi$ with intervals. Every continuation is stored with its outcome, which is the raw material of Proposals 2 and 4.
+\item[\EXP{1.2} --- The surrogate (answers \RQ{1.3}).] Fit the effect surrogate $f$ of Definition~\ref{def:surrogate} on the output of \EXP{1.1} and test it on held-out prefixes, held-out tasks and held-out systems. Baselines: process-reward-model value estimates \cite{wang2024mathshepherd}, the system's own self-monitoring signals (orchestrator ledger flags precede the labelled step in 24 of 90 Magentic-One traces, \S\ref{ds:traceelephant}) and per-source position priors.
+\item[\EXP{1.3} --- Attribution by effect (answers \RQ{1.4}).] Predict $k^\star=\arg\max_k e_\tau(k)$ from the screen and compare with the human labels of Who\&When, TraceElephant, MP-Bench and LongRCA and with the single-rollout counterfactual verifiers of EMFA and Causal Agent Replay \cite{liao2026emfa,shah2026car}. Disagreements between effect-based and human labels, adjudicated by further rollouts, are the interesting output; MP-Bench's three annotators make it possible to ask whether effect size tracks annotator consensus.
+\item[\EXP{1.4} --- Fragility and lock-in (answers \RQ{1.5}).] From the injection half of \EXP{1.1}, estimate the fragility curve $r(k/T)$ of Definition~\ref{def:fragility} per system, per agent and per injected mode, and its point of no return; compare systems with and without a verifier agent and compare topologies as in \citet{huang2024resilience}. Proposal~4 refines this experiment by keeping the absorbed branches and labelling what happened to the error.
+\end{description}
+\end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l >{\RaggedRight\hsize=1.25\hsize}X >{\RaggedRight\hsize=0.95\hsize}X >{\RaggedRight\hsize=0.8\hsize}X@{}}\toprule
+Exp. & Data & Metrics & Baselines / reference values \\\midrule
+\EXP{1.1} & \emph{Collected}: 200 failed + 200 successful runs on rows 1--5 of Table~\ref{tab:engine}, prefixes restored by snapshot; interventions from Table~\ref{tab:vocab}, $N=8$. Failed runs taken from the released labelled sets on the same systems (TraceElephant SWE-Agent 44, TrajErrBench 486, AgentErrorBench 200) so that a human label exists per run. & effect $\hat\phi$ with Wilson intervals; fraction of labelled steps that are $\alpha$-decisive at $\alpha\in\{0.25,0.5\}$; fraction of injections absorbed; share of labels outside the vocabulary (declared out of scope) & no baseline (measurement); SymTrace single-rerun repair 20.15\% and rerun reproduction 67.97\% \cite{luan2026symtrace}; Aegis absorption 23--66\% \\
+\EXP{1.2} & \emph{Train}: $(\tau_{<k},s_k,\delta,\hat p_\delta)$ tuples of \EXP{1.1}; \emph{test}: held-out prefixes, tasks and systems; transfer to live-web runs (row 6) scored against human labels only & Brier score, expected calibration error, AUROC of $\{\phi\ge\alpha\}$; reported separately for $\Delta_{\mathrm{fix}}$ and $\Delta_{\mathrm{inj}}$; rollouts saved at fixed accuracy & PRM value estimates \cite{wang2024mathshepherd}; ledger flags; position priors (first step, last decision step, per-source histogram) \\
+\EXP{1.3} & \emph{Test}: human labels of Who\&When, TraceElephant, MP-Bench, LongRCA on the replayable subset; MP-Bench per-step votes & exact and $\pm k$ agreement between $k^\star$ and the human step; nDCG@5 of $e_\tau$ against MP-Bench consensus; rank correlation of effect size with vote count; share of disagreements resolved by rollouts in favour of each side & EMFA and Causal Agent Replay single-rollout verifiers \cite{liao2026emfa,shah2026car}; human--human agreement (40.3\% LongRCA, $\alpha$ 0.64 TraceElephant) as the ceiling \\
+\EXP{1.4} & \emph{Collected}: successful runs of \EXP{1.1} (TraceElephant withholds its 160 successes; Failure-as-a-Process PASS runs once re-joined) & $r(k/T)$ with intervals per system, agent and mode; point of no return at threshold 0.5; area under $r$ as a scalar robustness score & natural $t_{\mathrm{lock}}$ distribution of Failure-as-a-Process; hierarchical-vs-flat loss of \citet{huang2024resilience}; SymTrace rerun regressions \\\bottomrule
+\end{tabularx}
+\captionof{table}{Evaluation of Proposal 1: data, metrics and baselines per experiment.}
+\label{tab:eval_p1}
+\end{minipage}\medskip
+
+\begin{multicols}{2}
+\paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p1} lists them per experiment; three conventions apply throughout.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Everything is probabilistic.} $p_0$ for a failed run is not zero (6.90\% of failed runs pass within three unguided reruns \cite{luan2026symtrace}), so effects carry intervals and the surrogate is scored as a probability, not a classification.
+\item \emph{Human labels are references, not ground truth.} \EXP{1.3} reports agreement \emph{and} the adjudicated disagreements; the human--human agreement figures of Section~\ref{sec:future:prelim} are quoted as the ceiling.
+\item \emph{Stratify by position and length.} Every curve is reported against $k/T$, and the rollout budget is stratified by trajectory length so that LongRCA-scale runs do not dominate.
+\end{itemize}
+
+\paragraph{Feasibility with the surveyed data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Environments.} Assumption~\ref{as:replay} holds for rows 1--5 of Table~\ref{tab:engine}: SWE-bench / SWE-Bench~Pro (TraceElephant's SWE-Agent runs, TrajErrBench), ALFWorld and WebShop (AgentErrorBench), the TravelPlanner and VitaBench sandboxes (LongRCA) and $\tau^2$-Bench with its simulated user (TrajErrBench, AgentRx). Live-web GAIA tests only the surrogate's transfer. SymTrace's recorded-prefix replay admits WebArena-Verified and AssistantBench runs at the price of an unreproducible continuation; AgentRewind's joint checkpoints \cite{zhuang2026agentrewind} restore the state after $\tau_{<k}$ cheaply.
+\item \emph{Injectors.} Injectors for $\Delta_{\mathrm{inj}}$ exist (Aegis, Who\&When~Pro, TracerTraj) and only need to be run with the negatives retained.
+\item \emph{Budget.} 400 trajectories, five positions, two interventions each and $N=8$ rollouts is $\approx$25\,k continuations; at the tail lengths observed here (medians of 10--145 steps, 30\,k--260\,k tokens per full trace) this is of the order of $10^9$ tokens, affordable with small open models and well below the cost of the human annotation it replaces.
+\end{itemize}
+
+\paragraph{Pitfalls to design for}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Stochasticity.} A single temperature-0 replay, as in SymTrace, EMFA and the minimal-repair-family search, is one Bernoulli draw; 39 of 54 successful runs fail at least once in three reruns \cite{luan2026symtrace}.
+\item \emph{Exposed downstream errors.} A repair at $k$ can succeed up to step $k+m$ and then fail for a new reason; each rollout is re-attributed (cheaply, by the surrogate) so that ``no flip'' separates into ``wrong step'' and ``several independent errors''.
+\item \emph{Oracle fixes leak the answer.} \textsc{oracle-action} is constructed from the ground truth but must not inject it verbatim; \textsc{hint} is the weaker, safer variant and both are reported.
+\item \emph{Vocabulary coverage.} Labelled errors with no single-step intervention (20 of 126 Who\&When Algorithm-Generated labels sit on step~0) are declared out of scope rather than scored as zero effect.
+\item \emph{Cost concentration.} Long-horizon sources dominate the token budget; stratify the rollout budget by trajectory length rather than by trajectory.
+\end{itemize}
+
+\paragraph{What would count as a result}
+\begin{itemize}[leftmargin=1.1em]
+\item A calibrated surrogate (\EXP{1.2}) that predicts, from the prefix alone, which steps of a failed run are worth repairing and which steps of a successful run are load-bearing.
+\item Effect-based labels (\EXP{1.3}) that agree with human consensus where humans agree and resolve the cases where they do not.
+\item Fragility curves (\EXP{1.4}) that characterise, for the first time with an interventional definition, how far into a run a multi-agent system can still recover from an error.
+\end{itemize}
+The first two reuse the benchmarks surveyed here as test sets; the third is new measurement that none of them currently supports.
+\end{multicols}

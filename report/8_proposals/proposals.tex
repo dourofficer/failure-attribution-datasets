@@ -1,0 +1,64 @@
+% Standalone companion document to the survey (main.tex). Build from report/ with ./build.sh, which compiles main.tex first
+% so that cross-references into the survey (\S, Fig., Table numbers) resolve through xr-hyper and link to main.pdf.
+\def\loadxrhyper{}          % tells preamble.tex to load xr-hyper before hyperref
+\input{preamble}
+\usepackage[numbers,sort&compress]{natbib}
+\externaldocument{build/main_labels}[main.pdf]   % survey labels (ds:*, sec:*, fig:*) from build/main.aux minus its \bibcite lines (written by build.sh); links open main.pdf
+\fancyhead[L]{\footnotesize\color{ink2}Research proposals on failure attribution in LLM agent systems}
+\title{\vspace{-9mm}\LARGE Failure Attribution in LLM Agent Systems\\[3pt]\large A working definition and five research proposals}
+\author{\normalsize Companion to the dataset survey \emph{Datasets for Failure Attribution in LLM Agent Systems}, 30 October 2026}\date{}
+\begin{document}
+\maketitle\vspace{-7mm}
+\begin{tcolorbox}[enhanced,colback=surface,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=5pt,right=5pt,top=3pt,bottom=3pt,fontupper=\small]
+\textbf{Scope.} This document fixes a working definition of failure attribution as an interventional quantity and develops five research proposals that follow from it. It is the companion of the survey \code{main.pdf}, which describes the 21 datasets the proposals draw their evidence from. References of the form \S3.2, Fig.~4, Section~7 or Table~1 that do not resolve inside this document point into the survey; in the PDF they link to \code{main.pdf}. All data, notes and scripts are in \code{/dataDisk/home/thanhdo/failure-attribution-datasets/}.
+\end{tcolorbox}
+\vspace{-2pt}\tableofcontents
+
+\section{Overview}\label{sec:future}
+
+\begin{multicols}{2}
+\paragraph{What this document contains} The survey leaves one definitional gap and five research questions behind it. The gap is treated first; the five proposals follow and build on each other.
+\begin{itemize}[leftmargin=1.1em]
+\item \textbf{Preliminaries} (Section~\ref{sec:future:prelim}) fix a working definition of failure attribution as an \emph{interventional} quantity, together with the two assumptions it needs and the data engine that every proposal uses.
+\item \textbf{Proposal 1} (Section~\ref{sec:future:perturb}) \emph{measures} that quantity with counterfactual rollouts and learns to predict it without executing.
+\item \textbf{Proposal 2} (Section~\ref{sec:future:unsup}) \emph{estimates} it from logs and outcomes alone, with no step label, through a hazard model.
+\item \textbf{Proposal 3} (Section~\ref{sec:future:train}) \emph{uses} it as a training signal for the agent that produced the failure and asks how much attribution accuracy is worth.
+\item \textbf{Proposal 4} (Section~\ref{sec:future:lifecycle}) looks \emph{between} the error and the outcome: how an error propagates, is absorbed or locks in, which is the regime the first three treat as a point event.
+\item \textbf{Proposal 5} (Section~\ref{sec:future:reroll}) turns attribution into a \emph{decision}: from which step a failed generation should be re-rolled when both the success it buys and the tokens it spends count, posed first for a single model and one generation, where it is cheapest to measure.
+\end{itemize}
+
+\paragraph{How the proposals are written} Every proposal has the same nine parts, in the same order, so that they can be read side by side:
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Motivation}: the evidence from the surveyed data that opens the question;
+\item \emph{Closest prior work}: what already exists and what it lacks;
+\item \emph{Setting}: the objects the proposal needs, introduced where they are first used as boxed \textcolor{s1!65!black}{\textbf{definitions}} and \textcolor{warning!60!black}{\textbf{assumptions}};
+\item \emph{Research questions}: stated as full sentences in a \textcolor{s7!65!black}{\textbf{purple box}} and numbered \RQ{$p$.$i$} for proposal $p$;
+\item \emph{Experiments}: numbered \EXP{$p$.$j$}, each naming the research questions it answers, fully or in part;
+\item \emph{Evaluation}: one table per proposal giving, for each experiment, the data (collected or released), the metrics and the baselines or reference values;
+\item \emph{Feasibility with the surveyed data}, \emph{Pitfalls to design for} and \emph{What would count as a result}.
+\end{itemize}
+Table~\ref{tab:roadmap} places the five proposals on one line each.
+\end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\small
+\begin{tabularx}{\linewidth}{@{}l >{\RaggedRight\hsize=1.35\hsize}X >{\RaggedRight\hsize=0.75\hsize}X >{\RaggedRight\hsize=0.9\hsize}X@{}}\toprule
+Proposal & Question in one sentence & Supervision it needs & What it produces \\\midrule
+1 Perturbation screens & How much does the outcome change when one step is repaired or corrupted, and can that change be predicted without running the system? & replayable environment, no human label & effect profiles $e_\tau$, fragility curves, a surrogate $f$ \\
+2 Label-free hazard model & Where in a failed run is the fatal step, when only outcomes---or nothing---are known? & outcome labels or none & a step-hazard model $h_\theta$, an online monitor \\
+3 Attribution as training signal & Does a better attributor make a better agent, and at what accuracy does it start to help? & a trainable policy and a replayable environment & the accuracy-to-value curve, culprit-only updates \\
+4 Error lifecycle & When an error enters a run, is it detected, corrected, tolerated or fatal, and how fast? & injections with absorbed branches kept & fate distributions, lifetime curves, per-agent profiles \\
+5 Restart frontier & From which step should a failed generation be re-rolled when both the success it buys and the tokens it spends count? & one model, automatic verifier, no label & restart profiles and costs, the frontier, a position rule and its predictor \\\bottomrule
+\end{tabularx}
+\captionof{table}{The five proposals. All of them measure or estimate the same object---the success probability of a prefix and how an intervention moves it---and all run on the data engine of Table~\ref{tab:engine}.}
+\label{tab:roadmap}
+\end{minipage}\medskip
+
+\input{8_proposals/preliminaries}
+\input{8_proposals/p1_perturbation}
+\input{8_proposals/p2_hazard}
+\input{8_proposals/p3_training}
+\input{8_proposals/p4_lifecycle}
+\input{8_proposals/p5_reroll}
+\clearpage
+\bibliographystyle{plainnat}\bibliography{bib/refs_merged}
+\end{document}

@@ -1,0 +1,128 @@
+% ---------- compact preamble ----------
+\documentclass[9pt,a4paper]{extarticle}
+\usepackage[a4paper,margin=13mm,top=15mm,bottom=16mm,headsep=4mm,footskip=7mm]{geometry}
+\usepackage[T1]{fontenc}\usepackage[utf8]{inputenc}
+\usepackage{newtxtext}  % Times, as in the ICML template
+\usepackage[scaled=0.82]{sourcecodepro}
+\usepackage{microtype}
+\setlength{\emergencystretch}{2em} % let narrow columns wrap long tokens instead of overflowing
+\usepackage{amsmath,amssymb,amsthm}
+% theorem-like statements are boxed tcolorbox environments; see the end of this file
+% Computer Modern math (text stays Times): default math fonts + CM for \mathrm/operators
+\DeclareSymbolFont{operators}{OT1}{cmr}{m}{n}\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathrm}{normal}{OT1}{cmr}{m}{n}\SetMathAlphabet{\mathbf}{normal}{OT1}{cmr}{bx}{n}
+\SetMathAlphabet{\mathit}{normal}{OT1}{cmr}{m}{it}\SetMathAlphabet{\mathsf}{normal}{OT1}{cmss}{m}{n}\SetMathAlphabet{\mathtt}{normal}{OT1}{cmtt}{m}{n}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{booktabs,multicol,tabularx,makecell,array,longtable}
+\renewcommand*\setemergencystretch[2]{\emergencystretch 2em} % multicol otherwise resets it to 4pt per column
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{caption}
+\usepackage{tcolorbox}\tcbuselibrary{skins,breakable,theorems}
+\usepackage{tikz}\usetikzlibrary{positioning,arrows.meta,shapes,calc,fit,backgrounds,decorations.pathreplacing}
+\usepackage{pgfplots}\pgfplotsset{compat=1.18}
+\usepackage{fontawesome5}
+\usepackage{ragged2e}
+\usepackage{CJKutf8}\newcommand{\cjk}[1]{\begin{CJK*}{UTF8}{gbsn}#1\end{CJK*}}
+\ifdefined\loadxrhyper\usepackage{xr-hyper}\fi % proposals.tex: external references into main.aux
+\usepackage[colorlinks,linkcolor=linkc,urlcolor=linkc,citecolor=linkc]{hyperref}
+
+% ---------- palette (dataviz reference palette) ----------
+\definecolor{s1}{HTML}{2a78d6}\definecolor{s2}{HTML}{eb6834}\definecolor{s3}{HTML}{1baf7a}
+\definecolor{s4}{HTML}{eda100}\definecolor{s5}{HTML}{e87ba4}\definecolor{s6}{HTML}{008300}
+\definecolor{s7}{HTML}{6250d6}\definecolor{s8}{HTML}{e34948}
+\definecolor{critical}{HTML}{d03b3b}\definecolor{good}{HTML}{0ca30c}\definecolor{warning}{HTML}{fab219}
+\definecolor{ink}{HTML}{0b0b0b}\definecolor{ink2}{HTML}{52514e}\definecolor{ink3}{HTML}{8a8984}
+\definecolor{surface}{HTML}{f6f5f2}\definecolor{rule}{HTML}{d9d8d2}\definecolor{linkc}{HTML}{1c5cab}
+\colorlet{agA}{s1}\colorlet{agB}{s2}\colorlet{agC}{s3}\colorlet{agD}{s7}
+\colorlet{agE}{s5}\colorlet{agF}{s4}\colorlet{agG}{s6}\colorlet{agH}{ink3}
+
+% ---------- typography ----------
+\setlength{\parindent}{0pt}\setlength{\parskip}{2.5pt plus 1pt}
+\setlength{\columnsep}{6mm}
+\linespread{0.98}
+\titleformat{\section}{\Large\bfseries\color{ink}}{\thesection}{0.6em}{}
+\titlespacing*{\section}{0pt}{9pt plus 2pt}{4pt}
+\titleformat{\subsection}{\large\bfseries\color{ink}}{\thesubsection}{0.6em}{}
+\titlespacing*{\subsection}{0pt}{7pt plus 2pt}{3pt}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{ink2}}{\thesubsubsection}{0.5em}{}
+\titlespacing*{\subsubsection}{0pt}{5pt plus 1pt}{2pt}
+\titleformat{\paragraph}[runin]{\bfseries\color{ink2}}{}{0pt}{}[.\ ]
+\titlespacing*{\paragraph}{0pt}{3pt}{0.5em}
+\setlist{nosep,leftmargin=1.2em,itemsep=1pt}
+\captionsetup{font={small,color=ink2},labelfont=bf,skip=3pt}
+\renewcommand{\arraystretch}{1.08}
+\makeatletter\setlength{\@fptop}{0pt}\makeatother
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\footnotesize\color{ink2}Failure-attribution datasets for LLM agents}
+\fancyhead[R]{\footnotesize\color{ink2}\nouppercase{\leftmark}}
+\fancyfoot[C]{\footnotesize\color{ink2}\thepage}
+\renewcommand{\headrulewidth}{0.3pt}\renewcommand{\headrule}{\color{rule}\hrule width\headwidth height 0.3pt}
+
+% ---------- helper macros ----------
+\newcommand{\code}[1]{\texttt{\small\def\_{\textunderscore\allowbreak}#1}}  % underscores are break points
+\newcommand{\chip}[2]{\tikz[baseline=(t.base)]\node[fill=#1!18,text=#1!60!black,rounded corners=2pt,inner xsep=3pt,inner ysep=1.5pt,font=\scriptsize\bfseries](t){#2};}
+\newcommand{\okbadge}{\chip{good}{available}}
+\newcommand{\gatedbadge}{\chip{warning}{gated}}
+\newcommand{\nobadge}{\chip{critical}{not released}}
+\newcommand{\partialbadge}{\chip{s7}{partial}}
+\newcommand{\naturalbadge}{\chip{s3}{natural}}
+\newcommand{\injected}{\chip{s2}{injected}}
+\newcommand{\lbl}[1]{\chip{ink3}{#1}}
+
+% key-value identity block
+\newenvironment{identity}{\begin{tcolorbox}[enhanced,colback=surface,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=4pt,right=4pt,top=3pt,bottom=3pt,fontupper=\small]\begin{tabular}{@{}>{\bfseries\color{ink2}}l@{\hskip 5pt}>{\RaggedRight}p{\dimexpr\linewidth-2.1cm}@{}}}{\end{tabular}\end{tcolorbox}}
+
+% stats table wrapper
+\newenvironment{statsbox}{\begin{tcolorbox}[enhanced,colback=white,colframe=rule,boxrule=0.3pt,arc=1.5pt,left=3pt,right=3pt,top=2pt,bottom=2pt,fontupper=\small]}{\end{tcolorbox}}
+
+% ---------- trajectory rendering ----------
+\newcommand{\trajfont}{\ttfamily\footnotesize} % font for the trajectory step boxes
+\newcommand{\trajtask}[2]{%
+\begin{tcolorbox}[enhanced,colback=s1!6,colframe=s1!60!black,boxrule=0.4pt,arc=1.5pt,left=4pt,right=4pt,top=2pt,bottom=2pt,fontupper=\footnotesize,
+  title={\footnotesize\bfseries\faTasks\ Task \ifx\\#1\\\else\textnormal{\scriptsize(\code{#1})}\fi},coltitle=white,colbacktitle=s1!60!black,toptitle=1pt,bottomtitle=1pt]
+#2
+\end{tcolorbox}}
+% \begin{trajstep}{idx}{agent}{color} body \end{trajstep}
+\newenvironment{trajstep}[3]{%
+\begin{tcolorbox}[enhanced,breakable,colback=white,colframe=#3!55,boxrule=0pt,leftrule=2.2pt,arc=0pt,left=4pt,right=3pt,top=1.5pt,bottom=1.5pt,before skip=1.5pt,after skip=1.5pt,
+  fontupper=\trajfont\color{ink},overlay unbroken and first={\node[anchor=north west,fill=#3!18,text=#3!50!black,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){#1 \textperiodcentered\ #2};}]
+\vspace{8pt}\par}{\end{tcolorbox}}
+\newenvironment{faultystep}[3]{%
+\begin{tcolorbox}[enhanced,breakable,colback=critical!5,colframe=critical,boxrule=0.5pt,leftrule=2.2pt,arc=0pt,left=4pt,right=3pt,top=1.5pt,bottom=1.5pt,before skip=1.5pt,after skip=1.5pt,
+  fontupper=\trajfont\color{ink},overlay unbroken and first={\node[anchor=north west,fill=critical,text=white,font=\scriptsize\bfseries,inner xsep=3pt,inner ysep=1pt,rounded corners=1.5pt] at ([xshift=2pt,yshift=-1pt]frame.north west){\faExclamationTriangle\ #1 \textperiodcentered\ #2 \textperiodcentered\ ANNOTATED ERROR STEP};}]
+\vspace{8pt}\par}{\end{tcolorbox}}
+% \trajannotation{agent}{step}{category}{reason}{ground truth}{final output}{extra}
+\newcommand{\trajannotation}[7]{%
+\begin{tcolorbox}[enhanced,breakable,colback=critical!4,colframe=critical!70!black,boxrule=0.4pt,arc=1.5pt,left=4pt,right=4pt,top=2pt,bottom=2pt,fontupper=\footnotesize,
+  title={\footnotesize\bfseries\faTag\ Annotation},coltitle=white,colbacktitle=critical!70!black,toptitle=1pt,bottomtitle=1pt]
+\begin{tabular}{@{}>{\bfseries\color{ink2}}l@{\hskip 5pt}>{\RaggedRight}p{\dimexpr\linewidth-2.0cm}@{}}
+Faulty agent & #1\\
+Faulty step & #2\\
+Category & #3\\
+Reason & #4\\
+Ground truth & #5\\
+System output & #6\\
+\ifx\\#7\\\else Other labels & #7\\\fi
+\end{tabular}
+\end{tcolorbox}}
+% shrink a table to the line width only when it is too wide (font-independent)
+\newsavebox{\fitboxsb}
+\newcommand{\fitbox}[1]{\sbox{\fitboxsb}{#1}\ifdim\wd\fitboxsb>\linewidth\resizebox{\linewidth}{!}{\usebox{\fitboxsb}}\else\usebox{\fitboxsb}\fi}
+\newcommand{\badgerow}[1]{{\raggedright\noindent#1\par}} % badge rows wrap instead of overflowing
+
+\newcommand{\note}[1]{\leavevmode{\color{purple}[\textsc{Note}: #1]}} 
+
+% ---------- boxed statements for the proposals document (8_proposals/proposals.tex) ----------
+% definitions: blue; assumptions: amber; research questions: purple. Unbreakable, so they also work inside multicols.
+\tcbset{stmt/.style={enhanced,boxrule=0.4pt,arc=1.5pt,left=4pt,right=4pt,top=2.5pt,bottom=2.5pt,before skip=4pt,after skip=4pt,
+  fontupper=\small,fonttitle=\footnotesize\bfseries,coltitle=white,toptitle=1pt,bottomtitle=1pt,
+  separator sign={},description font=\mdseries,description delimiters={(}{)},terminator sign={}}}
+\newtcbtheorem{definition}{Definition}{stmt,colback=s1!5,colframe=s1!65!black,colbacktitle=s1!65!black}{def}
+\newtcbtheorem{assumption}{Assumption}{stmt,colback=warning!10,colframe=warning!60!black,colbacktitle=warning!60!black}{as}
+% \begin{rqbox}{<proposal number>} ... \end{rqbox}: the research questions of one proposal, stated in full sentences
+\newtcolorbox{rqbox}[1]{stmt,breakable,colback=s7!5,colframe=s7!65!black,colbacktitle=s7!65!black,title={\faQuestionCircle\ Research questions of Proposal #1}}
+\newcommand{\RQ}[1]{\textbf{RQ\,#1}}   % research question p.i
+\newcommand{\EXP}[1]{\textbf{E\,#1}}   % experiment p.j

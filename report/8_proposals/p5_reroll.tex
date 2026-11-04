@@ -1,0 +1,151 @@
+\section{Proposal 5: Where to re-roll a single generation---the restart frontier}\label{sec:future:reroll}
+
+\begin{multicols}{2}
+\paragraph{Motivation} Proposals 1--4 ask which step of a failed run \emph{matters}. This proposal asks the operational question that follows once an attributor has answered: given a failed multi-step generation and a budget of tokens, \emph{from which step should the generation be re-rolled}? It is posed in the simplest setting that has the structure of the problem---one model, one generation, no environment---because there every quantity of Section~\ref{sec:future:prelim} can be measured exactly and cheaply, and because the setting is the pilot that Proposal~1 needs before it pays for agent rollouts. Four observations make the question non-trivial.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{The best position is not the earliest.} On ALFWorld and WebShop the net gain of a single-step repair differs by 0.51 on average across the thirds of a trajectory, and the earliest-single-success rule of AgenTracer loses up to 0.58 against the best position \cite{liao2026repairs}. On SWE-bench, restarting from the judge-labelled step changes success by $-0.03$ to $-0.08$ while restarting from the certified point of no return raises it from 0.44 to 0.53 \cite{shen2026epv}. Earliest-step labels (Who\&When, TrajErrBench, LongRCA) and first-error labels (ProcessBench \cite{zheng2024processbench}, PRM800K) are therefore not restart recommendations.
+\item \emph{Restart value is concentrated and often late.} On MATH-500 chains of DeepSeek-R1-Distill-Qwen-14B the gain of restarting at a step is concentrated in a few positions (pooled Gini 0.896) and a trained position selector does not beat the rule ``restart from the last eligible steps'' \cite{atri2026expanding}. The fix window $t_{\mathrm{lock}}-t_{\mathrm{err}}$ of Failure-as-a-Process has median 1 step (\S\ref{ds:failure_as_process}), so in agent runs the set of positions from which a re-roll helps can be a single step.
+\item \emph{Position is worth several points, and nobody has priced it.} Entropy-guided choice of the cut point moves MATH500 accuracy of Qwen2.5-Math-7B between 72.6 (random cut) and 77.6 (gradient-traced cut) at $\approx9\times$ the tokens of a single pass \cite{ding2026rewind}; keeping the steps before the first verifier-flagged step and regenerating the rest reaches a higher accuracy than Best-of-10 with 77.8\% fewer tokens \cite{wu2024stepco}; a learned backtracking token rewinds one step at inference and adds 2.9 points over no rewind \cite{yang2025selfbacktrack}. Each study fixes one position rule and reports either accuracy or tokens; none reports the two as a function of the position.
+\item \emph{A re-roll can also destroy a correct answer.} Unconditional revision overturns 19.1\% of the initially correct GSM8K answers of Llama-3.1-8B while raising accuracy by 25.5 points \cite{zhang2026riskaware}; conditioning a retry on the previous attempt makes small code models reproduce a near-identical program in 33--68\% of retries against 2--14\% for a blind resample, and the blind resample wins at 2.5--5.5$\times$ fewer tokens \cite{verma2026tryagain}. Whether \emph{keeping a prefix} inherits this anchoring, and whether later restarts break fewer correct runs, is unmeasured.
+\end{itemize}
+The proposal therefore treats the re-roll position as a decision with two axes---the success probability it buys and the tokens it spends---and measures the frontier between them on failed \emph{and} successful generations.
+
+\paragraph{Closest prior work} Six strands contain parts of the programme; Table~\ref{tab:rules} collects the position rules they use, which become the baselines of \EXP{5.2}.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Prefix value curves.} OmegaPRM \cite{luo2024omegaprm} estimates the success rate of every prefix by Monte-Carlo continuation and labels the first collapse; Thought Anchors and Thought Branches \cite{bogdan2025thoughtanchors,macar2025thoughtbranches} resample each sentence of a long chain of thought 100 times and read the shift in the answer distribution; EPV \cite{shen2026epv} does the same on SWE-bench prefixes. These give the profile of Definition~\ref{def:restart} below but not its cost, and they are read as attribution, not as a restart rule. ``Expanding LLM Reasoning'' \cite{atri2026expanding} is the exception that trains a position selector on restart value; it restricts restarts to the last third of a chain, scores cost as aggregate output and finds its selector no better than always-last.
+\item \emph{Cut-point regeneration.} Power sampling \cite{karan2026power} regenerates a suffix from a uniformly random cut and accepts by likelihood; REWIND \cite{ding2026rewind} and entropy-cut Metropolis--Hastings \cite{zhou2026entropycut} choose the cut at an entropy rise, the latter proving that mixing time then scales with the number of decisions rather than tokens; CUSUM re-decoding \cite{ettifouri2026cusum} rolls back to a saved KV state on an alarm and reports that rolling back \emph{without changing the continuation} is insufficient. REWIND contains the only cut-rule ablation on single-model reasoning; none of the four reports accuracy against position-dependent cost.
+\item \emph{First-error rules.} StepCo \cite{wu2024stepco} regenerates from the first step a process verifier scores below a threshold; HPFA \cite{zhu2026hpfa} labels the root cause as the earliest step whose replacement plus resampling succeeds; InT \cite{yang2026int} has the model propose a fix at its first error; ELPO \cite{liang2026elpo} binary-searches the first irrecoverable step. All four commit to \emph{earliest}, which the agent-side evidence above argues against.
+\item \emph{Restarts inside training.} Thinking Seeds \cite{yang2026thinkingseeds} restarts on-policy RL from truncated prefixes at a fixed length ratio (an entropy-chosen cut did worse) and names adaptive restart selection as future work; Re$^2$ \cite{wang2026resolve} trains the model to decide between continuing and re-solving from scratch; Proposal~3's restart entry point~R (Table~\ref{tab:entry}) is the agent version. None of them chooses the position by its measured value.
+\item \emph{Self-correction accounting.} The decomposition of a re-roll into keeping correct answers and fixing wrong ones \cite{yang2024confcrit,huang2024cannot,kamoi2024survey}, the closed-form ceiling of iterated re-rolling $\mathrm{CS}/(1-\mathrm{CL}+\mathrm{CS})$ \cite{yang2025scaling}, SCoRe's $\Delta(i{\to}c)$, $\Delta(c{\to}i)$ \cite{kumar2025score} and the harm and recovery rates of \citet{zhang2026riskaware} supply the metrics of Definition~\ref{def:restart}; selective verification \cite{dip2026thinkagain} and anchoring \cite{verma2026tryagain} supply the operator baselines of \EXP{5.3}. All of them re-roll the \emph{whole} answer; none has a position.
+\item \emph{Agents.} Rollback-induced reflection \cite{yu2026rir} restores the latest checkpoint that removes the failure condition while preserving valid progress, which is the rule this proposal makes measurable, on the joint checkpoints that AgentRewind \cite{zhuang2026agentrewind} provides; CausalFlow \cite{bonagiri2026causalflow} scores minimality of a repair but states that plain chains of thought ``provide no identifiable intervention points''; \citet{liao2026repairs} show that the best position depends on who continues the run.
+\end{itemize}
+What is missing from all of them is the pair $(p(k),c(k))$ on the same trajectories, the retention side on successful trajectories, and a comparison of position rules and re-roll operators at matched regenerated tokens.
+\end{multicols}
+
+\begin{table}[h]\centering\small
+\begin{tabularx}{\linewidth}{@{}>{\RaggedRight\hsize=0.75\hsize}X >{\RaggedRight\hsize=1.35\hsize}X >{\RaggedRight\hsize=0.9\hsize}X@{}}\toprule
+Position rule & Definition (restart from step $k$) & Source \\\midrule
+\textsc{none} & $k=T{+}1$: keep the generation as it is & reference point $p(T{+}1)=S(\tau)$ \\
+\textsc{blind} & $k=1$: resample from the question & \citet{verma2026tryagain}; self-consistency \\
+\textsc{uniform} & $k$ drawn uniformly from $\{1,\dots,T\}$ & power sampling \cite{karan2026power} \\
+\textsc{always-last} & the last eligible step (last third of the chain) & \citet{atri2026expanding} \\
+\textsc{one-back} & $k=T$: regenerate the last step only & Self-Backtracking at inference \cite{yang2025selfbacktrack} \\
+\textsc{first-flag} & first step whose process-verifier score falls below a threshold & StepCo \cite{wu2024stepco}, Math-Shepherd \cite{wang2024mathshepherd} \\
+\textsc{human-first} & the human first-error label & ProcessBench \cite{zheng2024processbench}, PRM800K \cite{lightman2023prm} \\
+\textsc{entropy-cut} & largest adjacent entropy rise in a window before the entropy peak, aligned to a delimiter & REWIND \cite{ding2026rewind}, \citet{zhou2026entropycut} \\
+\textsc{largest-drop} & $\arg\max_k\,[p(k)-p(k{+}1)]$ on the value curve & OmegaPRM \cite{luo2024omegaprm}, EPV \cite{shen2026epv} \\
+\textsc{earliest-fix} & smallest $k$ with $p(k)\ge\alpha$ & HPFA \cite{zhu2026hpfa}; $k^\star$ of Definition~\ref{def:fa} \\
+\textsc{max-effect} & $\arg\max_k p(k)$ & Proposal~1 \\
+\textsc{latest-}$\varepsilon$ & largest $k$ with $p(k)\ge\max_j p(j)-\varepsilon$ & this proposal (Definition~\ref{def:frontier}) \\
+\textsc{oracle} & the frontier of Definition~\ref{def:frontier} from the rollouts themselves & ceiling \\\bottomrule
+\end{tabularx}
+\caption{Position rules compared in \EXP{5.2}. Rules above the midrule need no rollouts; the three below it need the restart profile and are what a predictor (\EXP{5.4}) tries to approximate.}
+\label{tab:rules}
+\end{table}
+
+\begin{multicols}{2}
+\paragraph{Setting} One model $\pi$ with a fixed decoding configuration (sampler, temperature, thinking budget) answers a task $x$ with an automatic success predicate $S$ (reference answer, unit tests). Its generation is $\tau=(s_1,\dots,s_T)$, where a step is a sentence or a delimited reasoning step as in Thought Anchors \cite{bogdan2025thoughtanchors}, and the final answer is part of $s_T$. There is no environment, so Assumption~\ref{as:replay} holds trivially and $\mathrm{Roll}(\tau_{<k})$ is the model's own continuation from the kept prefix. The intervention is the one entry missing from Table~\ref{tab:vocab}: \textsc{resample}, which replaces $s_k$ and everything after it by a fresh draw of $\pi$.
+
+\begin{definition}{Restart profile and restart cost}{restart}
+For a generation $\tau$ and a position $k\in\{1,\dots,T{+}1\}$, the \emph{restart} $R_k(\tau)=\mathrm{Roll}(\tau_{<k})$ keeps $s_1,\dots,s_{k-1}$ and regenerates the rest; $R_1$ is a blind resample and $R_{T+1}$ is the original generation. Its \emph{restart profile} and \emph{restart cost} are
+\begin{align*}
+p_\tau(k)&=\Pr\big[S(R_k(\tau))=1\big],\\
+c_\tau(k)&=\mathbb{E}\big[\,\#\text{tokens generated by }R_k(\tau)\big],
+\end{align*}
+both estimated from $N$ independent restarts; $p_\tau(k)=p_0(\tau,k{-}1)$ in the notation of Definition~\ref{def:effect}, i.e.\ the profile is the prefix-value curve of Proposal~1 read at every position. On a failed generation $p_\tau$ is the \emph{recovery} curve and $p_\tau(k)-p_\tau(T{+}1)$ the gain of restarting at $k$; on a successful generation $p_\tau$ is the \emph{retention} curve and $1-p_\tau(k)$ the harm. Averaged over a corpus, recovery and retention are the critique score and the confidence level of \citet{yang2024confcrit} indexed by position.
+\end{definition}
+
+\begin{definition}{Restart frontier and position rules}{frontier}
+The \emph{restart frontier} of $\tau$ is the set of positions not dominated in $(p_\tau(k),-c_\tau(k))$. Three scalar rules read it:
+\begin{itemize}[leftmargin=1.1em]
+\item \textsc{max-effect} $k_{\max}=\arg\max_k p_\tau(k)$;
+\item \textsc{latest-}$\varepsilon$ $k_\varepsilon=\max\{k:\ p_\tau(k)\ge p_\tau(k_{\max})-\varepsilon\}$, the cheapest position within $\varepsilon$ of the best;
+\item \textsc{price-}$\lambda$ $k_\lambda=\arg\max_k\,[p_\tau(k)-\lambda\,c_\tau(k)]$ for a stated price $\lambda$ per token.
+\end{itemize}
+The \emph{regret} of any position rule $r$ at a token budget $B$ is the difference between the success probability of the frontier at $B$ and that of $r$ at the same budget, averaged over the corpus; it is the metric of \EXP{5.2} and \EXP{5.4}. The \emph{fix window} of Definition~\ref{def:fa} reappears as $k_{\mathrm{lock}}-k_{\max}$.
+\end{definition}
+
+\begin{assumption}{Prefix fidelity}{prefix}
+Restoring the prefix $\tau_{<k}$ reproduces the continuation distribution the model would have had at step $k$. Two things can break it and are stated with every number:
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Cache versus re-prefill.} Continuing from the retained KV cache and re-prefilling the same tokens produce different suffixes in BF16 for 166 of 200 Qwen2.5 traces, with accuracy unchanged within noise; in FP32 they agree \cite{lorup2026stagereplay}. The cost of a restart counts generated tokens; the prefill of a prefix that is not cached is reported separately.
+\item \emph{Decoding.} Under greedy decoding $R_k(\tau)$ reproduces $\tau$ and the profile is degenerate; the sampler and temperature are part of the definition of $p_\tau$, as the executor is in \citet{liao2026repairs}.
+\end{itemize}
+\end{assumption}
+
+Two remarks fix what is and is not new in the objects. The profile $p_\tau$ is the value curve that Proposals 1, 2 and 3 already estimate (the \textsc{resample} column of \EXP{1.1}, the survival function $\bar S_t$ of Proposal~2, the restart point of Proposal~3), so the measurement is shared. What is new is the second axis $c_\tau$, the retention side, and the rules of Definition~\ref{def:frontier}: under a near-flat profile---which the concentration result of \citet{atri2026expanding} and the median fix window of one step both predict to be common---\textsc{max-effect} and \textsc{earliest-fix} pick an early, expensive position, and \textsc{latest-}$\varepsilon$ is the rule that resolves the tension between effectiveness and efficiency explicitly.
+\end{multicols}
+
+\begin{rqbox}{5}
+\begin{description}[leftmargin=3.2em,style=sameline,font=\bfseries,itemsep=1.5pt]
+\item[RQ\,5.1] For a failed single-model generation, how does the success probability of a restart depend on the position it is restarted from, how concentrated is the gain, and how wide is the window of positions that recover the run?
+\item[RQ\,5.2] When several positions recover the run with near-equal probability, how much cheaper is the latest of them, and what regret do the position rules of Table~\ref{tab:rules} incur against the frontier at a matched token budget?
+\item[RQ\,5.3] Does restarting a correct generation keep its answer, does retention rise with the restart position, and is the harm of a restart smaller than the harm of a whole-answer revision?
+\item[RQ\,5.4] Is a kept prefix worth keeping: at matched regenerated tokens, does a prefix restart beat a blind resample and a rewrite conditioned on the whole generation, and when does the kept prefix anchor the continuation to the original error?
+\item[RQ\,5.5] Can the frontier position be predicted from the prefix---token entropy, verifier scores, hidden states, verbalised confidence---well enough to choose it without rollouts, and does the predictor beat always-last, first-flag and entropy-cut?
+\item[RQ\,5.6] Do restart profiles of single-model generations have the same shape as the \textsc{resample} profiles of agent trajectories, so that the single-model setting is a valid pilot for Proposal~1?
+\end{description}
+\end{rqbox}
+
+\begin{multicols}{2}
+\paragraph{Experiments}
+\begin{description}[leftmargin=1.4em,style=nextline,itemsep=1pt]
+\item[\EXP{5.1} --- The restart profile (answers \RQ{5.1}, \RQ{5.3}).] For each model and task, sample one generation per problem at the model's default temperature, keep the failed and the successful ones in equal numbers, and restart every generation at each step boundary (all boundaries when $T\le40$, else 16 positions at length quantiles plus the human first-error step where one exists) with $N=16$ continuations per position; record $S$ and the number of generated tokens. Estimate $p_\tau$ and $c_\tau$ with intervals, the Gini concentration of the gain, $k_{\max}$, $k_\varepsilon$ for $\varepsilon\in\{0.05,0.1\}$, the window $\{k:p_\tau(k)\ge p_\tau(k_{\max})-\varepsilon\}$ and, on successful generations, the retention curve. Every continuation is stored; \EXP{5.2}--\EXP{5.4} are computed on it.
+\item[\EXP{5.2} --- Rules against the frontier (answers \RQ{5.2}).] Apply every rule of Table~\ref{tab:rules} to the profiles of \EXP{5.1}, compute each rule's success probability and expected tokens, and its regret against the frontier at matched budgets $B$; report the gain per regenerated token of each rule and the token saving of \textsc{latest-}$\varepsilon$ over \textsc{max-effect} and \textsc{earliest-fix} at equal success. Human first-error labels are scored here as a position rule, which answers for ProcessBench and PRM800K the question \EXP{1.3} asks of the agent labels.
+\item[\EXP{5.3} --- Operators at matched tokens (answers \RQ{5.4}).] At the positions chosen by \textsc{latest-}$\varepsilon$ and \textsc{max-effect}, compare four re-roll operators at equal regenerated tokens: the prefix restart $R_k$; a blind resample $R_1$ with the same budget (several draws, majority vote); a rewrite conditioned on the whole generation, with and without the content-free ``this may be wrong'' placebo of \citet{verma2026tryagain}; and $R_k$ preceded by a \textsc{hint} at $k$ (Table~\ref{tab:vocab}) as the information-rich ceiling. Measure recovery, retention, the near-duplicate rate between the regenerated and the original suffix, and whether the regenerated suffix reproduces the original error (resilience in the sense of \citet{macar2025thoughtbranches}).
+\item[\EXP{5.4} --- Predicting the position (answers \RQ{5.5}).] Train a listwise position selector on the frontier labels of \EXP{5.1} from prefix features---per-token entropy and its rise, process-verifier scores, a linear probe on hidden states \cite{yuan2026hiddenerror}, verbalised confidence---with ties between positions broken at random \cite{atri2026expanding}; test on held-out problems, held-out tasks and a held-out model; score it as a rule in \EXP{5.2}'s terms. The surrogate of Proposal~1 (Definition~\ref{def:surrogate}) is trained on the same tuples and scored alongside.
+\item[\EXP{5.5} --- Transfer to agents (answers \RQ{5.6}).] Run the \textsc{resample} intervention of \EXP{1.1} at all positions on rows 1--2 of Table~\ref{tab:engine} ($\tau^2$-Bench, ALFWorld) with $N=8$, and compare the shape statistics of the profiles---Gini concentration, $k_\varepsilon/T$, window width, retention slope---with those of \EXP{5.1}; report where the single-model shapes predict the agent shapes and where the environment (irreversible actions, tool state) breaks the correspondence.
+\end{description}
+\end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}l >{\RaggedRight\hsize=1.2\hsize}X >{\RaggedRight\hsize=0.95\hsize}X >{\RaggedRight\hsize=0.85\hsize}X@{}}\toprule
+Exp. & Data & Metrics & Baselines / reference values \\\midrule
+\EXP{5.1} & \emph{Collected}: 300 failed + 300 successful generations per model on MATH-500, AIME 2024--25, GPQA-Diamond, MBPP+ and HumanEval+ (unit tests give $S$); models Qwen3-4B / 8B (thinking on and off), DeepSeek-R1-Distill-Qwen-7B, Qwen2.5-Math-7B; ProcessBench (3,400 human first-error labels) and PRM800K as the labelled subset; $N=16$ per position & $p_\tau(k)$, $c_\tau(k)$ with Wilson intervals; Gini of the gain; $k_{\max}$, $k_\varepsilon$, window width in steps and in $k/T$; retention curve and harm $1-p_\tau(k)$ on successes; corpus-level critique score and confidence level per position \cite{yang2024confcrit} & no baseline (measurement); concentration Gini 0.896 and always-last of \citet{atri2026expanding}; sentence-level anchor importance of \citet{bogdan2025thoughtanchors}; harm rate 19.1\% and recovery 25.5 pts of whole-answer revision \cite{zhang2026riskaware} \\
+\EXP{5.2} & profiles of \EXP{5.1}; process verifier Math-Shepherd / Qwen2.5-Math-PRM for \textsc{first-flag}; REWIND's cut rule re-implemented; ProcessBench and PRM800K labels for \textsc{human-first} & success and expected tokens per rule; regret against the frontier at $B\in\{0.25,0.5,1,2\}\times$ one full generation; gain per regenerated token; token saving of \textsc{latest-}$\varepsilon$ at equal success; agreement of \textsc{human-first} with the window & every rule of Table~\ref{tab:rules}; REWIND cut-rule ablation 72.6--77.6 on MATH500 \cite{ding2026rewind}; StepCo $-77.8\%$ tokens vs Best-of-10 \cite{wu2024stepco}; self-consistency at the same budget \cite{snell2024testtime}; human--human first-error agreement of ProcessBench as the ceiling of \textsc{human-first} \\
+\EXP{5.3} & continuations of \EXP{5.1} at $k_\varepsilon$ and $k_{\max}$, plus new draws for the blind, conditioned, placebo and hinted operators at equal tokens & recovery, retention, net gain at matched tokens; near-duplicate rate (suffix similarity $>0.95$); error-reproduction rate; share of gain attributable to the hint (answer leakage control) & blind resample with majority vote; Self-Refine-style conditioned rewrite; placebo of \citet{verma2026tryagain} (near-duplicates 33--68\% vs 2--14\%); SCoRe-trained self-correction where a checkpoint exists \cite{kumar2025score}; power sampling with uniform cut \cite{karan2026power} \\
+\EXP{5.4} & \emph{train}: frontier labels of \EXP{5.1}; \emph{test}: held-out problems, held-out task family, held-out model & regret of the predicted position at matched budgets; recall of the window; Brier score of predicted $p_\tau(k)$; rollouts saved at fixed regret & \textsc{always-last}, \textsc{first-flag}, \textsc{entropy-cut}, \textsc{uniform}; the learned router of \citet{atri2026expanding} (no gain over always-last, $-0.006$); Proposal~1's surrogate; hidden-state probe AUROC 0.85 of \citet{yuan2026hiddenerror} as the detection reference \\
+\EXP{5.5} & \emph{Collected}: 100 failed + 100 successful runs on $\tau^2$-Bench and ALFWorld (TrajErrBench, AgentErrorBench labels), \textsc{resample} at all positions, $N=8$ & same shape statistics as \EXP{5.1}; rank correlation of $k_\varepsilon/T$ and window width between settings; regret of the single-model predictor of \EXP{5.4} applied to agent prefixes & EPV restart values on SWE-bench (judge step $-0.03$ to $-0.08$, certified PNR $0.44\to0.53$) \cite{shen2026epv}; best-position spread 0.51 of \citet{liao2026repairs}; fix-window median 1 of Failure-as-a-Process \\\bottomrule
+\end{tabularx}
+\captionof{table}{Evaluation of Proposal 5: data, metrics and baselines per experiment.}
+\label{tab:eval_p5}
+\end{minipage}\medskip
+
+\begin{multicols}{2}
+\paragraph{Evaluation: data and metrics} Table~\ref{tab:eval_p5} lists them per experiment; four conventions apply.
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Match tokens, not calls.} Every comparison between rules or operators is made at equal regenerated tokens; a comparison at equal numbers of attempts favours whichever operator regenerates less and is the flaw that the review of refine-over-resample claims points at \cite{verma2026tryagain}. Sequential regeneration also pays a quadratic attention cost that token counts hide \cite{qin2025backtrack}, so wall-clock and FLOPs are reported for one model as a check.
+\item \emph{Recovery and retention are reported as a pair}, never as a net accuracy change; a rule that recovers many failures and breaks many successes is a different object from one that does neither, and the net depends on the base rate \cite{zhang2026riskaware}.
+\item \emph{Outcome, not step, defines failure.} A generation is failed if $S(\tau)=0$; a wrong step inside a successful generation is a retention case, not a failure, because reasoning models reach correct answers over persisting errors (55--78\% of injected GSM8K errors in R1 traces are never verbalised yet the answer is right \cite{phan2026critique}).
+\item \emph{The continuation policy is named.} $p_\tau$ depends on the sampler, the temperature and the thinking budget; results carry them as the executor is carried in \citet{liao2026repairs}, and the same-model executor is stated as the reason the setting is cleaner than the agent one.
+\end{itemize}
+
+\paragraph{Feasibility with the surveyed data}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Data and labels.} All tasks are public with automatic $S$; ProcessBench supplies 3,400 human first-error labels on four difficulty tiers and PRM800K step labels on MATH, so \textsc{human-first} needs no annotation. The survey's labelled agent sets (TrajErrBench 400, AgentErrorBench 150) score \EXP{5.5} on rows 1--2 of Table~\ref{tab:engine}.
+\item \emph{Infrastructure.} Prefix restarts are the cheapest rollout there is: no environment, prefix caching in the serving stack, one model. The Thought Anchors code \cite{bogdan2025thoughtanchors} already implements sentence segmentation and per-sentence resampling; REWIND's cut rule and StepCo's verifier loop are released.
+\item \emph{Budget.} 600 generations $\times$ 16 positions $\times$ $N=16$ $\times$ an average regenerated suffix of 2\,k tokens is $\approx3\times10^8$ tokens per model, i.e.\ two orders of magnitude below the agent screen of \EXP{1.1}; \EXP{5.3} adds four operators at two positions and \EXP{5.5} adds $\approx1.5\times10^8$ agent tokens on the two cheapest rows.
+\end{itemize}
+
+\paragraph{Pitfalls to design for}
+\begin{itemize}[leftmargin=1.1em]
+\item \emph{Step unit.} Cutting inside a sentence changes the profile: REWIND aligns cuts to delimiters and loses accuracy with windows above 20 tokens \cite{ding2026rewind}. Positions are step boundaries, and the segmentation is fixed before any rollout.
+\item \emph{Resilience.} Reasoning models regenerate removed content downstream \cite{macar2025thoughtbranches}, so a restart can re-derive the original error; \EXP{5.3} measures the reproduction rate and the window of \EXP{5.1} is read with it, since a narrow window and a high reproduction rate are the same phenomenon.
+\item \emph{Early-position bias.} Ties on a flat profile broken by the earliest index put a spurious early signal into any learned selector---the sign of the selector's gain flips with the tie rule in \citet{atri2026expanding}; ties are broken at random and \textsc{latest-}$\varepsilon$ is reported with its $\varepsilon$.
+\item \emph{Answer leakage.} The \textsc{hint} operator of \EXP{5.3} is constructed from the reference and must not state the answer; it is the ceiling of the ladder, and the information-free operators are the result.
+\item \emph{Failures by chance.} $p_\tau(T{+}1)=S(\tau)$ is one draw; a generation that failed by chance has $p_\tau(1)$ close to its success rate, so the gain is reported relative to $p_\tau(1)$ as well as to $S(\tau)$, and problems the model never solves ($p_\tau(1)\approx0$) are reported separately.
+\item \emph{Cost accounting.} Discarded tokens, prefill of uncached prefixes and the quadratic cost of long prefixes are all part of the price; CUSUM re-decoding discarded $\approx$317\,k tokens across 1,500 generations while emitted length barely moved \cite{ettifouri2026cusum}. $c_\tau$ counts generated tokens and the other terms are reported beside it.
+\item \emph{Cache fidelity.} BF16 re-prefill and live-cache continuations differ \cite{lorup2026stagereplay}; the restart mechanism is fixed per experiment and stated.
+\end{itemize}
+
+\paragraph{What would count as a result}
+\begin{itemize}[leftmargin=1.1em]
+\item Measured restart frontiers (\EXP{5.1}, \EXP{5.2}) for several models and tasks, with the width of the recovery window and the token saving of \textsc{latest-}$\varepsilon$ over \textsc{max-effect} and \textsc{earliest-fix} at equal success---the first statement of the effectiveness--efficiency trade-off of a re-roll position as a curve rather than a rule.
+\item A retention curve (\EXP{5.1}) showing whether late restarts also break fewer correct generations, which would make the late position preferable on both axes, or showing the opposite, which would make the price $\lambda$ a genuine choice.
+\item A matched-token answer (\EXP{5.3}) to whether a kept prefix is worth keeping, separated from anchoring and from answer leakage.
+\item A position predictor (\EXP{5.4}) with its regret against the frontier and against always-last, which is the rule it must beat to be worth training.
+\item Shape statistics (\EXP{5.5}) that say how far single-model profiles stand in for agent profiles, so that Proposal~1 can be piloted at single-model cost.
+\end{itemize}
+The quantity is shared with Proposals 1--3; what the proposal adds is the second axis and the decision it supports.
+\end{multicols}

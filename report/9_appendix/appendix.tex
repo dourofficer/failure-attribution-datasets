@@ -1,0 +1,56 @@
+\clearpage\appendix
+\section{Observability and replayability of the released data}\label{app:obs}
+
+\begin{multicols}{2}
+\paragraph{Purpose} The research proposals of the companion document \code{proposals.pdf} need two properties that the overview table (Table~\ref{tab:overview}) does not show: how much of the execution each release \emph{records} per step, and whether the state at a step can be \emph{restored and re-executed}. This appendix ranks the 21 datasets on both. The ranking is read from the dataset sections (Sections~\ref{sec:g1}--\ref{sec:g4}) and refers to what is actually downloadable as of October 2026, not to what the paper describes.
+
+\paragraph{Observability tiers}
+\begin{itemize}[leftmargin=1.1em]
+\item \chip{good}{A} every LLM call's full input and output, tool I/O and (where it exists) environment state or screenshots;
+\item \chip{s1}{B} the complete message stream with tool calls and tool returns, but not the per-call inputs or the state;
+\item \chip{warning}{C} agent outputs only (no tool inputs, no observations beyond what the agent printed);
+\item \chip{critical}{D} no step text released.
+\end{itemize}
+
+\paragraph{Replayability tiers}
+\begin{itemize}[leftmargin=1.1em]
+\item \chip{good}{A} replay tooling ships with the data (recorded prefix or runnable agent code plus environment);
+\item \chip{s1}{B} public environment and public agent code, so a prefix can be restored and re-executed (the $\mathrm{Roll}(\cdot)$ of the companion proposals document) in principle;
+\item \chip{warning}{C} only some subsets are replayable, or the authors' pipeline is demonstrated but not released;
+\item \chip{critical}{D} live web or no agent code: only the recorded trajectory exists;
+\item \chip{ink3}{E} nothing released.
+\end{itemize}
+
+\paragraph{Reading the ranking} Rows are ordered by the two tiers together, observability first. Two points follow. The measured programme of Proposal~1 in the companion document is feasible only on the rows whose replay tier is A or B (rows 1--3, 5--7, 12 and, with the trajectories rebuilt, 19), which coincides with the systems of that document's data-engine table. The output-only group (rows 15--18) is also the group with the lowest or unreported annotator agreement (Section~\ref{sec:reco}), which is what one expects when the annotator cannot see the evidence needed to place the step.
+\end{multicols}
+
+\medskip\noindent\begin{minipage}{\linewidth}\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabularx}{\linewidth}{@{}r l c c >{\RaggedRight}X@{}}\toprule
+\# & Dataset & Obs. & Replay & Basis (what the release contains)\\\midrule
+1 & TraceElephant (\S\ref{ds:traceelephant}) & \chip{good}{A} & \chip{good}{A} & Full request and response of every LLM call, screenshots, token usage, runnable agent code and a dynamic re-execution setting. Live-web GAIA and AssistantBench runs are not deterministic; the 44 SWE-Agent runs on SWE-Bench Verified are.\\
+2 & MemTrace (\S\ref{ds:memtrace}) & \chip{good}{A} & \chip{good}{A} & White-box execution graph with every intermediate variable and operation. Memory-system code is MIT and the source conversations are static, so a run is re-executable up to LLM sampling.\\
+3 & SymFail (\S\ref{ds:symtrace}) & \chip{good}{A} & \chip{good}{A} & Event-dependency graph with per-call messages and tool boundary results, plus the SymTrace selective-replay framework. Adapters are thin (at most three LLM calls), token usage is empty, and most WebArena runs never reached the site.\\
+4 & TRAIL (\S\ref{ds:trail}) & \chip{good}{A} & \chip{warning}{C} & OpenTelemetry span trees with full prompts, outputs, tool I/O and token counts. GAIA runs are live web; the 31 SWE-bench Lite runs are container-replayable.\\
+5 & TrajErrBench (\S\ref{ds:trajerrbench}) & \chip{s1}{B} & \chip{s1}{B} & Messages with tool calls and tool returns. $\tau^2$-Bench resets its database and simulated user with a seed; SWE-Bench Pro runs in OpenHands containers.\\
+6 & HORIZON (\S\ref{ds:horizon}) & \chip{s1}{B} & \chip{s1}{B} & Web step logs plus Playwright traces and page renders, docker environments and public agents. Database rows are a single SQL block and embodied rows are plans without observations.\\
+7 & AgentErrorBench (\S\ref{ds:agenterrorbench}) & \chip{s1}{B} & \chip{s1}{B} & Full observation and admissible actions at every turn. ALFWorld and WebShop are deterministic text simulators; the GAIA subset is live web.\\
+8 & AgentRx (\S\ref{ds:agentrx}) & \chip{s1}{B} & \chip{warning}{C} & $\tau$-bench rows carry tool calls, domain policies and tool schemas and are replayable; the Magentic-One rows are live web. HF copy gated, 73 of 170 public.\\
+9 & LongRCA (\S\ref{ds:longrca}) & \chip{s1}{B} & \chip{warning}{C} & Tool, terminal and evaluator records inside \code{history} ($\approx$180\,k characters per run). The sandboxes (TravelPlanner, VitaBench, SWE-bench Pro, Terminal-Bench 2, WebArena) are replayable but the authors' agent systems are not released.\\
+10 & Who\&When Pro (\S\ref{ds:who_and_when_pro}) & \chip{s1}{B} & \chip{warning}{C} & Framework-specific traces; GUI and image rows embed screenshots. Built by counterfactual replay with a SHA-256-keyed call cache, but only the evaluation harness is released, not the generation pipeline.\\
+11 & SearchAuditBench (\S\ref{ds:searchauditbench}) & \chip{s1}{B} & \chip{critical}{D} & Reasoning content and verbatim \code{search} / \code{visit} returns. Live web, and auditors are denied web access by design.\\
+12 & Aegis (\S\ref{ds:aegis}) & \chip{s1}{B} & \chip{s1}{B} & Turn content only; the MAS have no environment state. MAS wrappers and the injection factory are public and runs are temperature~0, so a replay is a re-run.\\
+13 & AgentHallu (\S\ref{ds:agenthallu}) & \chip{s1}{B} & \chip{warning}{C} & Tool calls with aligned tool responses. BFCL function calling is replayable against simulated tools; the search and GAIA subsets are live web.\\
+14 & TracerTraj (\S\ref{ds:tracertraj}) & \chip{s1}{B} & \chip{warning}{C} & Step content embeds tool and web output. The six MAS are public but no replay tooling or injector is released with the data.\\
+15 & CORRECT-Error (\S\ref{ds:correct_error}) & \chip{warning}{C} & \chip{critical}{D} & Role and content only; successful parent trajectories withheld; one Magentic-One variant on live web.\\
+16 & Who\&When (\S\ref{ds:who_and_when}) & \chip{warning}{C} & \chip{critical}{D} & Agent outputs only, no tool inputs, screenshots or environment state. Live-web GAIA and AssistantBench.\\
+17 & MP-Bench (\S\ref{ds:mp_bench}) & \chip{warning}{C} & \chip{critical}{D} & The same Who\&When logs plus output-only Magentic-One console transcripts from MAST.\\
+18 & MAST-Data (\S\ref{ds:mast_data}) & \chip{warning}{C} & \chip{critical}{D} & One raw log string per trace in seven framework-specific layouts.\\
+19 & Failure as a Process (\S\ref{ds:failure_as_process}) & \chip{critical}{D} & \chip{s1}{B} & Annotations only. Terminal-Bench containers and the three scaffolds are public, and 71\% of the runs can be re-joined from the CodeTracer release.\\
+20 & MegaRCA-Mix (\S\ref{ds:megarca_mix}) & \chip{critical}{D} & \chip{ink3}{E} & On paper the richest bundle (trajectory, configuration, console logs, verifier output, sandbox artifacts); nothing is released.\\
+21 & AgentErrata (\S\ref{ds:agenterrata}) & \chip{critical}{D} & \chip{ink3}{E} & Nothing released.\\
+\bottomrule
+\end{tabularx}
+\captionof{table}{The 21 datasets ranked by observability (what is recorded per step) and replayability (whether a step's state can be restored and re-executed), from the released artefacts as of October 2026.}
+\label{tab:obsrank}
+\end{minipage}
