@@ -1,0 +1,69 @@
+GAIA wrong-ending traces with NO HIGH error: 10/83 ['gaia/21f0c6c8d76ac61f4388f36ddffe1c38', 'gaia/27a6c5ebc3311542156fdde857a0035f', 'gaia/2cb6924caac94b32d2bf4b40bdf4ab51', 'gaia/331aece579d942bb4c345a86c86efb83', 'gaia/72877db591837666d500b459fb3cf29d', 'gaia/b7f8fcd484777f9d330f24a2ff30dd25', 'gaia/bc9c8f8dc13a51d0cd6762bd325ab17e', 'gaia/dcb89b6b049d424caf4c3e5fcd22c84c', 'gaia/ee9335fbe7329b273a8d922bd3f73b84', 'gaia/f5a297c9b9bc74ca0b1060b1c4c99c0f']
+GAIA correct-ending traces with >=1 HIGH error: 23/34
+correct: n=34 human overall score mean=3.60 median=3.75; reliability mean=2.88; n_HIGH mean=2.03; n_errors mean=4.29; share with 0 HIGH=0.32
+wrong: n=83 human overall score mean=3.17 median=3; reliability mean=2.19; n_HIGH mean=2.51; n_errors mean=5.29; share with 0 HIGH=0.12
+| primary category | correct | wrong |
+|---|---|---|
+| Tool-related | 5 | 18 |
+| Instruction Non-compliance | 6 | 9 |
+| Tool Selection Errors | 6 | 9 |
+| Language-only | 2 | 12 |
+| Formatting Errors | 7 | 5 |
+| Goal Deviation | 0 | 9 |
+| Task Orchestration | 3 | 3 |
+| Tool Output Misinterpretation | 1 | 4 |
+| Poor Information Retrieval | 0 | 3 |
+| Environment Setup Errors | 1 | 2 |
+| Incorrect Problem Identification | 0 | 2 |
+| Resource Not Found | 0 | 2 |
+| Tool Definition Issues | 0 | 2 |
+| Timeout Issues | 0 | 1 |
+| Resource Abuse | 0 | 1 |
+| Authentication Errors | 0 | 1 |
+earliest->primary distance (n=58): median 5.0, mean 10.1, max 47; pre-primary errors: {'end_plan': 29, 'other': 125}
+CodeAgent steps that print the task instead of calling search_agent: 28; labelled: 18
+   ('gaia/0242ca2533fac5b8b604a9060b3e15d6', 8, True)
+   ('gaia/0242ca2533fac5b8b604a9060b3e15d6', 10, False)
+   ('gaia/041b7f9c8c76c2ca1a8e67c6769267c3', 8, False)
+   ('gaia/1dd91d388cb4889e6c1f5ea5ca06bce6', 8, True)
+   ('gaia/1dd91d388cb4889e6c1f5ea5ca06bce6', 10, False)
+   ('gaia/2209204b631e26f4cee4dc3dd995608c', 8, True)
+   ('gaia/2c77a8feec544cc61a00a387ad792a13', 8, False)
+   ('gaia/2c77a8feec544cc61a00a387ad792a13', 10, False)
+   ('gaia/2c77a8feec544cc61a00a387ad792a13', 12, False)
+   ('gaia/2c77a8feec544cc61a00a387ad792a13', 14, False)
+   ('gaia/3205fa0cb2135fe671bf7cd0e5a26151', 13, False)
+   ('gaia/5dc4cf8d5175f2782f46265456998d39', 8, True)
+   ('gaia/5dc4cf8d5175f2782f46265456998d39', 10, True)
+   ('gaia/5dc4cf8d5175f2782f46265456998d39', 12, True)
+   ('gaia/6e64c2e543327a7c2f2ce3d26ced94d1', 8, False)
+   ('gaia/85c14ced5177cdad83f1f1f898a1c6c7', 8, True)
+   ('gaia/85c14ced5177cdad83f1f1f898a1c6c7', 10, True)
+   ('gaia/85c14ced5177cdad83f1f1f898a1c6c7', 12, True)
+   ('gaia/88e4ce6a659df42a4146331fff36417c', 8, True)
+   ('gaia/88e4ce6a659df42a4146331fff36417c', 10, True)
+   ('gaia/88e4ce6a659df42a4146331fff36417c', 12, True)
+   ('gaia/a041b8d88e3fedcc7d387da328f8a3b4', 8, True)
+   ('gaia/a041b8d88e3fedcc7d387da328f8a3b4', 10, True)
+   ('gaia/d857dc7d137db732306e97c3820652bd', 8, False)
+   ('gaia/d9a8dff7edce2d1b15ed4769886d9a2a', 8, True)
+   ('gaia/d9a8dff7edce2d1b15ed4769886d9a2a', 10, True)
+   ('gaia/f04b425c107f7b972209528a46c407d9', 20, True)
+   ('gaia/f04b425c107f7b972209528a46c407d9', 22, True)
+search_agent final_answer with no visit_page in its run: 13; labelled: 5; correct-ending: 3
+   ('gaia/3205fa0cb2135fe671bf7cd0e5a26151', 23, False, False)
+   ('gaia/3215fc75e81bdb73706a4fb37b66427f', 16, True, True)
+   ('gaia/331aece579d942bb4c345a86c86efb83', 13, False, False)
+   ('gaia/3acaa3150977e199eddb95c64f2ada2e', 27, False, False)
+   ('gaia/41bbc898aa7de0f31d2382ff57700a76', 16, True, False)
+   ('gaia/512475a321c616e45337da3575f6a185', 19, True, False)
+   ('gaia/772605f0794b0fa96bc942a8a7736571', 27, False, False)
+   ('gaia/a32806e19bac45a34d3712ccc433ec9d', 36, False, False)
+   ('gaia/b159cbc7eb989d874a0337cbee8a373c', 19, True, False)
+   ('gaia/d2868d12880a41ad5ed1fb3bb39159d5', 16, False, True)
+   ('gaia/ea313eef484bb042ddb079771359c8e6', 20, False, True)
+   ('gaia/eb42da715add1437eced9e494b0f62f7', 21, True, False)
+   ('gaia/fcdcb46c7df316b571138b53bd3c822a', 13, False, False)
+SWE primary impact: Counter({('MEDIUM', 'HIGH', 'MEDIUM'): 5, ('MEDIUM',): 5, ('LOW',): 5, ('MEDIUM', 'HIGH'): 2, ('MEDIUM', 'MEDIUM', 'HIGH'): 2, ('LOW', 'MEDIUM'): 2, ('LOW', 'LOW'): 2, ('LOW', 'HIGH'): 2, ('MEDIUM', 'MEDIUM'): 2, ('HIGH', 'HIGH', 'HIGH'): 1, ('HIGH',): 1, (): 1, ('HIGH', 'MEDIUM'): 1})  primary at last tool span: 3
+GAIA primary at FinalAnswerTool / final LLM: 46
+primary-error evidence quotes an execution error message: {'other': 274, 'quotes execution error': 23}

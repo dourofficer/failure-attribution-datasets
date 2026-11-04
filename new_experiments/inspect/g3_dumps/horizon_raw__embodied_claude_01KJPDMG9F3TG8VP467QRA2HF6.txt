@@ -1,0 +1,14 @@
+ID embodied_claude_01KJPDMG9F3TG8VP467QRA2HF6 domain=embodied model=claude run=None passed=None score=None
+[r2] Instruction | step=None | The agent uses hard-coded poses and grasps without perceiving or verifying the cube’s color, ignoring the 'green' constraint and risking moving the wrong object.
+[r3] Success | step=None | The plan homes, grasps the cube, lifts, translates to a new location, releases, and returns home—effectively moving the green cube as instructed.
+
+Task: Move the green cube.
+
+Primitive plan (7 steps):
+  home({})
+  move_to_pose({'arm': 'right', 'pose': [0.1, 0.16, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})
+  move_to_pose({'arm': 'right', 'pose': [0.1, 0.16, 1.1, 0, -0.818, 0.574, 0]})
+  move_to_pose({'arm': 'right', 'pose': [0.4, 0.16, 1.0, 0, -0.818, 0.574, 0]})
+  release({'arm': 'right'})
+  home({})

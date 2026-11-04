@@ -1,0 +1,41 @@
+
+## tau_retail n=29
+root != first failure: 2 ; gap root-first (steps) median 4.0 max 4
+root is the LAST annotated failure: 24 ; root is the only failure: 22
+failure density before root: 0.003/step; after root: 0.023/step
+root step contains error string: 0
+  error-string rate at root: 0.00 (n=20)
+  error-string rate at pre_fail: 0.00 (n=2)
+  error-string rate at post_fail: 0.00 (n=6)
+  error-string rate at unflagged: 0.05 (n=475)
+reaction to pre-root (recovered) failures: next speaker [('Tool:list_all_product_types', 2)] ; next step mentions problem 0 / 2 ; ledger flags no-progress 0
+root category: [('under', 8), ('misinterpretation', 7), ('misalignment', 7), ('adherence', 3), ('not supported', 2), ('invalid invocation', 1), ('system', 1)]
+
+## magentic_one n=44
+root != first failure: 17 ; gap root-first (steps) median 2 max 20
+root is the LAST annotated failure: 23 ; root is the only failure: 14
+failure density before root: 0.041/step; after root: 0.145/step
+root step contains error string: 9
+  error-string rate at root: 0.20 (n=44)
+  error-string rate at pre_fail: 0.00 (n=24)
+  error-string rate at post_fail: 0.07 (n=227)
+  error-string rate at unflagged: 0.06 (n=1862)
+reaction to pre-root (recovered) failures: next speaker [('Orchestrator (thought)', 24)] ; next step mentions problem 0 / 24 ; ledger flags no-progress 23
+root category: [('misinterpretation', 15), ('guardrail', 9), ('adherence', 8), ('invention', 4), ('misalignment', 4), ('not supported', 3), ('system', 1)]
+
+## category by role of failure event (all 73):
+| category | root | pre-root (recovered) | post-root (symptom) |
+|---|---|---|---|
+| misinterpretation | 22 | 0 | 9 |
+| misalignment | 11 | 1 | 15 |
+| adherence | 11 | 25 | 167 |
+| guardrail | 9 | 0 | 15 |
+| under | 8 | 0 | 2 |
+| not supported | 5 | 0 | 19 |
+| invention | 4 | 0 | 4 |
+| system | 2 | 0 | 0 |
+| invalid invocation | 1 | 0 | 4 |
+
+## agent blamed at root vs at pre-root failures
+root agents: [(('magentic_one', 'Orchestrator'), 23), (('tau_retail', 'Assistant'), 21), (('magentic_one', 'WebSurfer'), 16), (('tau_retail', 'User'), 8), (('magentic_one', 'Websurfer'), 2), (('magentic_one', 'Assistant'), 2), (('magentic_one', 'FileSurfer'), 1)]
+pre-root failure agents: [(('magentic_one', 'WebSurfer'), 23), (('tau_retail', 'Assistant'), 2), (('magentic_one', 'Orchestrator (-> WebSurfer)'), 1)]

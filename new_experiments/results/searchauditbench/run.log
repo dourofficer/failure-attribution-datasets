@@ -1,0 +1,71 @@
+40 records
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 143, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 114, in main
+    outs = chat_json_many(msgs, workers=args.workers, max_tokens=args.max_tokens, think=not args.no_think,
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 155, in chat_json_many
+    return list(ex.map(lambda m: chat_json(m, **kw), list_of_messages))
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 155, in <lambda>
+    return list(ex.map(lambda m: chat_json(m, **kw), list_of_messages))
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 141, in chat_json
+    out = chat(messages, max_tokens=max_tokens, think=think, **kw)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 98, in chat
+    raise RuntimeError(f'LLM call failed after {retries} attempts: {last}')
+RuntimeError: LLM call failed after 3 attempts: 400 Client Error: Bad Request for url: http://localhost:8211/v1/chat/completions
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/searchauditbench/all_at_once_std.jsonl'
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/searchauditbench/all_at_once_std_nogt.jsonl'
+40 records
+| metric | n | % |
+|---|---|---|
+| agent_ok | 39 | 97.5 |
+| step_exact | 16 | 40.0 |
+| step_in_set | 19 | 47.5 |
+| step_within_1 | 16 | 40.0 |
+| step_within_3 | 18 | 45.0 |
+| step_within_5 | 21 | 52.5 |
+
+n=40 parse_fail=1 pred later than gold: 9, earlier: 14, exact: 16
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/searchauditbench/all_at_once_std_nogt.jsonl
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| BrowseComp-ZH | 8 | 100.0 | 50.0 | 50.0 | 50.0 |
+| XBench-DeepSearch | 10 | 100.0 | 30.0 | 30.0 | 30.0 |
+| DeepSearchQA | 6 | 100.0 | 33.3 | 50.0 | 50.0 |
+| SEALQA | 7 | 100.0 | 42.9 | 57.1 | 57.1 |
+| BrowseComp | 7 | 85.7 | 42.9 | 42.9 | 57.1 |
+| BrowseComp English | 2 | 100.0 | 50.0 | 50.0 | 50.0 |
+| ALL | 40 | 97.5 | 40.0 | 45.0 | 47.5 |
+
+categories: {'later(>3)': 6, 'earlier(<-3)': 14, 'exact': 16, 'in_label_set': 3, 'truncated': 1}
+agent right but step wrong: 23; step right but agent wrong: 0
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 5 | 60.0 | 80.0 | 100.0 |
+| 11-30 | 11 | 45.5 | 45.5 | 90.9 |
+| 31-1000 | 24 | 33.3 | 37.5 | 100.0 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/searchauditbench/all_at_once_std_nogt_analysis.md

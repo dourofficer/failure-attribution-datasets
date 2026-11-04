@@ -1,0 +1,98 @@
+ID alfworld/Qwen3-8B_020_id_20___chat_b012_t00_e01-5b8f974f backbone=Qwen3-8B n_steps=60 gold_idx=43 cats=['action', 'action.invalid_action']
+REASON: At step 22, the agent attempted the action 'take keychain 1 from diningtable 1', but this action was not present in the admissible actions
+TASK: find two keychain and put them in sidetable.
+
+-- turn 1 (idx 1)
+   OBS: -= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a bed 2, a bed 1, a diningtable 1, a drawer 2, a drawer 1, a garbagecan 1, a shelf 14, a shelf 13, a shelf 12, a shelf 11, a shelf 10, a shelf 9, a shelf 8, a shelf 7, a shelf 6, a shelf 5, a shelf 4, a shelf 3, a shelf 2, a shelf 1, and a sidetable 1.
+
+Your task is to: find two keychain and p
+   ACT: go to drawer 1
+-- turn 2 (idx 3)
+   OBS: You arrive at drawer 1. The drawer 1 is closed.
+   ACT: open drawer 1
+-- turn 3 (idx 5)
+   OBS: You open the drawer 1. The drawer 1 is open. In it, you see nothing.
+   ACT: go to drawer 2
+-- turn 4 (idx 7)
+   OBS: You arrive at drawer 2. The drawer 2 is closed.
+   ACT: open drawer 2
+-- turn 5 (idx 9)
+   OBS: You open the drawer 2. The drawer 2 is open. In it, you see nothing.
+   ACT: go to shelf 1
+-- turn 6 (idx 11)
+   OBS: You arrive at shelf 1. On the shelf 1, you see nothing.
+   ACT: go to shelf 2
+-- turn 7 (idx 13)
+   OBS: You arrive at shelf 2. On the shelf 2, you see nothing.
+   ACT: go to shelf 3
+-- turn 8 (idx 15)
+   OBS: You arrive at shelf 3. On the shelf 3, you see a keychain 3.
+   ACT: take keychain 3 from shelf 3
+-- turn 9 (idx 17)
+   OBS: You pick up the keychain 3 from the shelf 3.
+   ACT: go to shelf 4
+-- turn 10 (idx 19)
+   OBS: You arrive at shelf 4. On the shelf 4, you see a cellphone 1, and a pencil 2.
+   ACT: go to shelf 5
+-- turn 11 (idx 21)
+   OBS: You arrive at shelf 5. On the shelf 5, you see a creditcard 1.
+   ACT: go to shelf 6
+-- turn 12 (idx 23)
+   OBS: You arrive at shelf 6. On the shelf 6, you see nothing.
+   ACT: go to shelf 7
+-- turn 13 (idx 25)
+   OBS: You arrive at shelf 7. On the shelf 7, you see a bowl 1.
+   ACT: go to shelf 8
+-- turn 14 (idx 27)
+   OBS: You arrive at shelf 8. On the shelf 8, you see a creditcard 2, and a mug 1.
+   ACT: go to shelf 9
+-- turn 15 (idx 29)
+   OBS: You arrive at shelf 9. On the shelf 9, you see nothing.
+   ACT: go to shelf 10
+-- turn 16 (idx 31)
+   OBS: You arrive at shelf 10. On the shelf 10, you see nothing.
+   ACT: go to shelf 11
+-- turn 17 (idx 33)
+   OBS: You arrive at shelf 11. On the shelf 11, you see a bowl 3.
+   ACT: go to shelf 12
+-- turn 18 (idx 35)
+   OBS: You arrive at shelf 12. On the shelf 12, you see a bowl 2.
+   ACT: go to shelf 13
+-- turn 19 (idx 37)
+   OBS: You arrive at shelf 13. On the shelf 13, you see nothing.
+   ACT: go to shelf 14
+-- turn 20 (idx 39)
+   OBS: You arrive at shelf 14. On the shelf 14, you see nothing.
+   ACT: go to diningtable 1
+-- turn 21 (idx 41)
+   OBS: You arrive at diningtable 1. On the diningtable 1, you see a book 1, a keychain 2, a keychain 1, a pen 1, a pencil 1, and a watch 1.
+   ACT: examine diningtable 1
+-- turn 22 (idx 43)  <<<< GOLD
+   OBS: On the diningtable 1, you see a book 1, a keychain 2, a keychain 1, a pen 1, a pencil 1, and a watch 1.
+   ACT: take keychain 1 from diningtable 1
+-- turn 23 (idx 45)
+   OBS: Nothing happens.
+   ACT: examine diningtable 1
+-- turn 24 (idx 47)
+   OBS: On the diningtable 1, you see a book 1, a keychain 2, a keychain 1, a pen 1, a pencil 1, and a watch 1.
+   ACT: take keychain 2 from diningtable 1
+-- turn 25 (idx 49)
+   OBS: Nothing happens.
+   ACT: go to sidetable 1
+-- turn 26 (idx 51)
+   OBS: You arrive at sidetable 1. On the sidetable 1, you see a alarmclock 1, a creditcard 3, a pencil 3, and a watch 2.
+   ACT: go to diningtable 1
+-- turn 27 (idx 53)
+   OBS: You arrive at diningtable 1. On the diningtable 1, you see a book 1, a keychain 2, a keychain 1, a pen 1, a pencil 1, and a watch 1.
+   ACT: examine diningtable 1
+-- turn 28 (idx 55)
+   OBS: On the diningtable 1, you see a book 1, a keychain 2, a keychain 1, a pen 1, a pencil 1, and a watch 1.
+   ACT: go to sidetable 1
+-- turn 29 (idx 57)
+   OBS: You arrive at sidetable 1. On the sidetable 1, you see a alarmclock 1, a creditcard 3, a pencil 3, and a watch 2.
+   ACT: move keychain 3 to sidetable 1
+-- turn 30 (idx 59)
+   OBS: You move the keychain 3 to the sidetable 1.
+   ACT: go to diningtable 1

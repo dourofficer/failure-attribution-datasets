@@ -1,0 +1,96 @@
+ID alfworld/Qwen3-8B_010_id_10___chat_b005_t00_e04-7e3c13ba backbone=Qwen3-8B n_steps=60 gold_idx=25 cats=['planning', 'planning.inefficient_plan']
+REASON: At step 13, the plan explicitly committed to an exhaustive cabinet-only search (cabinets 8→23) despite multiple prior empty cabinets and without first checking higher-probability, low-cost locations (e.g., countertops—the goal location—drawers, sink, stove)
+TASK: put a cool pot in countertop.
+
+-- turn 1 (idx 1)
+   OBS: -= Welcome to TextWorld, ALFRED! =-
+
+You are in the middle of a room. Looking quickly around you, you see a cabinet 23, a cabinet 22, a cabinet 21, a cabinet 20, a cabinet 19, a cabinet 18, a cabinet 17, a cabinet 16, a cabinet 15, a cabinet 14, a cabinet 13, a cabinet 12, a cabinet 11, a cabinet 10, a cabinet 9, a cabinet 8, a cabinet 7, a cabinet 6, a cabinet 5, a cabinet 4, a cabinet 3, a cabin
+   ACT: go to cabinet 1
+-- turn 2 (idx 3)
+   OBS: You arrive at cabinet 1. The cabinet 1 is closed.
+   ACT: open cabinet 1
+-- turn 3 (idx 5)
+   OBS: You open the cabinet 1. The cabinet 1 is open. In it, you see nothing.
+   ACT: go to cabinet 2
+-- turn 4 (idx 7)
+   OBS: You arrive at cabinet 2. The cabinet 2 is closed.
+   ACT: open cabinet 2
+-- turn 5 (idx 9)
+   OBS: You open the cabinet 2. The cabinet 2 is open. In it, you see a dishsponge 1, and a soapbottle 1.
+   ACT: go to cabinet 3
+-- turn 6 (idx 11)
+   OBS: You arrive at cabinet 3. On the cabinet 3, you see nothing.
+   ACT: go to cabinet 4
+-- turn 7 (idx 13)
+   OBS: You arrive at cabinet 4. The cabinet 4 is closed.
+   ACT: open cabinet 4
+-- turn 8 (idx 15)
+   OBS: You open the cabinet 4. The cabinet 4 is open. In it, you see nothing.
+   ACT: open cabinet 5
+-- turn 9 (idx 17)
+   OBS: You open the cabinet 5. The cabinet 5 is open. In it, you see nothing.
+   ACT: go to cabinet 6
+-- turn 10 (idx 19)
+   OBS: You arrive at cabinet 6. The cabinet 6 is closed.
+   ACT: open cabinet 6
+-- turn 11 (idx 21)
+   OBS: You open the cabinet 6. The cabinet 6 is open. In it, you see nothing.
+   ACT: go to cabinet 7
+-- turn 12 (idx 23)
+   OBS: You arrive at cabinet 7. The cabinet 7 is closed.
+   ACT: open cabinet 7
+-- turn 13 (idx 25)  <<<< GOLD
+   OBS: You open the cabinet 7. The cabinet 7 is open. In it, you see nothing.
+   ACT: go to cabinet 8
+-- turn 14 (idx 27)
+   OBS: You arrive at cabinet 8. The cabinet 8 is closed.
+   ACT: open cabinet 8
+-- turn 15 (idx 29)
+   OBS: You open the cabinet 8. The cabinet 8 is open. In it, you see a soapbottle 2.
+   ACT: go to cabinet 9
+-- turn 16 (idx 31)
+   OBS: You arrive at cabinet 9. The cabinet 9 is closed.
+   ACT: open cabinet 9
+-- turn 17 (idx 33)
+   OBS: You open the cabinet 9. The cabinet 9 is open. In it, you see nothing.
+   ACT: go to cabinet 10
+-- turn 18 (idx 35)
+   OBS: You arrive at cabinet 10. The cabinet 10 is closed.
+   ACT: open cabinet 10
+-- turn 19 (idx 37)
+   OBS: You open the cabinet 10. The cabinet 10 is open. In it, you see nothing.
+   ACT: go to fridge 1
+-- turn 20 (idx 39)
+   OBS: You arrive at fridge 1. The fridge 1 is closed.
+   ACT: open fridge 1
+-- turn 21 (idx 41)
+   OBS: You open the fridge 1. The fridge 1 is open. In it, you see nothing.
+   ACT: go to cabinet 11
+-- turn 22 (idx 43)
+   OBS: You arrive at cabinet 11. The cabinet 11 is closed.
+   ACT: open cabinet 11
+-- turn 23 (idx 45)
+   OBS: You open the cabinet 11. The cabinet 11 is open. In it, you see nothing.
+   ACT: open cabinet 12
+-- turn 24 (idx 47)
+   OBS: You open the cabinet 12. The cabinet 12 is open. In it, you see a bowl 1.
+   ACT: go to cabinet 13
+-- turn 25 (idx 49)
+   OBS: You arrive at cabinet 13. The cabinet 13 is closed.
+   ACT: open cabinet 13
+-- turn 26 (idx 51)
+   OBS: You open the cabinet 13. The cabinet 13 is open. In it, you see nothing.
+   ACT: go to cabinet 14
+-- turn 27 (idx 53)
+   OBS: You arrive at cabinet 14. The cabinet 14 is closed.
+   ACT: open cabinet 14
+-- turn 28 (idx 55)
+   OBS: You open the cabinet 14. The cabinet 14 is open. In it, you see nothing.
+   ACT: go to cabinet 15
+-- turn 29 (idx 57)
+   OBS: You arrive at cabinet 15. The cabinet 15 is closed.
+   ACT: open cabinet 15
+-- turn 30 (idx 59)
+   OBS: You open the cabinet 15. The cabinet 15 is open. In it, you see nothing.
+   ACT: go to cabinet 16

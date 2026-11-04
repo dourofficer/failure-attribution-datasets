@@ -1,0 +1,1527 @@
+=== mem0/locomo_locomo-10.json::query:locomo-qa-10-122@1 system=mem0 n_steps=174 gold=None type=ExtractionError op_in_slice=False final_op=memory_system.extract_facts
+QUERY: 'What did Calvin recently get that is a "masterpiece on wheels"?'
+GOLD ANSWERS: ["Ferrari"]
+PREDICTION: 'Based on the memories, Calvin recently got a vehicle that he feels is a "masterpiece on wheels." This is supported by the memories indicating that driving the vehicle gives him an adrenaline rush (Memory 1) and that he feels he deserves the vehicle after hard work (Memory 2).'
+REASON: The extraction step failed to preserve a key detail from the evidence: Calvin’s newly acquired Ferrari was described as “a masterpiece on wheels.” This entity-description link was necessary because the query asked which item was referred to by that phrase. The stored memory only retained more general information about Calvin’s vehicle, such as its emotional significance or association with hard work, without linking the phrase to the Ferrari. As a result, the system could not identify the exact answer.
+EVIDENCE: ['{\n    "content": "C\'mon, remember how great you are! Keep going for those dreams. You got this! You know what Dave? Last week, I got a new Ferrari! It\'s a masterpiece on wheels. Excited for thrilling rides and unforgettable journeys! Perhaps a photo of this unique beauty will lift your mood.\\nBelow is this message\'s metadata:\\nSpeaker Name: Calvin\\nSpeaker Role: user\\n",\n    "name": "Calvin",\n    "role": "user",\n    "timestamp": "2023-10-15T09:39:00"\n}']
+
+--- [step 0] extraction op=memory_system.extract_facts session=locomo-10-session-1
+Operation: memory_system.extract_facts [extraction] (op_id op-c4409ba0164c428d811fe7ebebee6635, session locomo-10-session-1, 2026-04-21 18:15:06.083)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D1:1: {
+    "content": "Hey Dave! Nice to meet you! How's it going since we talked?\nBelow is this message's met ...[527 more]
+
+--- [step 1] extraction op=memory_system.extract_facts session=locomo-10-session-1
+Operation: memory_system.extract_facts [extraction] (op_id op-a57d87787d4a43ca85ec9adf8c570b4b, session locomo-10-session-1, 2026-04-21 18:15:54.304)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D1:11: {
+    "content": "Wow, my agent found me this awesome place, so thankful!\nBelow is this message's metada ...[576 more]
+
+--- [step 2] update op=memory_system.update_memory_decision session=locomo-10-session-1
+Operation: memory_system.update_memory_decision [update] (op_id op-e1564705e21f42daaecf08d69e9fe2f4, session locomo-10-session-1, 2026-04-21 18:15:55.250)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:b8898f3603b5f6522528fa46ddfd2bf127b90c85: ['Agent found an awesome place for Calvin']
+  - [prompt] me ...[3030 more]
+
+--- [step 3] extraction op=memory_system.extract_facts session=locomo-10-session-1
+Operation: memory_system.extract_facts [extraction] (op_id op-41d6fbcf77ae4c4ba68c65e8fdbef808, session locomo-10-session-1, 2026-04-21 18:16:39.247)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D1:19: {
+    "content": "Thanks, Dave! If I need any help, I'll be sure to let you know. Stay safe!\nBelow is th ...[543 more]
+
+--- [step 4] extraction op=memory_system.extract_facts session=locomo-10-session-2
+Operation: memory_system.extract_facts [extraction] (op_id op-0947c16af232400a9f443f9a03f13145, session locomo-10-session-2, 2026-04-21 18:16:54.619)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D2:3: {
+    "content": "Nice car! It's an amazing ride - super smooth and real powerful. Like a rockstar behind  ...[786 more]
+
+--- [step 5] update op=memory_system.update_memory_decision session=locomo-10-session-2
+Operation: memory_system.update_memory_decision [update] (op_id op-45684128b0ef498cba8cf65193b00d24, session locomo-10-session-2, 2026-04-21 18:16:56.000)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:d70b5f680e2b5fcaa09f935df5ebd0d3c31ac49a: 'Find 6 existing memories similar to the new extracted facts.'
+  - [llm_response] str:7078d60eb0ee864fce18a7df49ede4d7a6bc21bd: ['Likes cars that are smooth and powerful', 'Enjoys feeling ...[4396 more]
+
+--- [step 6] extraction op=memory_system.extract_facts session=locomo-10-session-2
+Operation: memory_system.extract_facts [extraction] (op_id op-057c9e5b7b704b94b385e2f409e9abb8, session locomo-10-session-2, 2026-04-21 18:17:03.718)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D2:5: {
+    "content": "Woohoo! I finally got myself this beauty. Here's a pic from yesterday when I took it for ...[1169 more]
+
+--- [step 7] update op=memory_system.update_memory_decision session=locomo-10-session-2
+Operation: memory_system.update_memory_decision [update] (op_id op-0f02a999766143998510c366169a2d11, session locomo-10-session-2, 2026-04-21 18:17:05.196)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:59388a5639215f0e3c1e1cfcca21d82e81f15e4a: ['Calvin recently acquired a vehicle that he is very excite ...[4889 more]
+
+--- [step 8] extraction op=memory_system.extract_facts session=locomo-10-session-2
+Operation: memory_system.extract_facts [extraction] (op_id op-1be511b95f784d95a1911a9beadbf993, session locomo-10-session-2, 2026-04-21 18:17:10.827)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D2:6: {
+    "content": "Calvin, that car looks awesome! You must feel amazing every time you get inside! You des ...[572 more]
+
+--- [step 9] extraction op=memory_system.extract_facts session=locomo-10-session-4
+Operation: memory_system.extract_facts [extraction] (op_id op-737afabc4c8b4da1a8aa9ca5cd9d6c9f, session locomo-10-session-4, 2026-04-21 18:21:15.241)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D4:2: {
+    "content": "Wow Dave! Congrats on opening your own car maintenance shop! It looks like all your hard ...[586 more]
+
+--- [step 10] extraction op=memory_system.extract_facts session=locomo-10-session-5
+Operation: memory_system.extract_facts [extraction] (op_id op-4940c747f81241beb42e1364de1b726c, session locomo-10-session-5, 2026-04-21 18:25:09.642)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D5:15: {
+    "content": "Sure, Calvin! Keep in touch. If you ever need help, just let me know. Bye!\nBelow is th ...[533 more]
+
+--- [step 11] extraction op=memory_system.extract_facts session=locomo-10-session-6
+Operation: memory_system.extract_facts [extraction] (op_id op-7c4cd6db6e3542a6b2bca6086c1eb715, session locomo-10-session-6, 2026-04-21 18:25:15.155)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D6:1: {
+    "content": "Hey Dave! Long time no chat! Lots has gone down since we last caught up.\nBelow is this  ...[540 more]
+
+--- [step 12] extraction op=memory_system.extract_facts session=locomo-10-session-7
+Operation: memory_system.extract_facts [extraction] (op_id op-9e87d7f960bf4a53b56f46ee8e0d11a8, session locomo-10-session-7, 2026-04-21 18:28:07.909)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D7:9: {
+    "content": "Yeah, Dave! That feeling of power and happiness is amazing! It's great to see what we cr ...[595 more]
+
+--- [step 13] extraction op=memory_system.extract_facts session=locomo-10-session-8
+Operation: memory_system.extract_facts [extraction] (op_id op-60dd8415427045cea5a77141819498b9, session locomo-10-session-8, 2026-04-21 18:30:55.694)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D8:13: {
+    "content": "Have fun exploring the mountains, Dave! Safe travels and see you soon. Take care!\nBelo ...[550 more]
+
+--- [step 14] extraction op=memory_system.extract_facts session=locomo-10-session-9
+Operation: memory_system.extract_facts [extraction] (op_id op-969576927ead4dba83929e1031e646f8, session locomo-10-session-9, 2026-04-21 18:32:03.315)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D9:11: {
+    "content": "Thanks, Dave! Excited to drive again. Appreciate your help! Look what a wonderful view  ...[951 more]
+
+--- [step 15] update op=memory_system.update_memory_decision session=locomo-10-session-9
+Operation: memory_system.update_memory_decision [update] (op_id op-1795b01542c5435ba3785a3cdb83a218, session locomo-10-session-9, 2026-04-21 18:32:04.645)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:88ee19316d969a2172b33e7f61ebde911579124f: 'Find 20 existing memories similar to the new extracted facts.'
+  - [llm_response] str:fd190794dddfbaaf90100afeeabb3e3ef3dae218: ["User's name is Calvin", 'User is excited to drive again' ...[11952 more]
+
+--- [step 16] extraction op=memory_system.extract_facts session=locomo-10-session-9
+Operation: memory_system.extract_facts [extraction] (op_id op-2aea006aadc44a58bfcca020bcbd609b, session locomo-10-session-9, 2026-04-21 18:33:27.847)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D9:21: {
+    "content": "Thanks, Dave! let's keep in touch, take care!\nBelow is this message's metadata:\nSpeak ...[514 more]
+
+--- [step 17] extraction op=memory_system.extract_facts session=locomo-10-session-10
+Operation: memory_system.extract_facts [extraction] (op_id op-9166f5ce6e6c4ac59d7df1f6872d59d6, session locomo-10-session-10, 2026-04-21 18:35:08.857)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D10:17: {
+    "content": "Hey Cal, take care and don't overwork yourself! Talk to you soon. Stay safe!\nBelow i ...[537 more]
+
+--- [step 18] extraction op=memory_system.extract_facts session=locomo-10-session-11
+Operation: memory_system.extract_facts [extraction] (op_id op-b2f9927b44aa4e51847c858b5b233b1d, session locomo-10-session-11, 2026-04-21 18:36:44.733)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D11:14: {
+    "content": "Thanks, Dave! Appreciate your support. Let's catch up soon and chat. Take care!\nBelo ...[550 more]
+
+--- [step 19] extraction op=memory_system.extract_facts session=locomo-10-session-12
+Operation: memory_system.extract_facts [extraction] (op_id op-e4e36882a89b4cf2aa2cf7fe0d6b8fe2, session locomo-10-session-12, 2026-04-21 18:38:13.710)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D12:14: {
+    "content": "Glad to help, Calvin! Eager to see what you do. Keep at it and never forget your drea ...[549 more]
+
+--- [step 20] extraction op=memory_system.extract_facts session=locomo-10-session-12
+Operation: memory_system.extract_facts [extraction] (op_id op-1ccda9815acd485693895301f704ecdd, session locomo-10-session-12, 2026-04-21 18:38:26.574)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D12:17: {
+    "content": "Thanks, Dave! I'll stay focused and keep going. Appreciate your belief!\nBelow is thi ...[542 more]
+
+--- [step 21] extraction op=memory_system.extract_facts session=locomo-10-session-14
+Operation: memory_system.extract_facts [extraction] (op_id op-3cb03dc321c14e6ab2a89c9374330361, session locomo-10-session-14, 2026-04-21 18:41:41.208)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D14:15: {
+    "content": "Thanks, Cal! Your support means a lot to me.\nBelow is this message's metadata:\nSpea ...[505 more]
+
+--- [step 22] extraction op=memory_system.extract_facts session=locomo-10-session-15
+Operation: memory_system.extract_facts [extraction] (op_id op-3151504337fb44579d68908f449bba5c, session locomo-10-session-15, 2026-04-21 18:42:30.032)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D15:6: {
+    "content": "It was an incredible experience, Dave! The city was buzzing with energy and the festiv ...[881 more]
+
+--- [step 23] update op=memory_system.update_memory_decision session=locomo-10-session-15
+Operation: memory_system.update_memory_decision [update] (op_id op-9f073d34f6884eacbe83015291a992e6, session locomo-10-session-15, 2026-04-21 18:42:31.107)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:c2b1d3e6b11ecaf56388e2bf96b1f0647d836c54: ['Had an incredible experience in a city with a lively fes ...[3468 more]
+
+--- [step 24] extraction op=memory_system.extract_facts session=locomo-10-session-15
+Operation: memory_system.extract_facts [extraction] (op_id op-8d815623777b4cf48fb314b6176e5f50, session locomo-10-session-15, 2026-04-21 18:42:36.835)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D15:8: {
+    "content": "It was a dream come true, Dave! The festival had buzzing energy and a super upbeat cro ...[878 more]
+
+--- [step 25] update op=memory_system.update_memory_decision session=locomo-10-session-15
+Operation: memory_system.update_memory_decision [update] (op_id op-4750d24844de46778a99e1b2124ff24e, session locomo-10-session-15, 2026-04-21 18:42:38.353)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:3a82ed585fc1d5dae6573a915a7c5fc982cc2b24: 'Find 8 existing memories similar to the new extracted facts.'
+  - [llm_response] str:38fa9b2253bbc33542fe5d1c8c2696fc7800884c: ['Attended a festival with buzzing energy and a super upbe ...[5607 more]
+
+--- [step 26] extraction op=memory_system.extract_facts session=locomo-10-session-15
+Operation: memory_system.extract_facts [extraction] (op_id op-ceafcc2ca4a4438585457d90c3eca549, session locomo-10-session-15, 2026-04-21 18:43:30.713)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D15:15: {
+    "content": "Sure, Calvin! Looking forward to hearing about it. See ya then!\nBelow is this messag ...[524 more]
+
+--- [step 27] extraction op=memory_system.extract_facts session=locomo-10-session-16
+Operation: memory_system.extract_facts [extraction] (op_id op-1fc51e4beb9b4814bec45b3c875890a5, session locomo-10-session-16, 2026-04-21 18:43:37.343)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D16:2: {
+    "content": "Hey Dave! The tour was amazing! I was so pumped from all the energy from the audience. ...[727 more]
+
+--- [step 28] update op=memory_system.update_memory_decision session=locomo-10-session-16
+Operation: memory_system.update_memory_decision [update] (op_id op-3dea925eec1f4ee7bf1661a85d270e9e, session locomo-10-session-16, 2026-04-21 18:43:38.250)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:51770d9d1068526d6b91d10751bef40e7f180c42: ['Calvin enjoyed the tour and felt energized by the audien ...[3590 more]
+
+--- [step 29] extraction op=memory_system.extract_facts session=locomo-10-session-16
+Operation: memory_system.extract_facts [extraction] (op_id op-dd09d8ed59a741ee8b4d4d83a41832b7, session locomo-10-session-16, 2026-04-21 18:43:43.822)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D16:4: {
+    "content": "Performing on such a big stage was a dream come true! The energy was incredible and I  ...[973 more]
+
+--- [step 30] update op=memory_system.update_memory_decision session=locomo-10-session-16
+Operation: memory_system.update_memory_decision [update] (op_id op-12af239b88134fe4a3d6d099bd56bb23, session locomo-10-session-16, 2026-04-21 18:43:45.315)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:213aa0fb9e510c4413ea4d3193188328da9fc848: 'Find 7 existing memories similar to the new extracted facts.'
+  - [llm_response] str:07dc1990c32e270a7049aeab9a503f24c222670c: ['Calvin performed on a big stage and found it to be a dre ...[5389 more]
+
+--- [step 31] extraction op=memory_system.extract_facts session=locomo-10-session-16
+Operation: memory_system.extract_facts [extraction] (op_id op-245b43a2b6594534a594f70ae7c77c4c, session locomo-10-session-16, 2026-04-21 18:44:24.512)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D16:12: {
+    "content": "Thanks, Dave! I'll let you know if I need any assistance with props or anything else. ...[590 more]
+
+--- [step 32] extraction op=memory_system.extract_facts session=locomo-10-session-16
+Operation: memory_system.extract_facts [extraction] (op_id op-cd5efeca5d3e440aae98b3e0a7aeb264, session locomo-10-session-16, 2026-04-21 18:44:46.558)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D16:15: {
+    "content": "That's a great guitar, Calvin! Love the design, it's so unique and special.\nBelow is ...[673 more]
+
+--- [step 33] update op=memory_system.update_memory_decision session=locomo-10-session-16
+Operation: memory_system.update_memory_decision [update] (op_id op-3ec22dd7710f4800bba4b9713353165f, session locomo-10-session-16, 2026-04-21 18:44:48.086)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:77c4a6817cdc34e8cd25b0ab827a96a182189c28: ["Likes the design of Calvin's guitar, finds it unique and ...[3716 more]
+
+--- [step 34] extraction op=memory_system.extract_facts session=locomo-10-session-18
+Operation: memory_system.extract_facts [extraction] (op_id op-d73f7328440742db82f8f6123271ff5f, session locomo-10-session-18, 2026-04-21 18:47:25.035)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D18:7: {
+    "content": "Thanks Dave! Lots of cool stuff happening. Next up, a tour - so excited! After that, I ...[878 more]
+
+--- [step 35] update op=memory_system.update_memory_decision session=locomo-10-session-18
+Operation: memory_system.update_memory_decision [update] (op_id op-3385c7391e304639b3e1330a51eec597, session locomo-10-session-18, 2026-04-21 18:47:26.302)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:3a82ed585fc1d5dae6573a915a7c5fc982cc2b24: 'Find 8 existing memories similar to the new extracted facts.'
+  - [llm_response] str:7a34b703b75944fe0de71597e9db273cfc7bb3f6: ['Calvin is excited about an upcoming tour', 'Calvin plans ...[6344 more]
+
+--- [step 36] extraction op=memory_system.extract_facts session=locomo-10-session-19
+Operation: memory_system.extract_facts [extraction] (op_id op-bd117b99d190477f8a735cc91d4b49e8, session locomo-10-session-19, 2026-04-21 18:49:39.340)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D19:11: {
+    "content": "Thanks, Calvin! It means a lot that you appreciate what I do. I'm glad that I can mak ...[830 more]
+
+--- [step 37] update op=memory_system.update_memory_decision session=locomo-10-session-19
+Operation: memory_system.update_memory_decision [update] (op_id op-3996c0889b8e4e79836027e9cc932783, session locomo-10-session-19, 2026-04-21 18:49:40.429)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:d18c1566db74a7ae1d8768f9c6d720c2b7703fcf: 'Find 15 existing memories similar to the new extracted facts.'
+  - [llm_response] str:f5ef962ef4bb027979163064859bc2b0aabb1033: ['Name is Dave', 'Values making people happy', 'Has a lot ...[9327 more]
+
+--- [step 38] extraction op=memory_system.extract_facts session=locomo-10-session-20
+Operation: memory_system.extract_facts [extraction] (op_id op-4c7e3dd8498c43a98f495599f554511f, session locomo-10-session-20, 2026-04-21 18:50:55.859)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D20:11: {
+    "content": "I'm stoked, Calvin! We can crank up the music and have an awesome jam session. Can't  ...[720 more]
+
+--- [step 39] update op=memory_system.update_memory_decision session=locomo-10-session-20
+Operation: memory_system.update_memory_decision [update] (op_id op-f1e2219394d74682aa19bc594cffa945, session locomo-10-session-20, 2026-04-21 18:50:57.174)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:b4bc9ddbd9751ba664de9b02de7eccfb0bae981c: 'Find 10 existing memories similar to the new extracted facts.'
+  - [llm_response] str:3ab1ce2defe1e973e9215b12e30615f48c420d35: ['User is named Dave', 'User enjoys having jam sessions a ...[6070 more]
+
+--- [step 40] extraction op=memory_system.extract_facts session=locomo-10-session-20
+Operation: memory_system.extract_facts [extraction] (op_id op-aa9cc2f0484d4f3f97390f2918e5fa86, session locomo-10-session-20, 2026-04-21 18:51:21.411)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D20:15: {
+    "content": "Nice one, Calvin! Let's make some awesome memories and have a great time. See ya soon ...[547 more]
+
+--- [step 41] update op=memory_system.update_memory_decision session=locomo-10-session-20
+Operation: memory_system.update_memory_decision [update] (op_id op-cb67825fcadc4618878ae656bc4f9710, session locomo-10-session-20, 2026-04-21 18:51:22.706)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:666105672b59fe0b79802040f3e4724f5ef49a58: ["User's name is Dave"]
+  - [memory_entry] memory-unit-1f9 ...[3652 more]
+
+--- [step 42] extraction op=memory_system.extract_facts session=locomo-10-session-21
+Operation: memory_system.extract_facts [extraction] (op_id op-5c91fac3c75e42c8a96111727672a7be, session locomo-10-session-21, 2026-04-21 18:52:00.464)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D21:3: {
+    "content": "Hey Dave, it was awesome talking to those artists! Our mutual friend knew we'd be a gr ...[1051 more]
+
+--- [step 43] update op=memory_system.update_memory_decision session=locomo-10-session-21
+Operation: memory_system.update_memory_decision [update] (op_id op-6933b611a8bb4117b44be8f803bf59d7, session locomo-10-session-21, 2026-04-21 18:52:02.292)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:bc8dd21417d8aca118054f9d3872b6b069d93655: 'Find 14 existing memories similar to the new extracted facts.'
+  - [llm_response] str:1ba4e9159c23ce4f1fe3aae01b17ab7fa5e87019: ["User's name is Calvin", 'Enjoys working on a project to ...[9284 more]
+
+--- [step 44] extraction op=memory_system.extract_facts session=locomo-10-session-21
+Operation: memory_system.extract_facts [extraction] (op_id op-798c058234d24668b22563cef1d84015, session locomo-10-session-21, 2026-04-21 18:54:11.159)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D21:18: {
+    "content": "Yep, Calvin! Together, we can do amazing things if we work together and stay motivate ...[586 more]
+
+--- [step 45] extraction op=memory_system.extract_facts session=locomo-10-session-22
+Operation: memory_system.extract_facts [extraction] (op_id op-04d35289ae9a4d9ba3ee47ab74506bd3, session locomo-10-session-22, 2026-04-21 18:55:43.373)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D22:11: {
+    "content": "Thanks, Calvin! Your support really means a lot. I'll stay focused and keep going. Ap ...[573 more]
+
+--- [step 46] extraction op=memory_system.extract_facts session=locomo-10-session-22
+Operation: memory_system.extract_facts [extraction] (op_id op-9f1faa29a4da4bfcbc2620108a623512, session locomo-10-session-22, 2026-04-21 18:55:54.057)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D22:13: {
+    "content": "Thanks so much, Calvin. Your support means everything to me. I'll keep pushing and re ...[562 more]
+
+--- [step 47] extraction op=memory_system.extract_facts session=locomo-10-session-25
+Operation: memory_system.extract_facts [extraction] (op_id op-dfa9b90bded34c1d8cbb8eafcd3497e5, session locomo-10-session-25, 2026-04-21 19:01:54.571)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D25:8: {
+    "content": "Staying connected and up-to-date on world events is important to me. It helps my music ...[1498 more]
+
+--- [step 48] update op=memory_system.update_memory_decision session=locomo-10-session-25
+Operation: memory_system.update_memory_decision [update] (op_id op-0492fe2111474bde97abdba2fd345a33, session locomo-10-session-25, 2026-04-21 19:01:56.075)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:a8df9d0c056fa03be9dfce356ffffac41f0f4a75: 'Find 12 existing memories similar to the new extracted facts.'
+  - [llm_response] str:cb030e57a82704f6994c694b55ac1aa04f148ac6: ['Staying connected and up-to-date on world events is imp ...[8811 more]
+
+--- [step 49] extraction op=memory_system.extract_facts session=locomo-10-session-25
+Operation: memory_system.extract_facts [extraction] (op_id op-f69e858b91da4907a310d1f247557ac4, session locomo-10-session-25, 2026-04-21 19:03:26.644)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D25:23: {
+    "content": "That's great, Calvin! Loving the attention to detail in your work, it makes it extra  ...[800 more]
+
+--- [step 50] update op=memory_system.update_memory_decision session=locomo-10-session-25
+Operation: memory_system.update_memory_decision [update] (op_id op-d7fa1bbc937c4e4985fcd5991679988f, session locomo-10-session-25, 2026-04-21 19:03:27.713)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:f3c88e5be8be22eb2cb6d48f355d3fd358cec5b6: ["User appreciates attention to detail in Calvin's work an ...[4587 more]
+
+--- [step 51] extraction op=memory_system.extract_facts session=locomo-10-session-25
+Operation: memory_system.extract_facts [extraction] (op_id op-31bc7b7f30944cfd8b3d197c10ca81d2, session locomo-10-session-25, 2026-04-21 19:03:31.996)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D25:24: {
+    "content": "Thanks Dave! Appreciate your support!\nBelow is this message's metadata:\nSpeaker Nam ...[508 more]
+
+--- [step 52] update op=memory_system.update_memory_decision session=locomo-10-session-25
+Operation: memory_system.update_memory_decision [update] (op_id op-dd28a2a40c5b4d129f97395188e3d255, session locomo-10-session-25, 2026-04-21 19:03:33.108)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:35d5b27d8493c8eb43d6c2f5e45f8accda5c1108: ["User's name is Calvin"]
+  - [memory_entry] memory-unit-2 ...[2999 more]
+
+--- [step 53] extraction op=memory_system.extract_facts session=locomo-10-session-25
+Operation: memory_system.extract_facts [extraction] (op_id op-19e7e1e443f34935b42dc1e4624eb500, session locomo-10-session-25, 2026-04-21 19:04:14.590)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D25:30: {
+    "content": "Wow, Dave! It's a rush connecting with everyone. That feeling is unbeatable! Wishing  ...[594 more]
+
+--- [step 54] update op=memory_system.update_memory_decision session=locomo-10-session-25
+Operation: memory_system.update_memory_decision [update] (op_id op-0d5cdddfe079469baec75b02d36cfd89, session locomo-10-session-25, 2026-04-21 19:04:15.713)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:35d5b27d8493c8eb43d6c2f5e45f8accda5c1108: ["User's name is Calvin"]
+  - [prompt] memory-update-decis ...[2441 more]
+
+--- [step 55] extraction op=memory_system.extract_facts session=locomo-10-session-26
+Operation: memory_system.extract_facts [extraction] (op_id op-c86228a3fbfd405c99b3f6c7c4169c80, session locomo-10-session-26, 2026-04-21 19:05:46.081)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D26:10: {
+    "content": "That's great, Calvin. We both have discovered something that brings us fulfillment. I ...[575 more]
+
+--- [step 56] extraction op=memory_system.extract_facts session=locomo-10-session-26
+Operation: memory_system.extract_facts [extraction] (op_id op-9292fe78a99c4b0bb31364efc7fd86bb, session locomo-10-session-26, 2026-04-21 19:05:56.385)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D26:15: {
+    "content": "Thanks, Dave! I appreciate your support. Let's keep pushing for our goals. Catch you  ...[570 more]
+
+--- [step 57] update op=memory_system.update_memory_decision session=locomo-10-session-26
+Operation: memory_system.update_memory_decision [update] (op_id op-5e5c6e044e4c4fc28f7a9713490372fd, session locomo-10-session-26, 2026-04-21 19:05:57.323)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:35d5b27d8493c8eb43d6c2f5e45f8accda5c1108: ["User's name is Calvin"]
+  - [prompt] memory-update-decis ...[2441 more]
+
+--- [step 58] extraction op=memory_system.extract_facts session=locomo-10-session-28
+Operation: memory_system.extract_facts [extraction] (op_id op-0cde389825664ba096868e3932961945, session locomo-10-session-28, 2026-04-21 19:08:05.776)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D28:3: {
+    "content": "Thanks, Dave! It was an awesome feeling seeing everyone come together to celebrate - s ...[1075 more]
+
+--- [step 59] update op=memory_system.update_memory_decision session=locomo-10-session-28
+Operation: memory_system.update_memory_decision [update] (op_id op-7815ac20db00445987e38fe157591a8a, session locomo-10-session-28, 2026-04-21 19:08:07.372)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:213aa0fb9e510c4413ea4d3193188328da9fc848: 'Find 7 existing memories similar to the new extracted facts.'
+  - [llm_response] str:dbe3a1cbbe895d5196199be42c7013e1a2070320: ['Calvin felt it was an awesome and rewarding experience s ...[5741 more]
+
+--- [step 60] extraction op=memory_system.extract_facts session=locomo-10-session-28
+Operation: memory_system.extract_facts [extraction] (op_id op-74e00844d75f470eb87f94bf3c3a976b, session locomo-10-session-28, 2026-04-21 19:09:41.642)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D28:18: {
+    "content": "Thanks, Calvin! Really appreciate you noticing the effort I put into this.\nBelow is  ...[535 more]
+
+--- [step 61] extraction op=memory_system.extract_facts session=locomo-10-session-29
+Operation: memory_system.extract_facts [extraction] (op_id op-b493db44b4c64bdcb616063f4e370cc6, session locomo-10-session-29, 2026-04-21 19:13:40.572)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D29:17: {
+    "content": "Yeah, it's exciting to see where these new ideas lead. It's all about growing and evo ...[614 more]
+
+--- [step 62] update op=memory_system.update_memory_decision session=locomo-10-session-29
+Operation: memory_system.update_memory_decision [update] (op_id op-73596a54fedb420fa4657a80f32762c2, session locomo-10-session-29, 2026-04-21 19:13:42.017)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:35d5b27d8493c8eb43d6c2f5e45f8accda5c1108: ["User's name is Calvin"]
+  - [prompt] memory-update-decis ...[2441 more]
+
+--- [step 63] extraction op=memory_system.extract_facts session=locomo-10-session-30
+Operation: memory_system.extract_facts [extraction] (op_id op-a47bbdef305e4b61b92de805f1c71253, session locomo-10-session-30, 2026-04-21 19:15:34.141)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U10:D30:18: {
+    "content": "That sounds great, Dave! Can't wait to see it.\nBelow is this message's metadata:\nSp ...[517 more]
+
+--- [step 64] update op=memory_system.update_memory_decision session=locomo-10-session-30
+Operation: memory_system.update_memory_decision [update] (op_id op-5c012b2b7a57472393b670d7d8073c26, session locomo-10-session-30, 2026-04-21 19:15:34.991)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:35d5b27d8493c8eb43d6c2f5e45f8accda5c1108: ["User's name is Calvin"]
+  - [prompt] memory-update-decis ...[2441 more]
+
+--- [step 65] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f5bf0465e8b4428b8f899fe797b0dc6f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.108)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-1: 'When did Calvin first travel to Tokyo?'
+Outputs:
+  - [memory_entry] memory-unit-087891a8-b34f-4ad6-879d-ce691a85e134: {
+    "id": "087891a8-b34f-4ad6-879d-ce691a85e134",
+    "memory": "Going to T ...[2220 more]
+
+--- [step 66] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4fe874f2d9d0426399fdefe4a1a7d3ff, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.133)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-2: 'What items did Calvin buy in March 2023?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is  ...[2156 more]
+
+--- [step 67] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d05ef640df094c7abbc7fa4393a14c8f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.311)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-10: "When did a mishap occur with Calvin's musical gear and favorite mic?"
+Outputs:
+  - [memory_entry] memory-unit-40877ace-0d9f-4ef3-93e3-a23212e6b4b2: {
+    "id": "40877ace-0d9f-4ef3-93e3-a23212e6b ...[2296 more]
+
+--- [step 68] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-7390ba64b2ec4bf9863adbf7512de9e7, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.333)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-11: "When did Calvin's place get flooded in Tokyo?"
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "Us ...[2228 more]
+
+--- [step 69] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-2dd3479f1fd24935b970a175f00b2ace, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.355)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-12: 'What mishaps has Calvin run into?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is named  ...[2247 more]
+
+--- [step 70] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-02cc553916de476882a485f074480eae, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.376)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-13: "When was Calvin's concert in Tokyo?"
+Outputs:
+  - [memory_entry] memory-unit-087891a8-b34f-4ad6-879d-ce691a85e134: {
+    "id": "087891a8-b34f-4ad6-879d-ce691a85e134",
+    "memory": "Going to Tok ...[2148 more]
+
+--- [step 71] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-47f42ae3d41e4774a9e814e57d6194be, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.401)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-14: 'Would Calvin enjoy performing at the Hollywood Bowl?'
+Outputs:
+  - [memory_entry] memory-unit-735c72db-d81b-4f7e-91dc-c64c627841fa: {
+    "id": "735c72db-d81b-4f7e-91dc-c64c627841fa",
+    "memor ...[2303 more]
+
+--- [step 72] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-43c31f37c8d34183949bfd3dba37008f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.428)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-15: 'When did Calvin meet with the creative team for his new album?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+ ...[2382 more]
+
+--- [step 73] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c4146238b2aa447d93597c4ff6a376d4, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.500)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-18: 'When did Calvin have a car incident?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "User named  ...[2135 more]
+
+--- [step 74] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-7578e7a730a540cd9eb739a9ad111ec3, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.525)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-19: 'How many times has Calvin had to deal with insurance paperwork?'
+Outputs:
+  - [memory_entry] memory-unit-13164600-6f04-4b08-8e13-708e7c025fdd: {
+    "id": "13164600-6f04-4b08-8e13-708e7c025fdd", ...[2272 more]
+
+--- [step 75] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-247d0f3b9efa4c1eb38182d6796cf91c, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.549)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-20: 'Which places or events has Calvin visited in Tokyo?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    "memory ...[2243 more]
+
+--- [step 76] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-5178c61524c04416b3474fe02969c4ed, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.593)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-22: 'Does Calvin wish to become more popular?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is ...[2212 more]
+
+--- [step 77] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-75029e7ccd2c4f31a609275ce6fcf27b, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.615)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-23: 'Does Calvin want to expand his brand?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is na ...[2150 more]
+
+--- [step 78] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-37bd0af2c193433f9604a4d036b3695a, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.702)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-27: 'When did Calvin record a podcast with his friends?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory" ...[2268 more]
+
+--- [step 79] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-acc12c70e6194a198cd0a24bcd3981a1, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.724)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-28: 'Which city was Calvin visiting in August 2023?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "U ...[2240 more]
+
+--- [step 80] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1be7341cc389459caa6118b9c79a16a2, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.746)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-29: 'What does Calvin do to relax?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is named Calv ...[2178 more]
+
+--- [step 81] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a73c9a0a8b04429db6228a73a66720c0, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.905)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-36: 'When did Calvin book flight tickets to Boston?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "U ...[2114 more]
+
+--- [step 82] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-30530cea0d964e67b0af81be090b78df, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.926)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-37: "When was Calvin's album released?"
+Outputs:
+  - [memory_entry] memory-unit-012b5636-9270-43d9-aa53-d855696c2f59: {
+    "id": "012b5636-9270-43d9-aa53-d855696c2f59",
+    "memory": "Has a new albu ...[2119 more]
+
+--- [step 83] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-29c244d4ebf54356a51407d8b197f97b, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:58.949)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-38: 'Does Calvin love music tours?'
+Outputs:
+  - [memory_entry] memory-unit-1fa80ad0-78ca-4ab9-a4ec-603d4975c2a2: {
+    "id": "1fa80ad0-78ca-4ab9-a4ec-603d4975c2a2",
+    "memory": "User plans to show ...[2222 more]
+
+--- [step 84] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-80e73a9b4be145c88995394d45b83799, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.014)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-41: 'What was the artists Calvin used to listen to when he was a kid?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee" ...[2346 more]
+
+--- [step 85] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-992d63aeb34c4231abe1b4c2d339ec16, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.036)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-42: 'Which of their family member do Calvin and Dave have nostalgic memories about?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b ...[2347 more]
+
+--- [step 86] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-415b17cba07640278f00d2ab6c978e14, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.080)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-44: 'Which city was Calvin at on October 3, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "Use ...[2198 more]
+
+--- [step 87] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-70f492499f2e4626a545f463e799d21a, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.127)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-46: 'What shared activities do Dave and Calvin have?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": " ...[2239 more]
+
+--- [step 88] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b47bda8c304c4223be3169fa5e8861d1, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.236)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-51: 'When did Calvin buy his second Ferrari?'
+Outputs:
+  - [memory_entry] memory-unit-0cf429d9-e576-4cdf-a85f-bdbdb87624cf: {
+    "id": "0cf429d9-e576-4cdf-a85f-bdbdb87624cf",
+    "memory": "User vis ...[2138 more]
+
+--- [step 89] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a63ef8f7cbde4fa5bdc92fe5b270be12, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.279)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-53: 'When did Calvin plan on travelling to Tokyo the second time?'
+Outputs:
+  - [memory_entry] memory-unit-087891a8-b34f-4ad6-879d-ce691a85e134: {
+    "id": "087891a8-b34f-4ad6-879d-ce691a85e134",
+   ...[2172 more]
+
+--- [step 90] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-57de90c1b6ff4b46a57a144e563803e1, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.300)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-54: 'Who supports Calvin in tough times?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is name ...[2209 more]
+
+--- [step 91] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-150736b9a48b4163b13464bfead54858, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.321)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-55: 'What does help Calvin stay connected to the creative process?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+  ...[2359 more]
+
+--- [step 92] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d147c138ce7b4206a87b67746ab5eecf, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.343)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-56: 'When did Calvin visit some of the sights in Boston with a former high school friend?'
+Outputs:
+  - [memory_entry] memory-unit-16d99981-e25c-4e67-af0e-b2b5e1595a1a: {
+    "id": "16d99981-e25c-4e6 ...[2229 more]
+
+--- [step 93] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-046a56dadec044e7ac174f8d56ffe156, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.429)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-60: 'How many Ferraris does Calvin own?'
+Outputs:
+  - [memory_entry] memory-unit-0cf429d9-e576-4cdf-a85f-bdbdb87624cf: {
+    "id": "0cf429d9-e576-4cdf-a85f-bdbdb87624cf",
+    "memory": "User visited  ...[2086 more]
+
+--- [step 94] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e9241e39a020414b97edf9aaec545165, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.451)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-61: 'What gifts has Calvin received from his artist friends?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "me ...[2283 more]
+
+--- [step 95] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-663fb6c217a54c8bb4faab892ace5a65, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.515)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-64: 'What style of guitars does Calvin own?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is n ...[2249 more]
+
+--- [step 96] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a1abdc63cc0444c0a22b0ac355d1d889, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.601)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-68: 'Where was Calvin located in the last week of October 2023?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+     ...[2193 more]
+
+--- [step 97] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-35e486aac06b4cdbbe0c938f61cc9f63, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.666)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-71: 'When did Calvin attend a gala in Boston?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "memory": "Calvin  ...[2236 more]
+
+--- [step 98] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-318154183501405b8aac3bb9a7e8e4dd, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.687)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-72: 'How long did Calvin plan to stay in Japan?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "User  ...[2164 more]
+
+--- [step 99] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1a59130e94ba4302b9a3df28ca6421c1, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.729)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-74: 'Where did Calvin attend a music festival in April 2023?'
+Outputs:
+  - [memory_entry] memory-unit-1fa80ad0-78ca-4ab9-a4ec-603d4975c2a2: {
+    "id": "1fa80ad0-78ca-4ab9-a4ec-603d4975c2a2",
+    "me ...[2247 more]
+
+--- [step 100] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-5e52f324a6824e4794d19653755e80ad, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.750)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-75: 'What advice did Calvin receive from the producer at the music festival?'
+Outputs:
+  - [memory_entry] memory-unit-735c72db-d81b-4f7e-91dc-c64c627841fa: {
+    "id": "735c72db-d81b-4f7e-91dc-c64c62 ...[2370 more]
+
+--- [step 101] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-33cb9f0ac6224652825ab90fda698c64, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.815)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-78: 'What did Calvin receive as a gift from another artist?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "mem ...[2264 more]
+
+--- [step 102] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a59056426e914182aeed1bf39f4f386d, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.837)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-79: 'What was the necklace Calvin received meant to remind him of?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+  ...[2249 more]
+
+--- [step 103] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-23c6f59a53814837ae6e1afbbb5497dc, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.886)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-81: 'How does Calvin plan to jumpstart his inspiration?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+    "memory" ...[2336 more]
+
+--- [step 104] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f40b4c60fed8403fb1b95d181d4430fa, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.909)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-82: 'What did Calvin manage to save during the flood incident?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    " ...[2239 more]
+
+--- [step 105] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1f1c600bb50a4c3baa12df661c42f602, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 11:59:59.975)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-85: "What fuels Calvin's soul?"
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is named Calvin", ...[2212 more]
+
+--- [step 106] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b51c728fa93447349bec5d8c2851811c, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.024)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-87: 'What sports activity is Calvin planning to try after the tour with Frank Ocean?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9 ...[2311 more]
+
+--- [step 107] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-20045e0450ed4838ab39d00f84d27d36, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.050)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-88: 'What was Calvin excited to do after getting his car fixed on 7 July, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72d ...[2167 more]
+
+--- [step 108] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-3ba241d7cbcb4ef08eaa3c3f20292434, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.073)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-89: 'What did Calvin and his friends arrange for in the park?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "m ...[2254 more]
+
+--- [step 109] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-087e8b9235934e0eab3b5d240178a497, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.096)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-90: 'What kind of music has Calvin been creating lately?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+    "memory ...[2317 more]
+
+--- [step 110] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-2e81b044f4454c9da7911cf3086a01ac, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.121)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-91: 'How does Calvin describe his process of adding electronic elements to his songs?'
+Outputs:
+  - [memory_entry] memory-unit-40877ace-0d9f-4ef3-93e3-a23212e6b4b2: {
+    "id": "40877ace-0d9f-4ef3-93 ...[2396 more]
+
+--- [step 111] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-3d6ac30f1a924e3da66fbf89c4439fb2, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.143)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-92: 'What car brand does Calvin own that he is proud of?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory ...[2114 more]
+
+--- [step 112] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-652f08f7865447c5873df8360d85494d, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.166)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-93: "What is Calvin's biggest current goal?"
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "User name ...[2291 more]
+
+--- [step 113] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-06a91f2c05e84e4b9893e884db7be6fc, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.187)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-94: "What is Dave's advice to Calvin regarding his dreams?"
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memo ...[2300 more]
+
+--- [step 114] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bacde4acde004b5ca5c5bf126301db73, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.311)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-99: 'How did the audience in Tokyo react when Calvin sang one of his songs?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e1436 ...[2325 more]
+
+--- [step 115] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-aa6eaa0995ef4164820fad70e09414d7, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.334)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-100: 'How did Calvin meet Frank Ocean?'
+Outputs:
+  - [memory_entry] memory-unit-103c4e85-d8eb-4171-8909-f0cbd6fb3d9e: {
+    "id": "103c4e85-d8eb-4171-8909-f0cbd6fb3d9e",
+    "memory": "User is collab ...[2284 more]
+
+--- [step 116] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4884c0a66a364ab197ef752fd8c50fd6, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.381)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-102: 'What did Calvin and his friends record in August 2023?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "me ...[2282 more]
+
+--- [step 117] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-138030b6dafd4978a81503e299bdf5ba, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.404)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-103: 'Where did Calvin start shooting a video for his new album?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    ...[2288 more]
+
+--- [step 118] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8adf8964f52640ae994143856f8f1ad4, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.427)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-104: "What design is featured on Calvin's guitar?"
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "Use ...[2201 more]
+
+--- [step 119] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b3cd8bde03d44ad8bfa589e37bee2cdd, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.449)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-105: 'Why did Calvin get his guitar customized with a shiny finish?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+ ...[2274 more]
+
+--- [step 120] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-fd3824a314d44dbfb0dd7437ca87a0db, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.472)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-106: 'What color glow did Calvin customize his guitar with?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "mem ...[2268 more]
+
+--- [step 121] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-9f27616c61d047adbe2b4d39d0b382f4, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.541)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-109: 'What did Calvin book a flight ticket for on 1st September 2023?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6" ...[2204 more]
+
+--- [step 122] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-158d5549c6ea4e699bd8b41439183dc1, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.563)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-110: 'What is Calvin excited about after the tour?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "memory": "Ca ...[2266 more]
+
+--- [step 123] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-87adbf8249154a61867b89ad54d49d12, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.654)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-114: 'What activity did Calvin enjoy during his summer drives?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    " ...[2236 more]
+
+--- [step 124] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ff97be81e7de485d8556124d872c0440, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.677)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-115: 'Which song from the childhood of Calvin brings back memories of a road trip with his dad?'
+Outputs:
+  - [memory_entry] memory-unit-38b06aa3-c3aa-4768-94a8-919b428f9ebf: {
+    "id": "38b06aa3-c3 ...[2350 more]
+
+--- [step 125] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-cad41c96e1914c6192c974e5bd263c12, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.700)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-116: 'What project did Calvin work on to chill out?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "U ...[2169 more]
+
+--- [step 126] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-77700f3cb5d94b80b8fe46d5b5319845, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.768)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-119: 'What do Calvin and Dave use to reach their goals?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory" ...[2286 more]
+
+--- [step 127] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c29d58ba39ff477b815684d19185f832, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.836)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-122: 'What did Calvin recently get that is a "masterpiece on wheels"?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee" ...[2221 more]
+
+--- [step 128] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1a29827c6277490b93e2f34082fda294, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.882)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-124: 'How does Calvin stay motivated when faced with setbacks?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+    " ...[2316 more]
+
+--- [step 129] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-050c59a59215454280407b68abfc8185, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:00.981)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-128: 'What specific location in Tokyo does Calvin mention being excited to explore?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d ...[2229 more]
+
+--- [step 130] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8ef7addc9c9f4039ae7e265b2cf100ab, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.006)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-129: 'What dish does Dave recommend Calvin to try in Tokyo?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "mem ...[2301 more]
+
+--- [step 131] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-153588ca4b9447038eec76389e944041, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.029)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-130: 'What does Calvin find energizing during the tour?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "memory" ...[2303 more]
+
+--- [step 132] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1a1a8b0e8a334d51af5d25d1f9c153ac, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.053)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-131: 'How does Calvin balance his job and personal life?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory ...[2259 more]
+
+--- [step 133] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-df5f93e02e0e4b7bbff01a20422965ac, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.075)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-132: "What inspired Calvin's recent music?"
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+    "memory": "Staying in ...[2333 more]
+
+--- [step 134] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b9d649b62c7d4852998c6af3b2dc121a, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.098)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-133: 'How does Calvin describe his music in relation to capturing feelings?'
+Outputs:
+  - [memory_entry] memory-unit-12f34b28-6f5b-4dd1-b736-bba5a79619a0: {
+    "id": "12f34b28-6f5b-4dd1-b736-bba5a79 ...[2366 more]
+
+--- [step 135] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-00bc56a313bb4a0a8d9f901834eb8cf4, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.174)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-136: 'What does Calvin believe makes an artist create something extraordinary?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a3 ...[2350 more]
+
+--- [step 136] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d58670333939490e99a57eb59874b377, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.220)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-138: 'When did Calvin first get interested in cars?'
+Outputs:
+  - [memory_entry] memory-unit-4b484127-2cb2-4847-9d13-74784abcc5e6: {
+    "id": "4b484127-2cb2-4847-9d13-74784abcc5e6",
+    "memory": "C ...[2054 more]
+
+--- [step 137] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4f77c9eb65e845bea46c7f11d7a46dde, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.243)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-139: 'How did Calvin feel about performing with someone he admires?'
+Outputs:
+  - [memory_entry] memory-unit-03125510-b438-4e41-8453-f8cd59d79df8: {
+    "id": "03125510-b438-4e41-8453-f8cd59d79df8",
+ ...[2346 more]
+
+--- [step 138] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-efadde6ceb24411683fad22a01e1427e, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.265)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-140: 'What realization did the nightclub experience bring to Calvin?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4", ...[2287 more]
+
+--- [step 139] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-77474d6a2b514458bb2da4d3bd387b2b, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.288)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-141: 'What do Dave and Calvin agree on regarding their pursuits?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    ...[2299 more]
+
+--- [step 140] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1fbe87c9f87e4e1c94bf7607958f4fa0, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.310)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-142: 'Which city is featured in the photograph Dave showed Calvin?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+  ...[2373 more]
+
+--- [step 141] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-60475c7cbe46417cb8baafaf5b81c76d, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.333)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-143: 'What did Calvin do recently at his Japanese house?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory ...[2238 more]
+
+--- [step 142] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f9856c5e6c2f4720b1403688ed1ad5dd, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.400)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-146: 'What type of videos does Calvin usually watch on his television?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee ...[2282 more]
+
+--- [step 143] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-eea7cc32e1f74d25a82f4762f4344fad, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.448)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-148: 'What tools does Calvin use to boost his motivation for music?'
+Outputs:
+  - [memory_entry] memory-unit-35ce0dd5-a3b6-4d35-8695-16a383c84b1f: {
+    "id": "35ce0dd5-a3b6-4d35-8695-16a383c84b1f",
+ ...[2403 more]
+
+--- [step 144] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-5083b2ad6f2540f49e6dae08e179da3f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.517)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-151: 'Who did Calvin invite to see him perform in Boston on 13 November, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-1fa80ad0-78ca-4ab9-a4ec-603d4975c2a2: {
+    "id": "1fa80ad0-78ca-4ab9-a4ec-603d ...[2243 more]
+
+--- [step 145] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ed03ce2c5a5c4a268598280f0068908f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.540)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-152: 'What hobby did Calvin take up recently?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is ...[2184 more]
+
+--- [step 146] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-afb8477024124d67a744330ba7c211fc, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.608)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-155: 'What event did Calvin attend in Boston?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "memory": "Calvin  ...[2183 more]
+
+--- [step 147] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-9e46693b56b240b6883bc67eadc6b9d8, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.631)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-156: 'What did Calvin discuss with the cool artist he met at the gala?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4 ...[2314 more]
+
+--- [step 148] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-92087acd276e4e6782aa7d442a70f3cd, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.677)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-158: 'What positive impact does Calvin mention nature has on tough times?'
+Outputs:
+  - [memory_entry] memory-unit-02832513-3b87-4214-892d-3e8e66a88528: {
+    "id": "02832513-3b87-4214-892d-3e8e66a88 ...[2326 more]
+
+--- [step 149] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-2b265e1e4222412198fe0260746cd646, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.722)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-160: 'What advice did Calvin receive from the chef at the music festival?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5 ...[2375 more]
+
+--- [step 150] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-cec9a54518694b1799975abf49bc6b7b, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.745)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-161: "What is Calvin's new business venture as of 1 May, 2023?"
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    " ...[2191 more]
+
+--- [step 151] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-cbf2ccd2e7c541c2b3c7e97ca09d8f50, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.768)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-162: 'What type of cars does Calvin work on at his shop?'
+Outputs:
+  - [memory_entry] memory-unit-0558b29e-1c8e-4438-869e-de6e71e07f68: {
+    "id": "0558b29e-1c8e-4438-869e-de6e71e07f68",
+    "memory ...[2151 more]
+
+--- [step 152] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c41a246438ea4e7883106bdf57e0ff89, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.835)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-165: 'What did Calvin open in May 2023?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is named ...[2151 more]
+
+--- [step 153] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-700a22bcef1c4c41b07dc1d7c3b2aa30, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.858)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-166: 'What gives Calvin a sense of achievement and purpose?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f4",
+    "mem ...[2349 more]
+
+--- [step 154] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0653ca0947c645ae8629ced6bab5bf70, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.911)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-168: 'How does Calvin describe his process of adding acoustic elements to his songs?'
+Outputs:
+  - [memory_entry] memory-unit-40877ace-0d9f-4ef3-93e3-a23212e6b4b2: {
+    "id": "40877ace-0d9f-4ef3-93e ...[2411 more]
+
+--- [step 155] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d1b45f5015b049e7a1f67afa5e84db04, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.933)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-169: 'What clothing brand does Calvin own that he is proud of?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    " ...[2178 more]
+
+--- [step 156] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-384c098fec054a7a8300f33619e63541, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.956)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-170: 'What workshop did Calvin get picked for on 11 August, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+   ...[2213 more]
+
+--- [step 157] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a2fb20b5c3f44f24bf91fe3ad2080e49, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:01.978)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-171: 'What kind of modifications has Calvin been working on in the car mod workshop?'
+Outputs:
+  - [memory_entry] memory-unit-0558b29e-1c8e-4438-869e-de6e71e07f68: {
+    "id": "0558b29e-1c8e-4438-869 ...[2194 more]
+
+--- [step 158] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-79a845ae9c8a4fffbfd543c323aa52a4, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.002)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-172: 'What type of car did Calvin work on during the workshop?'
+Outputs:
+  - [memory_entry] memory-unit-0558b29e-1c8e-4438-869e-de6e71e07f68: {
+    "id": "0558b29e-1c8e-4438-869e-de6e71e07f68",
+    " ...[2159 more]
+
+--- [step 159] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4789b51b622947f1b548aec5719cae6f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.071)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-175: "What design is featured on Dave's guitar?"
+Outputs:
+  - [memory_entry] memory-unit-1f9f2aa9-3113-4e52-8f57-ac7939c241be: {
+    "id": "1f9f2aa9-3113-4e52-8f57-ac7939c241be",
+    "memory": "User' ...[2052 more]
+
+--- [step 160] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bc735dfed49b4841926956db94af6907, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.094)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-176: 'Why did Dave get his guitar customized with a shiny finish?'
+Outputs:
+  - [memory_entry] memory-unit-34460e4d-04dc-4516-90a5-beb01e12964e: {
+    "id": "34460e4d-04dc-4516-90a5-beb01e12964e",
+   ...[2126 more]
+
+--- [step 161] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-68b089b1475c46a2924d73b55bf13d6f, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.141)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-178: 'Where did Calvin come back from with insights on car modification on 1st September 2023?'
+Outputs:
+  - [memory_entry] memory-unit-0558b29e-1c8e-4438-869e-de6e71e07f68: {
+    "id": "0558b29e-1c8 ...[2275 more]
+
+--- [step 162] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8001cb5455b74ea8a5cbd442555d1a64, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.164)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-179: 'What emotion does Calvin mention feeling when he sees the relief of someone whose car he fixed?'
+Outputs:
+  - [memory_entry] memory-unit-13f51398-aa09-48e7-b5e3-e594f16eeab5: {
+    "id": "13f51 ...[2275 more]
+
+--- [step 163] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-6fb9990738054ca097661d4abf14951e, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.258)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-183: 'What car did Calvin work on in the junkyard?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    "memory": "Ag ...[2141 more]
+
+--- [step 164] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-07b2f8a6f2b54cf8adbdb3e24242781e, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.355)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-187: 'What did Calvin recently get that is a "masterpiece on canvas"?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee" ...[2242 more]
+
+--- [step 165] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-dd6fe2ec9c9c4c5b80693bf3ec9c9326, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.378)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-188: 'Who headlined the music festival that Calvin attended in October?'
+Outputs:
+  - [memory_entry] memory-unit-03244eea-36c8-4754-b5cd-a3e14360f2f4: {
+    "id": "03244eea-36c8-4754-b5cd-a3e14360f2f ...[2340 more]
+
+--- [step 166] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4370fa2f238448708af9a3e8070a21b3, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.426)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-190: 'What specific location in Tokyo does Calvin mention being excited to avoid?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9 ...[2198 more]
+
+--- [step 167] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e89fa38ac3f84744aec7cb30d5b9192c, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.450)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-191: 'When did Calvin sell the car he restored last year?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memor ...[2079 more]
+
+--- [step 168] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-318c4d6d57434623ab54443188e4a990, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.473)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-192: 'When did Calvin first get interested in motorcycles?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memo ...[2187 more]
+
+--- [step 169] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-78dd958f660c4d2aa1f907680cc93dcc, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.542)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-195: 'What did Calvin recently start a blog about?'
+Outputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "Us ...[2179 more]
+
+--- [step 170] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8ab2cb26c20e4bc2a7d1195e8f67c208, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.681)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-201: 'What new item did Calvin buy recently?'
+Outputs:
+  - [memory_entry] memory-unit-135328e3-7b53-4da0-8f9b-72dd3739d6d6: {
+    "id": "135328e3-7b53-4da0-8f9b-72dd3739d6d6",
+    "memory": "User nam ...[2182 more]
+
+--- [step 171] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-72233b7033ee4eceb173d18826948837, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.704)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-202: 'What type of photos does Calvin like to capture with his new camera?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd ...[2243 more]
+
+--- [step 172] retrieval op=memory_system.search_vector_store session=session-8a4582f2274a4c39916c39066a32ad25
+Operation: memory_system.search_vector_store [retrieval] (op_id op-255fd6d57c9845a1aa3843d09c960aba, session session-8a4582f2274a4c39916c39066a32ad25, 2026-04-25 12:00:02.751)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-10-204: 'Where did Calvin take a stunning photo of a waterfall?'
+Outputs:
+  - [memory_entry] memory-unit-3517cbf2-7eca-455d-b84d-9d661abd5d37: {
+    "id": "3517cbf2-7eca-455d-b84d-9d661abd5d37",
+    "me ...[2269 more]
+
+--- [step 173] evaluation op=question-answering session=session-8f9ec6819c8644aeb0ea2a2e916e0768
+Operation: question-answering [evaluation] (op_id op-620d78373a644514a92257ea41074176, session session-8f9ec6819c8644aeb0ea2a2e916e0768, 2026-04-25 13:54:19.457)
+Description: The question-answering model generates an answer based on the question, the context retrieved from the memory system, and a question-answering prompt.
+Inputs:
+  - [memory_entry] memory-unit-23729d0e-86ef-4d19-bd32-fc966e1633ee: {
+    "id": "23729d0e-86ef-4d19-bd32-fc966e1633ee",
+    "memory": "User is named Calvin",
+    "ti ...[3857 more]

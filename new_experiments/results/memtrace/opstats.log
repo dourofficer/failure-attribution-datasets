@@ -1,0 +1,16 @@
+## mem0: n=23 median slice 107 distinct op names median 4
+  gold op names: [('memory_system.search_vector_store', 14), ('memory_system.update_memory_decision', 4), ('memory_system.extract_facts', 4), ('question-answering', 1)]
+  gold is the ONLY op of its name: 3 | gold is the LAST op of its name: 4 | median #same-name ops: 23
+  steps after gold median: 36 | by type: Counter({('RetrievalError', False): 12, ('ExtractionError', False): 4, ('UpdateError', False): 3, ('RetrievalError', True): 2, ('UpdateError', True): 1, ('ResponseError', True): 1})
+## rag: n=40 median slice 500 distinct op names median 4
+  gold op names: [('memory_system.retrieve', 37), ('question-answering', 3)]
+  gold is the ONLY op of its name: 24 | gold is the LAST op of its name: 24 | median #same-name ops: 1
+  steps after gold median: 1 | by type: Counter({('RetrievalError', True): 21, ('RetrievalError', False): 16, ('ResponseError', True): 3})
+## evermemos: n=39 median slice 1505 distinct op names median 8
+  gold op names: [('memory_system.agentic_final_rerank', 22), ('question-answering', 14), ('memory_system.agentic_round2_bundle', 3)]
+  gold is the ONLY op of its name: 22 | gold is the LAST op of its name: 22 | median #same-name ops: 1
+  steps after gold median: 90 | by type: Counter({('RetrievalError', False): 17, ('ResponseError', True): 14, ('RetrievalError', True): 8})
+## long_context: n=38 median slice 497 distinct op names median 3
+  gold op names: [('memory_system.memory_update', 22), ('question-answering', 16)]
+  gold is the ONLY op of its name: 10 | gold is the LAST op of its name: 10 | median #same-name ops: 459
+  steps after gold median: 180 | by type: Counter({('UpdateError', False): 22, ('ResponseError', True): 10, ('ResponseError', False): 6})

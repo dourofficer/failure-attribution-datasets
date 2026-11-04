@@ -1,0 +1,12 @@
+80 records
+| metric | n | % |
+|---|---|---|
+| agent_ok | 60 | 75.0 |
+| step_exact | 60 | 75.0 |
+| step_in_set | 60 | 75.0 |
+| step_within_1 | 68 | 85.0 |
+| step_within_3 | 73 | 91.2 |
+| step_within_5 | 77 | 96.2 |
+
+n=80 parse_fail=0 pred later than gold: 14, earlier: 6, exact: 60
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/correct_error/all_at_once_std_nogt.jsonl

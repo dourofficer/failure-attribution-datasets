@@ -1,0 +1,24 @@
+64 records
+| metric | value |
+|---|---|
+| records (parsed) | 64 (63) |
+| local_wrong | 84.1% |
+| contradicts_prefix | 68.3% |
+| corrected_later | 31.7% |
+| has symptoms_later | 47.6% |
+| decisive = yes | 57.1% |
+| decisive = no_earlier | 3.2% |
+| decisive = no_later | 12.7% |
+| decisive = no_other | 27.0% |
+| style_odd | 44.4% |
+| subset | n | local_wrong | contradicts_prefix | corrected_later | symptoms | decisive yes | style_odd |
+|---|---|---|---|---|---|---|---|
+| alfagent | 8 | 100 | 100 | 25 | 75 | 62 | 38 |
+| debate | 7 | 100 | 57 | 71 | 86 | 14 | 57 |
+| dylan | 8 | 100 | 75 | 88 | 100 | 38 | 50 |
+| macnet | 8 | 88 | 50 | 50 | 88 | 75 | 50 |
+| magentic-one | 8 | 38 | 38 | 0 | 0 | 38 | 25 |
+| mathchat | 8 | 100 | 100 | 0 | 0 | 100 | 88 |
+| metagpt | 8 | 75 | 62 | 0 | 12 | 75 | 0 |
+| smolagents | 8 | 75 | 62 | 25 | 25 | 50 | 50 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/who_and_when_pro/label_check.jsonl

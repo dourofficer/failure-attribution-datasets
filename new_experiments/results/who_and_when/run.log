@@ -1,0 +1,28 @@
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| Algorithm-Generated | 126 | 62.7 | 48.4 | 78.6 | 48.4 |
+| Hand-Crafted | 58 | 63.8 | 31.0 | 44.8 | 31.0 |
+| ALL | 184 | 63.0 | 42.9 | 67.9 | 42.9 |
+
+categories: {'exact': 79, 'earlier(-1..3)': 32, 'earlier(<-3)': 21, 'later(+1..3)': 14, 'later(>3)': 27, 'truncated': 8, 'parse_fail': 3}
+agent right but step wrong: 38; step right but agent wrong: 1
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 131 | 50.4 | 79.4 | 64.1 |
+| 11-30 | 19 | 31.6 | 42.1 | 63.2 |
+| 31-1000 | 34 | 20.6 | 38.2 | 58.8 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/who_and_when/all_at_once_std_analysis.md
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| Algorithm-Generated | 126 | 65.1 | 49.2 | 83.3 | 49.2 |
+| Hand-Crafted | 58 | 50.0 | 24.1 | 44.8 | 24.1 |
+| ALL | 184 | 60.3 | 41.3 | 71.2 | 41.3 |
+
+categories: {'exact': 76, 'earlier(-1..3)': 39, 'earlier(<-3)': 31, 'later(+1..3)': 16, 'later(>3)': 22}
+agent right but step wrong: 37; step right but agent wrong: 2
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 131 | 50.4 | 83.2 | 66.4 |
+| 11-30 | 19 | 21.1 | 26.3 | 52.6 |
+| 31-1000 | 34 | 17.6 | 50.0 | 41.2 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/who_and_when/all_at_once_inventory_analysis.md

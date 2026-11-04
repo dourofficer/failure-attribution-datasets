@@ -1,0 +1,29 @@
+160 records with evidence
+
+## mem0: n=40 in_slice=23
+ evidence words ever in some step output (>=50%): 5 | ever in input: 11
+ gold == loss step: 0 | gold == last_in: 2 | gold == last_out+1: 0
+ gold step has the query in its inputs: 15 | n steps with query (median): 2
+ by type: Counter({('RetrievalError', False): 14, ('UpdateError', False): 4, ('ExtractionError', False): 4, ('ResponseError', False): 1})
+ out-of-slice: evidence in some output? Counter({('ExtractionError', False): 13, ('UpdateError', False): 3, ('ExtractionError', True): 1})
+
+## rag: n=40 in_slice=40
+ evidence words ever in some step output (>=50%): 40 | ever in input: 39
+ gold == loss step: 0 | gold == last_in: 3 | gold == last_out+1: 0
+ gold step has the query in its inputs: 40 | n steps with query (median): 2
+ by type: Counter({('RetrievalError', False): 37, ('ResponseError', False): 3})
+ out-of-slice: evidence in some output? Counter()
+
+## evermemos: n=40 in_slice=39
+ evidence words ever in some step output (>=50%): 40 | ever in input: 40
+ gold == loss step: 0 | gold == last_in: 11 | gold == last_out+1: 3
+ gold step has the query in its inputs: 17 | n steps with query (median): 3
+ by type: Counter({('RetrievalError', False): 25, ('ResponseError', False): 14})
+ out-of-slice: evidence in some output? Counter({('ExtractionError', True): 1})
+
+## long_context: n=40 in_slice=38
+ evidence words ever in some step output (>=50%): 35 | ever in input: 40
+ gold == loss step: 0 | gold == last_in: 2 | gold == last_out+1: 4
+ gold step has the query in its inputs: 16 | n steps with query (median): 2
+ by type: Counter({('UpdateError', False): 22, ('ResponseError', False): 16})
+ out-of-slice: evidence in some output? Counter({('UpdateError', True): 1, ('UpdateError', False): 1})

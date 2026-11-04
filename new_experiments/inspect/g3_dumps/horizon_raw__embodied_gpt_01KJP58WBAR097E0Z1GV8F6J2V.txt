@@ -1,0 +1,14 @@
+ID embodied_gpt_01KJP58WBAR097E0Z1GV8F6J2V domain=embodied model=gpt run=None passed=None score=None
+[r2] Planning Error | step=None | The plan omits perception/targeting to ensure picking the blue then the red cube, using hardcoded poses and generic grasps without verifying colors, indicating an incorrect/incomplete sub-plan.
+[r3] Planning Error | step=None | The primitive plan hard-codes poses and includes a release without any perception or verification to target and confirm the blue-then-red cubes, so it cannot ensure the color-specific picking order.
+
+Task: Pick the blue cube, then pick the red cube.
+
+Primitive plan (7 steps):
+  home({})
+  move_to_pose({'arm': 'right', 'pose': [0.3, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})
+  move_to_pose({'arm': 'right', 'pose': [0.5, -0.09, 1.1, 0.707, 0.707, 0.0, 0.0]})
+  release({'arm': 'right'})
+  move_to_pose({'arm': 'right', 'pose': [0.2, 0.06, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})

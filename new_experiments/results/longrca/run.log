@@ -1,0 +1,37 @@
+60 records
+| metric | n | % |
+|---|---|---|
+| agent_ok | 29 | 48.3 |
+| step_exact | 12 | 20.0 |
+| step_in_set | 12 | 20.0 |
+| step_within_1 | 14 | 23.3 |
+| step_within_3 | 17 | 28.3 |
+| step_within_5 | 20 | 33.3 |
+
+n=60 parse_fail=0 pred later than gold: 30, earlier: 18, exact: 12
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/longrca/all_at_once_std.jsonl
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| travelplanner | 38 | 31.6 | 13.2 | 23.7 | 13.2 |
+| vitabench | 4 | 100.0 | 0.0 | 0.0 | 0.0 |
+| webarena_verified | 11 | 81.8 | 45.5 | 54.5 | 45.5 |
+| swe_bench_pro | 6 | 66.7 | 33.3 | 33.3 | 33.3 |
+| terminal_bench_2 | 1 | 0.0 | 0.0 | 0.0 | 0.0 |
+| ALL | 60 | 48.3 | 20.0 | 28.3 | 20.0 |
+
+categories: {'later(>3)': 27, 'earlier(<-3)': 16, 'exact': 12, 'later(+1..3)': 3, 'earlier(-1..3)': 2}
+agent right but step wrong: 17; step right but agent wrong: 0
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 0 | 0.0 | 0.0 | 0.0 |
+| 11-30 | 1 | 0.0 | 0.0 | 100.0 |
+| 31-1000 | 59 | 20.3 | 28.8 | 47.5 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/longrca/all_at_once_std_analysis.md
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/longrca/all_at_once_std_nogt.jsonl'

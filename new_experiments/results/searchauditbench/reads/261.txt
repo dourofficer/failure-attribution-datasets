@@ -1,0 +1,271 @@
+=== searchauditbench / 261  subset=BrowseComp-ZH  n_steps=9  gold=8  error_steps=[7, 8]  agent=assistant  cats=['Unverified Source Reliance']
+TASK: 一款模拟经营类游戏，主要角色为四名女角色，有超过十种结局，游戏世界观与某部小说相同，请问该游戏名是？
+GROUND TRUTH: 犹格索托斯的庭院
+FINAL OUTPUT: <answer>太太！我喜欢你！</answer>
+REASON: The earliest decisive error occurs at message 8, where the agent makes its first and final commitment after only broad search-result snippets. The snippets show a genre-level association for the predicted game, but they do not verify the hard clues that the game has four female main characters, more than ten endings, and a worldview shared with a novel. By answering without opening or otherwise checking candidate-specific sources, the trajectory relies on insufficient evidence and selects an unsupported game.
+EXTRA: {'critical_idx': 8, 'critical_step': {'message_index': 8, 'span_start_message_index': 7, 'span_end_message_index': 8}, 'span_start': 7, 'span_end': 8, 'span_idxs': [7, 8], 'rationale': {'failure_rationale': 'The earliest decisive error occurs at message 8, where the agent makes its first and final commitment after only broad search-result snippets. The snippets show a genre-level association for the predicted game, but they do not verify the hard clues that the game has four female main characters, more than ten endings, and a worldview shared with a novel. By answering without opening or otherwise checking candidate-specific sources, the trajectory relies on insufficient evidence and selects an unsupported game.'}, 'repair_directive': 'Return to the pre-final candidate verification step. Build a candidate list from targeted searches, open official, store, wiki, or high-quality game-specific pages for each plausible candidate, and verify the character-count, ending-count, and shared-worldview constraints before finalizing.', 'repair_rubrics': [{'requirement': 'A valid repair must use candidate-specific opene
+   ... [188 chars cut] ...
+ement': 'A valid repair must verify that the selected game has more than ten endings.'}, {'requirement': 'A valid repair must verify the shared-novel-worldview relation with evidence for both the game and the related novel or setting.'}, {'requirement': 'A valid repair must reject any candidate lacking evidence for all hard clues and continue targeted candidate search.'}]}
+
+--- [step 0] system (system) native=0
+You are a deep research assistant. Your core function is to conduct thorough, multi-source investigations into any topic. You must handle both broad, open-domain inquiries and queries within specialized academic fields. For every request, synthesize information from credible, diverse sources to deliver a comprehensive, accurate, and objective response. When you have gathered sufficient information and are ready to provide the definitive response, you must enclose the entire final answer within <answer></answer> tags.
+
+Current date: 2026-06-16
+
+--- [step 1] user (user) native=1
+一款模拟经营类游戏，主要角色为四名女角色，有超过十种结局，游戏世界观与某部小说相同，请问该游戏名是？
+
+--- [step 2] assistant (agent) native=2
+Reasoning: 
+我们需要识别这款游戏。
+
+我们需要进行网络搜索。使用搜索功能查找与类似描述相匹配的游戏："模拟经营 四名女角色 超过十种结局 世界观 同名小说"。或者或许我们可以推断出一些类似的信息。可能是 "猫咪斗恶龙"？不。需要思考。
+
+这是模拟经营类 (simulation management genre)，主要角色有四个女性角色，超过10种结局。游戏世界与一部小说相同（世界观与某部小说相同）。可能是一款中国游戏？可能是《无尽梦魇》(Neverafter)？不是。
+
+最好是搜索一下。使用搜索查询。
+
+Tool calls: [{"tool_name": "search", "tool_arguments": {"query": ["模拟经营 类游戏 四名女角色 超过十种结局 世界观 与小说相同", "四名女主 模拟经营 游戏 十个结局 小说世界观", "模拟经营 女主 四人 多结局 小说 同名"]}, "tool_call_id": "chatcmpl-tool-91fa5b32a057987c"}]
+
+--- [step 3] tool:search (tool) native=3
+A Google search for '模拟经营 类游戏 四名女角色 超过十种结局 世界观 与小说相同' found 10 results:
+
+## Web Results
+1. [模拟经营四名女角色超过十种结局世界观与小说相同 - Instagram](https://www.instagram.com/popular/%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92%E8%89%B2-%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D%E7%BB%93%E5%B1%80-%E4%B8%96%E7%95%8C%E8%A7%82-%E4%B8%8E%E5%B0%8F%E8%AF%B4%E7%9B%B8%E5%90%8C/)
+模拟经营四名女角色超过十种结局世界观与小说相同 · 大家夠社牛的話可以跟對面要大狙試試看（？ - 462K · which one your favourite?
+
+2. [138款,1300+h亲测！值不值得买? 2025模拟经营·生存休闲年度报告](https://www.youtube.com/watch?v=eRYIFnMUwbE)
+Date published: Dec 22, 2025
+大家好，這裡是【蘇安安Susanne】 ✿ 種田狂魔·感謝喜愛✓希望發現更多好玩的模擬經營·生存建造·休閑獨立遊戲！ 00:00:00 引言, 00:01:03 1.
+
+3. [模拟经营类游戏综述 - 知乎专栏](https://zhuanlan.zhihu.com/p/602457812)
+经过长时间的探索和研究，我对模拟经营类游戏的认知已经相对完善。所以打算写一篇简单的综述，其中涉及到一些模拟经营类游戏的基本概念和认知。希望尽可能的以相对通俗的 ...
+
+4. [四名女角模拟经营游戏结局超过十种 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80-%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D/)
+四名女角模拟经营游戏结局超过十种 · 店裡有很厲害的夥伴！ 為什麼覺得他厲害呢？ · 本家：壹雯超人#les #女同#姛 44.2K.
+
+5. [[PDF] 硕士学位论文](http://20
+   ... [5690 chars cut] ...
+紙片人超療育。此書單推薦女主養成各種背景的男主崽崽，有二次元/古代/星際/末世~還有主角玩像素RPG遊戲的沙雕題材， ...
+
+10. [四名女角模拟经营游戏结局超过十种 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80-%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D/)
+四名女角模拟经营游戏结局超过十种 · 免費送造型的小遊戲 61K. 免費送造型的小遊戲 · [Eng Below] ✨ 全港首個本地Board Game × 香港Vtuber ...
+
+--- [step 4] assistant (agent) native=4
+Reasoning: 
+嗯，这些搜索结果没有直接指出是什么游戏。让我们试试不同的搜索词。
+
+或许可以尝试一些知名的模拟经营类游戏 (simulation management games)，背景取自小说，有四名女主角和多结局。可能是像“时空之轮”之类的东西吗？不是。
+
+想想中国小说改编的游戏：有很多改编自小说的国产游戏。也许是一款“《锦绣未央》”之类的游戏？但感官是模拟经营 (simulation management)。
+
+我们来尝试不同的关键词：“小说改编 模拟经营 四名女主人公 多结局”。
+
+Tool calls: [{"tool_name": "search", "tool_arguments": {"query": ["小说改编 模拟经营 游戏 四女主角 多结局", "小说改编 模拟 经营 游戏 四名女主 结局", "小说世界观 模拟经营 四女主 结局"]}, "tool_call_id": "chatcmpl-tool-9e39f872a2588142"}]
+
+--- [step 5] tool:search (tool) native=5
+A Google search for '小说改编 模拟经营 游戏 四女主角 多结局' found 10 results:
+
+## Web Results
+1. [四名女主角模拟经营游戏结局超过十种小说改编 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E4%B8%BB%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D-%E5%B0%8F%E8%AF%B4%E6%94%B9%E7%BC%96/)
+四名女主角模拟经营游戏结局超过十种小说改编 · 限時三秒！ · 祕密的偶像公主遊玩教學大公開 2025年12月4日 ...
+
+2. [小说家模拟2 - App Store](https://apps.apple.com/cn/app/%E5%B0%8F%E8%AF%B4%E5%AE%B6%E6%A8%A1%E6%8B%9F2/id1552539180)
+在小说家模拟2里，你想要的这些都能实现！ 小说家模拟2是一款模拟经营类的游戏，你将在游戏里扮演一名默默无闻的小说家，在高额房租与随时可能破产的风险之下，为了 ...
+
+3. [模拟经营四名女主角结局小说世界改编游戏 - Instagram](https://www.instagram.com/popular/%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E5%9B%9B%E5%90%8D%E5%A5%B3%E4%B8%BB%E8%A7%92-%E7%BB%93%E5%B1%80-%E5%B0%8F%E8%AF%B4%E4%B8%96%E7%95%8C-%E6%94%B9%E7%BC%96-%E6%B8%B8%E6%88%8F/)
+模拟经营四名女主角结局小说世界改编游戏 · 【信長の野望真戦】伊勢関所、東西大戦。 かなりの兵 · 有天收到了一封有趣的私訊是林口康橋狼人殺社長 ...
+
+4. [《捞女游戏》（现名《情感反诈模拟器》）100%故事线收集指南](https://steamcommunity.com/sharedfiles/filedetails/?id=3503935242)
+Date published: Jun 20, 2025
+本指南可以帮助大家收集全部故事线，顺便也能集齐所有恋情档案和完成所有结局相关成就。因为涉及全路线收集，所以必然会
+   ... [6651 chars cut] ...
+，感兴趣可入 - 豆瓣](https://m.douban.com/group/topic/164461762/)
+Date published: Feb 5, 2020
+《亡灵酒馆经营日志》作者:百玖【完结】 《完美牧场经营攻略[综]》 女主有一个空间,而且女主是做药膳的,女主最初是靠四神汤谱出名,然后借鉴方便面的方式, ...
+
+10. [[PDF] 硕士学位论文](http://202.195.136.150/openfile?dbid=72&objid=51_57_48_57_57_49&lwsing=e9e089ea99795358b67c47981ac94a41)
+除了女主人公，游戏中还有两位拥有剧情的女性角色，她们都是都市丽人的化身。 一位是管理公司的安娜姐，安娜姐工作能力强，善于经营管理，曾提点女主工作的生. 存法则 ...
+
+--- [step 6] assistant (agent) native=6
+Reasoning: 
+好的，我现在需要解决用户的问题：一款模拟经营类游戏，主要角色为四名女角色，有超过十种结局，游戏世界观与某部小说相同，该游戏名是？
+
+首先，用户提到了几个关键点：
+1. 模拟经营类游戏。
+2. 四名女角色作为主角。
+3. 超过十种结局。
+4. 世界观与某部小说相同。
+
+从之前的搜索结果来看，用户已经尝试了多个关键词组合，但结果中并没有直接给出明确的游戏名称。不过有几个线索需要注意：
+
+1. **“四名女主角模拟经营游戏结局超过十种小说改编”** 在多个搜索结果中出现，尤其是Instagram的标签，可能意味着该游戏在社交平台上有一定热度，但具体名称未直接提及。
+
+2. **《捞女游戏》（现名《情感反诈模拟器》）** 出现在搜索结果中，但根据Steam指南的内容，该游戏可能更偏向于恋爱模拟而非模拟经营，且结局数量虽然提到100%收集，但不确定是否符合四名女角色的设定。
+
+3. **《恋与制作人》** 被提及，但这是一款女性向恋爱游戏，而非模拟经营类型。
+
+4. **《主播女孩重度依赖》** 是视觉小说类游戏，虽然角色较多，但同样是非模拟经营类型。
+
+接下来需要进一步分析可能的关键词组合：
+
+- **“四名女客人物、模拟经营、多结局、小说改编”**：可能需要更具体的关键词，比如游戏名称的可能变体或别名。
+
+在搜索结果中，注意到“情感反诈模拟器”曾用名《捞女游戏》，但类型可能不符。另外，有提到“四名女角色模拟经营游戏结局超过十种”在Instagram上被多次标注，但具体链接无法访问，可能需要通过其他途径查找。
+
+另一个线索是，用户提到“小说世界观相同”，可能需要寻找知名小说改编的模拟经营游戏。例如：
+
+- **《逆熵》** 是由米哈游开发的游戏，但类型更偏向于动作策略，而非模拟经营。
+- **《女仆咖啡厅》** 类似的游戏可能有多个，但通常结局数量可能不足十种。
+- **《东方Project》** 改编的游戏通常有多个角色和结局，但类型多为弹幕射击或格斗，非模拟经营。
+
+考虑到用户提供的搜索结果中，多次出现“小说改编”这一关键词，可能需要寻找一部小说，并查看其改编游戏是否符合要求。例如：
+
+- **《魔道祖师》** 或《陈情令》改编的游戏，但类型多为RPG或卡牌游戏。
+- **《天行九歌》** 改编的游戏多为动作类。
+
+或者可能是轻小说改编的游戏，例如《为美好的世界献上祝福》的衍生游戏，但类型同样不符。
+
+另外，注意到在搜索结果中有一款游戏《十字军骑士》改编自诺贝尔文学奖作品，但类型是RPG卡牌游戏，非模拟经营。
+
+回到问题本身，可能需要更精准的关键词。根据用户提供的搜索结果，安装Instagram的关键词链接中，标签包括“小说改编”，但无法直接查看内容。因此，可能需要尝试其他搜索词：
+
+- **“四女主 模拟经营 小说衍生 游戏”**
+- **“四名女主角 模拟经营 多结局 小说改编”**
+- **“十种结局 模拟经营 四女角色”**
+
+此外，考虑到中文游戏市场，可能存在一些独立游戏或小众作品，可能需要通过Steam平台或游戏社区查找。
+
+例如，在Steam上搜索模拟经营类游戏，筛选出有女性角色和多结局的作品。例如：
+
+- **《牧场物语》系列**：但主角通常是玩家自定义，非固定四位女性角色。
+- **《符文工房》系列**：类似，有多个女性角色，但结局数量可能不足十种，且世界观并非直接小说改编。
+- **《猫影之馆》**：恋爱模拟，非模拟经营。
+- **《恋爱教室》**：类似。
+
+另一个可能性是《**大奉打更人**》改编的游戏，根据搜索结果，它涉及小说世界观和模拟经营元素，但目前尚未知是否有游戏推出。
+
+或者，根据用户提供的“情感反诈模拟器”，如果该游戏确实结合了模拟经营和小说元素，可能符合，但需要进一步验证。
+
+由于目前搜索结果中没有直接答案，可能需要尝试其他搜索词，并重点查看Steam页面或游戏评测。
+
+尝试新的搜索词：
+
+Tool calls: [{"tool_name": "search", "tool_arguments": {"query": ["模拟经营 四女主 小说改编 十种结局", "Steam 模拟经营 四女角色 多结局", "四名女主角 模拟经营游戏 小说世界观"]}, "tool_call_id": "chatcmpl-tool-af9fdc73d8155d61"}]
+
+--- [step 7] tool:search (tool) native=7 <<< labelled
+A Google search for '模拟经营 四女主 小说改编 十种结局' found 10 results:
+
+## Web Results
+1. [四名女主角模拟经营游戏结局超过十种小说改编 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E4%B8%BB%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D-%E5%B0%8F%E8%AF%B4%E6%94%B9%E7%BC%96/)
+四名女主角模拟经营游戏结局超过十种小说改编 · 限時三秒！ · 祕密的偶像公主遊玩教學大公開 2025年12月4日 ...
+
+2. [四名女角模拟经营游戏结局超过十种 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80-%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D/)
+四名女角模拟经营游戏结局超过十种 · 免費送造型的小遊戲 61K. 免費送造型的小遊戲 · [Eng Below] ✨ 全港首個本地Board Game × 香港Vtuber ...
+
+3. [小说家模拟2 - App Store](https://apps.apple.com/cn/app/%E5%B0%8F%E8%AF%B4%E5%AE%B6%E6%A8%A1%E6%8B%9F2/id1552539180)
+小说家模拟2是一款模拟经营类的游戏,你将在游戏里扮演一名默默无闻的小说家,在高额房租与随时可能努力让自己的作品签约
+
+4. [《捞女游戏》（现名《情感反诈模拟器》）100%故事线收集指南](https://steamcommunity.com/sharedfiles/filedetails/?id=3503935242)
+Date published: Jun 20, 2025
+本指南可以帮助大家收集全部故事线，顺便也能集齐所有恋情档案和完成所有结局相关成就。因为涉及全路线收集，所以必然会有海量剧透，为了观感不会打黑条， ...
+
+5. [2021第四季度登陆Steam的国产Gal/视觉小说汇总 - 游信](https://www.357.com/article/7543)
+Date published: Mar 27, 2022
+以养成与经营为主的模拟经营类游戏，玩家扮演王爷的幕僚，以一家青楼为掩饰暗中寻找着发动兵变的时机。游戏拥有复杂的养成系统与海量的文本，12位女主 ...
+
+6. [模拟经营四名女主角结局小说世界改编游戏 - Instagram](https://www.instagram.com/popular/%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E5%9B%9B%E5%90%8D%E5%A5%B3%E4%B8%BB%E8%A7%92-%E7%BB%93%E5%B1%80-%E5%B0%8F%E8%AF%B4%E4%B8%96%E7%95%8C-%E6%94%B9%E7%BC%96-%E6%B8%B8%E6%88%8F/)
+模拟经营四名女主角结局小说世界改编游戏 · 【信長の野望真戦】伊勢関所、東西大戦。 かなりの兵 · 有天收到了一封有趣的私訊是林口康橋狼人殺社長 ...
+
+7. [ผู้แนะนำบน Steam: ACG茶话](https://store.steampowered.com/curator/43109080-ACG%25E8%258C%25B6%25E8%25AF%259D/?l=thai&appid=2729360)
+“或许你认为它是一部狗尾续貂的续作，或许你会说它剧情杂乱，但这些仍不遮掩其神作的光辉。穿越作跳跃式的叙述方式，使得厘清故事脉络变得尤其困难；对于玩过本篇的玩家， ...
+
+8. [【讨论】这模拟经营乡村游戏里的NPC一定是真人！ :: 第30章 - Reddit](https://www.reddit.com/r/manga/comments/18ku3b4/disc_the_npcs_in_this_village_sim_game_must_be/?tl=zh-hans)
+Date published: Dec 17, 2023
+为了能有个完整的结局改了故事。 结局虽然提前了,但改编得还不错。主角的自我提升剧情能完整展现出来挺好的, 不过结局还是相当不错的。
+
+9. [Cadillac Pre-Owned vehicles | Cadillac dealer in Grand Rapids MI](https://www.harveycadillac.com/searchused.aspx)
+Find the pre-owned vehicle you've been looking for today with the best pre-owned Cadillac prices in Grand Rapids.
+
+10. [【合集】模拟经营类小说整理，感兴趣可入 - 豆瓣](https://m.douban.com/group/topic/164461762/)
+Date published: Feb 5, 2020
+女主有一个空间，而且女主是做药膳的，女主最初是靠四神汤谱出名，然后借鉴方便面的方式，让普通人也可以轻松做出药膳，后来就开连锁店、加盟店。挺 ...
+=======
+A Google search for 'Steam 模拟经营 四女角色 多结局' found 10 results:
+
+## Web Results
+1. [总有一款戳中你！Steam/NS 模拟经营游戏推荐](https://www.youtube.com/watch?v=axRJssuTD-8)
+Date published: 2 months ago
+... 多好玩的模擬經營·生存建造·休閑獨立遊戲！ ✿ 喜歡我的影片歡迎訂閱1. 罪托邦/Sintopia 2. 终落之城/ALL WILL FALL 3. 雾隐天途/DarkSwitch 4. 朋友 ...
+
+2. [深澜探索者](https://store.steampowered.com/curator/45540934/admin/reviews_manage/)
+一位新手船长驾驶新的飞艇强强联合开启空中世界冒险之旅的故事，初始角色可选职业有飞行员、采掘家、厨师、农夫、流浪艺人，这些不同的职业所带有的初始属性不同，可以选择 ...
+
+3. [模拟经营类游戏steam大全好玩的模拟经营类游戏steam排行榜](https://www.gamersky.com/handbook/202508/1978972.shtml)
+Date published: Aug 14, 2025
+模拟器游戏的魅力，在于能让玩家跳出现实的束缚，钻进一个个精心构建的虚拟场景里，体验截然不同的人生。而那些沉浸感爆棚的游戏，更是能让你忘记时间流逝 ...
+
+4. [《捞女游戏》（现名《情感反诈模拟器》）100%故事线收集指南](https://steamcommunity.com/sharedfiles/filedetails/?id=3503935242)
+Date published: Jun 20, 2025
+本指南可以帮助大家收集全部故事线，顺便也能集齐所有恋情档案和完成所有结局相关成就。因为涉及全路线收集，所以必然会有海量剧透，为了观感不会打黑条， ...
+
+5. [【Steam模拟经营类游戏推荐】体验不一样的职业和人生](https://www.dealmoon.com/guide/994836)
+Date published: Mar 25, 2024
+【Steam模拟经营类游戏推荐】体验不一样的职业和人生，过上“赛博田园生活” · 1. 星露谷物语（Stardew Valley） · 2. 杯杯倒满（Feed The Cups) · 3. 模拟人生4 （ ...
+
+6. [年度最佳, 40款! 11月模擬經營生存休閑_獨立遊戲推薦](https://www.youtube.com/watch?v=I74AuDvFxHc)
+Date published: 1 year ago
+年度最佳, 40款! 11月模擬經營生存休閑_獨立遊戲推薦| Steam+Switch【蘇安安Susanne】 34K views · 1 year ago. Steam/NS 模拟经营游戏推荐
+
+7. [Steam 开发者：Kairosoft](https://store.steampowered.com/developer/Kairosoft?l=schinese)
+发行日期：2024 年12 月8 日. “与哆啦A梦一起打造梦幻甜品店的模拟经营游戏” ... 2026 年5 月31 日. 驾驶在空中飞行的船来一场大冒险！充满浪漫色彩的模拟角色扮演游戏.
+
+8. [四名女角色 模拟经营 游戏 结局超过10](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92%E8%89%B2-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80%E8%B6%85%E8%BF%8710/)
+四名女角色 模拟经营 游戏 结局超过10 · #抽獎文 大家說說看誰是節奏王 也可以玩玩 29.5K #抽獎文 大家說說看誰是節奏王 也可以玩玩挑戰看看唷‼️ ⚡️抽獎活動： 底下留言：你 ...
+
+9. [Asian FMV 亚洲全动态真人互动影像游戏](https://store.steampowered.com/curator/45634232-Asian-FMV-%25E4%25BA%259A%25E6%25B4%25B2%25E5%2585%25A8%25E5%258A%25A8%25E6%2580%2581%25E7%259C%259F%25E4%25BA%25BA%25E4%25BA%2592%25E5%258A%25A8%25E5%25BD%25B1/?l=schinese&snr=1_1050_curatorsreviewing_)
+》风格的爱情模拟游戏，而结局变成一部很特别的故事，值得尝试，因为这个体验与其他FMV很不一样。 评级：A+。 更多详情请见完整评测链接。 ✓ [中文字幕] 2024-05 ...
+
+10. [同人女模拟经营游戏，凭什么获Steam特别好评？](https://m.huxiu.com/article/3914805.html)
+Date published: Jan 16, 2025
+《太太！我喜欢你！》从2023年9月开始开发，今年6月26日公布demo，11月29日发售EA版本。但由于赛道小众，核心玩家规模有限，团队对成绩并不想做太多预期，甚至做 ...
+=======
+A Google search for '四名女主角 模拟经营游戏 小说世界观' found 10 results:
+
+## Web Results
+1. [小说世界观模拟经营游戏四名女角色 - Instagram](https://www.instagram.com/popular/%E5%B0%8F%E8%AF%B4%E4%B8%96%E7%95%8C%E8%A7%82-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92%E8%89%B2/)
+小说世界观模拟经营游戏四名女角色 · 自水底深處，朝著光芒指引的方向， 牽起你的 · 這就是女生和男生遊戲創角的差異 ㅤ#燕雲十 2,599.
+
+2. [沙尼‧羊研究室 - Steam](https://store.steampowered.com/app/3464370/Sani_Yangs_Laboratory/?l=tchinese&snr=1_1056_4_1056_curator-tabs&curator_clanid=45525570)
+「本作是一款来自我们的邻居韩国的视觉小说作品，又在其中融入了不少模拟经营元素，补充了视觉小说本身缺少的游戏性，让游戏玩起来更加有意思。
+
+3. [[PDF] 硕士学位论文](http://202.195.136.150/openfile?dbid=72&objid=51_57_48_57_57_49&lwsing=e9e089ea99795358b67c47981ac94a41)
+在游戏叙事中，五位主角都具有Evol（超能力），其中女主角. 身上的特殊血液可以改变其他超能力者和所有人类的命运。四位男主角以及女主角分. 别属于不同的阵营，需要玩家 ...
+
+4. [4本刚完结模拟器西幻小说，神明之力推进文明，领主种田经营救世](https://www.163.com/dy/article/J1JV66AT0553JUR8.html)
+Date published: May 7, 2024
+简介：陆尧误入一款扮演神明的像素小游戏，却发现这款游戏连入了不同维度的世界。游戏中的【祭品】会进入现实，而他给予的【恩赐】也可以抵达游戏世界。作为 ...
+
+5. [2021第四季度登陆Steam的国产Galgame/视觉小说汇总 - 知乎专栏](https://zhuanlan.zhihu.com/p/452675622)
+Date published: Jan 2, 2022
+以养成与经营为主的模拟经营类游戏，玩家扮演王爷的幕僚，以一家青楼为掩饰暗中寻找着发动兵变的时机。游戏拥有复杂的养成系统与海量的文本，12位女主 ...
+
+6. [四名女主角模拟经营游戏结局超过十种小说改编 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E4%B8%BB%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D-%E5%B0%8F%E8%AF%B4%E6%94%B9%E7%BC%96/)
+四名女主角模拟经营游戏结局超过十种小说改编 · 怪奇研究所 新品登場 如果有一天， 你發現自己的記憶 · 女子が入れてたら嫌なスマホゲームは！？
+
+7. [拆解经典游戏，玩转剧情与玩法的融合设计](http://gameinstitute.qq.com/knowledge/100133)
+从世界观开始，将游戏角色的定位（我是谁，玩家的目标），玩家的游戏过程（也就是玩法）以及最后的情感寄托（结局）交代清楚，才能称之为是一个完整的剧情。 Ⅱ 游戏剧情在游戏中呈现 ...
+
+8. [【CJ 25】經營模擬遊戲《魔女酒館Witches Tavern》實機試玩](https://www.youtube.com/watch?v=va8DNhN8Gh0)
+Date published: Aug 2, 2025
+霓諾網絡於ChinaJoy 2025 亮相旗下三款作品，分別為《不/存在的你，和我》、《天空島傳說》以及《魔女酒館》。電玩瘋也特別搶先體驗西方中世紀魔幻風格 ...
+
+9. [《我靠模拟经营游戏发家致富》笔下超生 - 晋江文学城](https://www.jjwxc.net/onebook.php?novelid=4139740)
+Date published: 3 days ago
+路西的手机里有个叫做《梦想庄园》的农场模拟经营手游，无非就是种种地、买买地皮和工厂、赚钱修补祖传的庄园…… 本来一切都很正常，这就是个普通的手游 ...
+
+10. [四名女角模拟经营游戏结局超过十种 - Instagram](https://www.instagram.com/popular/%E5%9B%9B%E5%90%8D%E5%A5%B3%E8%A7%92-%E6%A8%A1%E6%8B%9F%E7%BB%8F%E8%90%A5-%E6%B8%B8%E6%88%8F-%E7%BB%93%E5%B1%80-%E8%B6%85%E8%BF%87%E5%8D%81%E7%A7%8D/)
+[Eng Below] ✨ 全港首個本地Board Game × 香港Vtuber聯動計劃✨ 歷史性一刻！我哋創造咗香港第一個本地桌遊同Vtuber嘅crossover合作！ 《混沌召戰》× 羽鳥楓鈴- 呢個 ...
+
+--- [step 8] assistant (agent) native=8 <<<< GOLD
+<answer>太太！我喜欢你！</answer>

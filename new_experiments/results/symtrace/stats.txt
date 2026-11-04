@@ -1,0 +1,46 @@
+## environment reach
+ag2: n=171 no_tool_call=65 env_blocked(all tool results failed)=72 placeholder_hit=75 any_ok_tool_result=34 giveup_final=52
+crewai: n=184 no_tool_call=119 env_blocked(all tool results failed)=43 placeholder_hit=41 any_ok_tool_result=22 giveup_final=58
+magnetic_one: n=181 no_tool_call=92 env_blocked(all tool results failed)=59 placeholder_hit=57 any_ok_tool_result=30 giveup_final=45
+
+## failure node kind x primary label (all)
+| node kind | c1 | c2 | c3 | c4 | total |
+|---|---|---|---|---|---|
+| agent_action | 121 | 67 | 164 | 81 | 433 |
+| final_result | 4 | 0 | 36 | 58 | 98 |
+| tool_call | 0 | 0 | 1 | 0 | 1 |
+| tool_result | 0 | 2 | 2 | 0 | 4 |
+
+## primary label by (mas, situation)
+| mas | situation | c1 | c2 | c3 | c4 | n | gold=first action | gold=final | gold=tool_call |
+|---|---|---|---|---|---|---|---|---|---|
+| ag2 | env_blocked | 9 | 0 | 58 | 5 | 72 | 0 | 23 | 0 |
+| ag2 | no_tool_call | 5 | 0 | 6 | 54 | 65 | 1 | 54 | 0 |
+| ag2 | reached_env | 23 | 2 | 8 | 1 | 34 | 0 | 5 | 1 |
+| crewai | env_blocked | 4 | 18 | 17 | 4 | 43 | 14 | 14 | 0 |
+| crewai | no_tool_call | 35 | 0 | 17 | 67 | 119 | 117 | 1 | 0 |
+| crewai | reached_env | 10 | 3 | 2 | 7 | 22 | 14 | 0 | 0 |
+| magnetic_one | env_blocked | 10 | 17 | 32 | 0 | 59 | 19 | 1 | 0 |
+| magnetic_one | no_tool_call | 19 | 22 | 50 | 1 | 92 | 73 | 0 | 0 |
+| magnetic_one | reached_env | 10 | 7 | 13 | 0 | 30 | 8 | 0 | 0 |
+
+## predictability of primary label
+majority class ('c3', 203) -> acc 0.379
+rule: majority label per gold_kind: acc 0.420 {'agent_action': ('c3', 164), 'final_result': ('c4', 58), 'tool_result': ('c2', 2), 'tool_call': ('c3', 1)}
+rule: majority label per mas: acc 0.457 {'ag2': ('c3', 72), 'magnetic_one': ('c3', 95), 'crewai': ('c4', 78)}
+rule: majority per (mas, kind, situation): acc 0.638
+rule: + giveup final: acc 0.666
+
+## failure node position relative to the first failed tool result
+runs with a failed tool result: 224 ; gold before it 148 ; gold = the call just before it (-1) 1 ; gold after it 74 ; median -2.0
+gold is last node: 98 ; gold is first agent action: 246 ; unanimous: 0
+
+## give-up finals vs confident finals: primary label
+Counter({(False, 'c4'): 131, (False, 'c3'): 109, (False, 'c1'): 103, (True, 'c3'): 94, (False, 'c2'): 38, (True, 'c2'): 31, (True, 'c1'): 22, (True, 'c4'): 8})
+
+## magnetic_one: agent of failure node Counter({'user': 102, 'masd_magnetic_one_assistant': 77, 'magnetic_one': 2})
+
+## kinds sequence patterns (top 8 per mas)
+ag2 4 distinct; [('sys_,user,agen,agen,fina', 65), ('sys_,user,agen,agen,tool,tool,agen,agen,tool,tool,agen,agen,tool,tool,fina', 58), ('sys_,user,agen,agen,tool,tool,agen,agen,tool,tool,agen,agen,fina', 36), ('sys_,user,agen,agen,tool,tool,agen,agen,fina', 12)]
+crewai 4 distinct; [('sys_,user,agen,agen,fina', 119), ('sys_,user,agen,agen,tool,tool,agen,agen,tool,tool,agen,agen,fina', 27), ('sys_,user,agen,agen,tool,tool,agen,agen,tool,tool,agen,agen,tool,tool,fina', 22), ('sys_,user,agen,agen,tool,tool,agen,agen,fina', 16)]
+magnetic_one 4 distinct; [('sys_,user,agen,agen,agen,agen,fina', 92), ('sys_,user,agen,agen,agen,agen,tool,tool,agen,agen,agen,agen,tool,tool,agen,agen,agen,agen,tool,tool,fina', 47), ('sys_,user,agen,agen,agen,agen,tool,tool,agen,agen,agen,agen,tool,tool,agen,agen,agen,agen,fina', 30), ('sys_,user,agen,agen,agen,agen,tool,tool,agen,agen,agen,agen,fina', 12)]

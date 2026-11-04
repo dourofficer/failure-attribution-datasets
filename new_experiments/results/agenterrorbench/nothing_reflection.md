@@ -1,0 +1,33 @@
+# How ALFWorld agents interpret "Nothing happens"
+
+| backbone | turns after Nothing happens | aware(format) | misread(as semantic outcome) | other |
+|---|---|---|---|---|
+| Qwen3-8B | 9 | 5 | 3 | 1 |
+| Llama3.3-70B-Turbo | 317 | 155 | 140 | 22 |
+| GPT-4o | 517 | 86 | 429 | 2 |
+
+Examples where the GOLD turn follows a "Nothing happens" and the reflection does not mention the format:
+
+- alfworld/Llama3.3-70B-Turbo_006_006 idx 13:  Reflecting on the last action and its outcome, it's clear that the task goal of putting the candle on the toilet was not completed. The last action, "lace the candle on the toilet," was not successful and encountered issues, as indicated by the outcome "Nothing happens." This suggests that the agen
+- alfworld/Llama3.3-70B-Turbo_014_014 idx 19:  Reflecting on the last action and its outcome, it's clear that the task goal of putting a creditcard on the coffeetable has not been completed. The last action, "inventory," did not yield any progress toward the task goal, as indicated by the observation "Nothing happens." This suggests that the ac
+- alfworld/Llama3.3-70B-Turbo_017_044 idx 7:  Reflecting on the last action and its outcome, it's clear that the task goal of putting some pillows on the sofa has not been completed. The last action to examine sofa 1 did not result in any progress, as the observation was that nothing happened. This suggests that the action may not have been su
+- alfworld/GPT-4o_003_alfworld_task_003 idx 13:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task goal of cleaning the plate was not completed. - Was last action successful or did it encounter issues? The last action encountered issues as nothing happened when attempting to clean the plate. - Am I making pro
+- alfworld/GPT-4o_006_alfworld_task_006 idx 9:  Reflect on the last action and its outcome - Did I complete the task goal? No, I have not completed the task goal of finding a pan and placing it on a countertop. - Was last action successful or did it encounter issues? The last action was to go to cabinet 2, but the observation indicates that noth
+- alfworld/GPT-4o_007_alfworld_task_007 idx 5:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task goal is not yet completed as I have not found or interacted with an apple. - Was last action successful or did it encounter issues? The action to go to countertop 1 was executed, but the current observation "Not
+- alfworld/GPT-4o_008_alfworld_task_008 idx 9:  Reflect on the last action and its outcome - I did not complete the task goal of placing the remote control on the dresser. - The last action, 'go to dresser 1', was unsuccessful as it did not change my position or lead to progress. - I am not making progress toward the task goal yet as I am unable
+- alfworld/GPT-4o_009_alfworld_task_009 idx 19:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task goal of heating the tomato and then placing it in the fridge is not yet complete. - Was last action successful or did it encounter issues? The last action was successful in closing the microwave. - Am I making p
+- alfworld/GPT-4o_017_alfworld_task_017 idx 5:  Reflect on the last action and its outcome - Did I complete the task goal? No, I have not yet cooled the apple or placed it on the dining table. - Was last action successful or did it encounter issues? The action encountered an issue, as the observation "Nothing happens" suggests the fridge did not
+- alfworld/GPT-4o_018_alfworld_task_018 idx 7:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task is not complete. - Was the last action successful or did it encounter issues? The last action did not result in progress as there was no change in observation. - Am I making progress toward the task goal? No, th
+- alfworld/GPT-4o_020_alfworld_task_020 idx 21:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task goal to cool the pot and put it on a countertop is not yet completed. - Was last action successful or did it encounter issues? The last action to go to fridge 1 was unsuccessful as it resulted in "Nothing happen
+- alfworld/GPT-4o_026_alfworld_task_026 idx 9:  Reflect on the last action and its outcome - Did I complete the task goal? No, the task goal is to cool a cup and place it on the sidetable, and I have not found a cup yet. - Was last action successful or did it encounter issues? The last action to go to fridge 1 was not executed; hence, it encount
+
+
+# WebShop: paging through empty result pages and product opens
+
+| backbone | runs | 'next' clicks on EMPTY result pages (total) | runs with >=1 such click | runs that never open a product | median searches per run | median next-clicks per run |
+|---|---|---|---|---|---|---|
+| GPT-4o | 15 | 80 | 15 | 10 | 5 | 20 |
+| Llama3.3-70B-Turbo | 17 | 26 | 4 | 12 | 6 | 12 |
+| Qwen3-8B | 18 | 46 | 6 | 7 | 3 | 12 |
+
+runs that never open a product: GPT-4o_001_chat_b000_t00(planning.inefficient_plan), GPT-4o_003_chat_b000_t00(system.environment_error), GPT-4o_005_chat_b000_t00(planning.inefficient_plan), GPT-4o_006_chat_b000_t00(planning.inefficient_plan), GPT-4o_008_chat_b000_t00(planning.inefficient_plan), GPT-4o_009_chat_b000_t00(planning.inefficient_plan), GPT-4o_011_chat_b000_t00(planning.inefficient_plan), GPT-4o_012_chat_b000_t00(planning.constraint_ignorance), GPT-4o_013_chat_b000_t00(memory.hallucination), GPT-4o_014_chat_b000_t00(memory.hallucination), Llama3.3-70B-Turbo_019_w(planning.plan_inefficient), Llama3.3-70B-Turbo_015_w(reflection.causal_misattribution), Llama3.3-70B-Turbo_014_w(memory.over_simplification), Llama3.3-70B-Turbo_013_w(system.environment_error), Llama3.3-70B-Turbo_012_w(system.environment_error), Llama3.3-70B-Turbo_011_w(planning.plan_inefficient), Llama3.3-70B-Turbo_010_w(memory.over_simplification), Llama3.3-70B-Turbo_009_w(action.parameter_error), Llama3.3-70B-Turbo_008_w(memory.hallucination), Llama3.3-70B-Turbo_006_w(memory.over_simplification), Llama3.3-70B-Turbo_005_w(system.environment_error), Llama3.3-70B-Turbo_004_w(memory.over_simplification), Qwen3-8B_003_chat_b000_t(planning.constraint_ignorance), Qwen3-8B_004_chat_b000_t(planning.inefficient_plan), Qwen3-8B_005_chat_b000_t(system.environment_error), Qwen3-8B_006_chat_b000_t(planning.inefficient_plan), Qwen3-8B_007_chat_b000_t(planning.constraint_ignorance), Qwen3-8B_008_chat_b000_t(planning.inefficient_plan), Qwen3-8B_012_chat_b000_t(planning.constraint_ignorance)

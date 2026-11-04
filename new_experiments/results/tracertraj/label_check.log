@@ -1,0 +1,22 @@
+60 records
+| metric | value |
+|---|---|
+| records (parsed) | 60 (60) |
+| local_wrong | 63.3% |
+| contradicts_prefix | 41.7% |
+| corrected_later | 18.3% |
+| has symptoms_later | 36.7% |
+| decisive = yes | 33.3% |
+| decisive = no_earlier | 8.3% |
+| decisive = no_later | 25.0% |
+| decisive = no_other | 33.3% |
+| style_odd | 55.0% |
+| subset | n | local_wrong | contradicts_prefix | corrected_later | symptoms | decisive yes | style_odd |
+|---|---|---|---|---|---|---|---|
+| agentic/test | 10 | 80 | 40 | 20 | 40 | 40 | 60 |
+| agentic/train | 10 | 70 | 30 | 30 | 60 | 40 | 80 |
+| coding/test | 10 | 50 | 20 | 40 | 50 | 20 | 50 |
+| coding/train | 10 | 10 | 10 | 0 | 0 | 10 | 20 |
+| math/test | 10 | 70 | 70 | 10 | 40 | 40 | 60 |
+| math/train | 10 | 100 | 80 | 10 | 30 | 50 | 60 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/tracertraj/label_check.jsonl

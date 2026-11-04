@@ -1,0 +1,15 @@
+ID embodied_gpt_01KJP64ECEVPBC8XN4E0GMVZCY domain=embodied model=gpt run=None passed=None score=None
+[r2] Success | step=None | The plan grasps the blue cube, moves it right then left, releases it, then moves to and grasps the green cube, matching the instruction.
+[r3] Success | step=None | The plan grasps the blue cube, moves it right then left while held, releases it, then moves to the green cube’s pose and grasps it.
+
+Task: Move the blue cube right then left, then pick the green cube.
+
+Primitive plan (8 steps):
+  home({})
+  move_to_pose({'arm': 'right', 'pose': [0.3, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})
+  move_to_pose({'arm': 'right', 'pose': [0.4, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  move_to_pose({'arm': 'right', 'pose': [0.2, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  release({'arm': 'right'})
+  move_to_pose({'arm': 'right', 'pose': [0.1, 0.16, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})

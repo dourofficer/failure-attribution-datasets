@@ -1,0 +1,53 @@
+records 148 Counter({'gaia': 117, 'swe_bench': 31})
+no errors: ['gaia/d2868d12880a41ad5ed1fb3bb39159d5', 'gaia/f510c80d120dc75e4259704184ee802d', 'gaia/fa31e4af04a2469c88d6e8845e8aac69', 'swe_bench/a18532f8923099230c813bf79515d33b']
+answer_match: Counter({False: 81, True: 36, None: 31})  per subset Counter({('gaia', False): 81, ('gaia', True): 36, ('swe_bench', None): 31})
+correct-ending traces: [('gaia/0140b3f657eddf76ca82f72c49ac8e58', 8, {'MEDIUM': 1, 'LOW': 1, 'HIGH': 6}), ('gaia/08be1639c58e086cf0bb8c269039973d', 5, {'MEDIUM': 1, 'HIGH': 4}), ('gaia/0adc4f3b99d9564d32811e913cc9d248', 1, {'LOW': 1}), ('gaia/0ebe673d64647ec44c370638b82d3c78', 1, {'LOW': 1}), ('gaia/14be0e98b825d2da5665e2e10f6cc927', 6, {'HIGH': 6}), ('gaia/2713fa0aa73f0c5a8b480f026c21a547', 5, {'LOW': 1, 'HIGH': 3, 'MEDIUM': 1}), ('gaia/2c77a8feec544cc61a00a387ad792a13', 2, {'HIGH': 2}), ('gaia/3215fc75e81bdb73706a4fb37b66427f', 1, {'LOW': 1}), ('gaia/331aece579d942bb4c345a86c86efb83', 2, {'LOW': 2}), ('gaia/33cedc57294f33839f1acc3ee5182788', 7, {'LOW': 3, 'MEDIUM': 2, 'HIGH': 2}), ('gaia/387546b0d3e81503bd8d392c6f1b6b25', 6, {'LOW': 2, 'MEDIUM': 2, 'HIGH': 2}), ('gaia/396b6aa1ab86eb2e20d27582eb5eebd9', 6, {'HIGH': 5, 'MEDIUM': 1}), ('gaia/41b597524173272503073a0799ac523c', 1, {'HIGH': 1}), ('gaia/4a8d094e92433f1ba1da21f602c417d9', 3, {'MEDIUM': 1, 'HIGH': 2}), ('gaia/53dba4241b22d5039c9c119871c7c8b4', 3, {'HIGH': 3}), ('gaia/5b5a35053775cbf29701c171e6675853', 4, {'LOW': 2, 'MEDIUM': 2}), ('gaia/5bbd1534b199c57861f55b58be9949a0', 14, {'MEDIUM': 7, 'HIGH': 3, 'LOW': 4}), ('gaia/5e5dc94e090341c564d582f551a0cddb', 5, {'LOW': 1, 'MEDIUM': 1, 'HIGH': 3}), ('gaia/5f3a0a7fc572f49630c069e4e5a64ae3', 13, {'LOW': 7, 'HIGH': 4, 'MEDIUM': 2}), ('gaia/62df2a06b647ca730391602dbf62f843', 4, {'MEDIUM': 2, 'HIGH': 2}), ('gaia/7bf0addde339e4cac9dd3b772232a7e0', 8, {'HIGH': 4, 'MEDIUM': 3, 'LOW': 1}), ('gaia/88c63c780aba1f23c3c5345aa340d7e2', 2, {'LOW': 1, 'HIGH': 1}), ('gaia/96be1bf61f2915e52ec59173b9bd9828', 5, {'LOW': 1, 'HIGH': 3, 'MEDIUM': 1}), ('gaia/99f6b447779ba86b3cff2caede832d59', 1, {'LOW': 1}), ('gaia/a99faf782e8ad4d5f1ccdfcb7e143b9a', 11, {'HIGH': 7, 'MEDIUM': 3, 'LOW': 1}), ('gaia/aa76e85e274bb7187a186c5ed9c90b43', 1, {'LOW': 1}), ('gaia/c60ad8608dd94271a6c6805eedfa26a8', 5, {'HIGH': 4, 'MEDIUM': 1}), ('gaia/cbefff615c15f4de61bd0ffd1ce97d2e', 2, {'HIGH': 2}), ('gaia/d277cf50c742ad43ddf128587f59b363', 3, {'LOW': 1, 'MEDIUM': 1, 'HIGH': 1}), ('gaia/d2868d12880a41ad5ed1fb3bb39159d5', 0, {}), ('gaia/dbc070b918d4a052c0b686081408fb52', 3, {'HIGH': 2, 'MEDIUM': 1}), ('gaia/ea313eef484bb042ddb079771359c8e6', 1, {'HIGH': 1}), ('gaia/ee939c276d2bdab808593f5121c52faf', 9, {'LOW': 8, 'MEDIUM': 1}), ('gaia/ef0207e4427fe22aeb1c2105932b74d7', 5, {'MEDIUM': 3, 'LOW': 2}), ('gaia/f510c80d120dc75e4259704184ee802d', 0, {}), ('gaia/fa31e4af04a2469c88d6e8845e8aac69', 0, {})]
+
+earliest error impact vs primary:
+  primary is earliest span: 86
+  primary later than earliest; earliest impacts=LOW: 32
+  primary later than earliest; earliest impacts=MEDIUM: 17
+  primary later than earliest; earliest impacts=LOW/MEDIUM: 9
+n errs before primary:  Counter({0: 86, 1: 25, 5: 10, 2: 10, 3: 7, 4: 6})
+n HIGH per trace: Counter({0: 38, 2: 35, 1: 24, 3: 23, 4: 13, 6: 8, 5: 7})
+traces with no HIGH: 34
+evidence visible in labelled step content: Counter({True: 462, False: 377})
+ by span kind: {('LLM', False): 293, ('LLM', True): 451, ('TOOL', False): 84, ('TOOL', True): 11}
+primary span kind: Counter({'LLM': 129, 'TOOL': 15, None: 4})
+next tool span after primary shows error-ish text: Counter({False: 90, None: 55, True: 3})
+used search agent: Counter({('gaia', False): 70, ('gaia', True): 47, ('swe_bench', False): 31})
+| category | HIGH | MEDIUM | LOW | total |
+|---|---|---|---|---|
+| Formatting Errors | 26 | 61 | 109 | 196 |
+| Instruction Non-compliance | 16 | 90 | 46 | 152 |
+| Goal Deviation | 57 | 5 | 2 | 64 |
+| Resource Abuse | 8 | 47 | 2 | 57 |
+| Tool-related | 45 | 8 | 0 | 53 |
+| Language-only | 46 | 2 | 2 | 50 |
+| Task Orchestration | 6 | 39 | 1 | 46 |
+| Tool Selection Errors | 41 | 2 | 1 | 44 |
+| Context Handling Failures | 15 | 27 | 0 | 42 |
+| Poor Information Retrieval | 6 | 29 | 5 | 40 |
+| Incorrect Problem Identification | 4 | 23 | 0 | 27 |
+| Tool Output Misinterpretation | 7 | 9 | 1 | 17 |
+| Environment Setup Errors | 6 | 2 | 1 | 9 |
+| Resource Not Found | 7 | 0 | 0 | 7 |
+| Context Handling Failure | 1 | 4 | 0 | 5 |
+| Authentication Errors | 1 | 3 | 1 | 5 |
+| Tool Definition Issues | 2 | 0 | 1 | 3 |
+| Resource Exhaustion | 2 | 1 | 0 | 3 |
+| Language-Only | 3 | 0 | 0 | 3 |
+| Service Errors | 1 | 1 | 0 | 2 |
+| Timeout Issues | 2 | 0 | 0 | 2 |
+| Incorrect Memory Usage | 0 | 2 | 0 | 2 |
+| Instruction Non-Compliance | 0 | 2 | 0 | 2 |
+|  Incorrect Problem Identification | 0 | 0 | 1 | 1 |
+| Tool Selection | 1 | 0 | 0 | 1 |
+| Goal deviation | 1 | 0 | 0 | 1 |
+| Task Orchestration Errors | 0 | 1 | 0 | 1 |
+| Task Orchestration Error | 0 | 1 | 0 | 1 |
+| Formatting Error | 0 | 0 | 1 | 1 |
+| Poor Information retrieval | 0 | 1 | 0 | 1 |
+| Instruction non complience | 0 | 1 | 0 | 1 |
+primary categories: [('Goal Deviation', 44), ('Instruction Non-compliance', 41), ('Tool Selection Errors', 34), ('Language-only', 34), ('Formatting Errors', 31), ('Tool-related', 30), ('Task Orchestration', 22), ('Resource Abuse', 10), ('Context Handling Failures', 9), ('Incorrect Problem Identification', 9), ('Poor Information Retrieval', 8), ('Tool Output Misinterpretation', 7)]
+earliest (non-primary) categories: [('Instruction Non-compliance', 26), ('Formatting Errors', 22), ('Task Orchestration', 6), ('Resource Abuse', 6), ('Incorrect Problem Identification', 4), ('Poor Information Retrieval', 3), ('Tool Output Misinterpretation', 2), ('Goal Deviation', 1), ('Environment Setup Errors', 1), ('Context Handling Failures', 1), ('Task Orchestration Errors', 1), ('Tool Definition Issues', 1)]

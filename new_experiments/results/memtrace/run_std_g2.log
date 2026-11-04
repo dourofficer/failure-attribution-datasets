@@ -1,0 +1,25 @@
+30 records
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 143, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 114, in main
+    outs = chat_json_many(msgs, workers=args.workers, max_tokens=args.max_tokens, think=not args.no_think,
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 120, in chat_json_many
+    depth += 1
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 120, in <lambda>
+    depth += 1
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 106, in chat_json
+    
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 63, in chat
+    
+RuntimeError: LLM call failed after 3 attempts: 400 Client Error: Bad Request for url: http://localhost:8210/v1/chat/completions

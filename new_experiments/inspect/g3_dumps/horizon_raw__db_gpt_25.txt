@@ -1,0 +1,10 @@
+ID db_gpt_25 domain=database model=gpt run=None passed=False score=None
+[r2] Success | step=None | The agent’s IN-subquery is semantically equivalent to the gold JOIN query and correctly counts distinct elements for single-bond molecules; the 'False' label reflects evaluation mismatch, not a reasoning error.
+[r3] Success | step=None | The agent’s SQL is semantically equivalent to the gold query (IN-subquery vs JOIN), correctly capturing single-bond molecules and counting distinct elements.
+
+Question  : How many elements are there for single bond molecules?
+Evidence  : single bond refers to bond_type = '-';
+Agent SQL : SELECT COUNT(DISTINCT A.`element`) FROM atom AS A WHERE A.`molecule_id` IN ( SELECT DISTINCT `molecule_id` FROM bond WHERE `bond_type` = '-' )
+Gold  SQL : SELECT COUNT(DISTINCT T.element) FROM ( SELECT DISTINCT T2.molecule_id, T1.element FROM atom AS T1 INNER JOIN molecule AS T2 ON T1.molecule_id = T2.molecule_id INNER JOIN bond AS T3 ON T2.molecule_id = T3.molecule_id WHERE T3.bond_type = '-' ) AS T
+Correct   : False
+Notes     : The model produced a different query shape (IN-subquery vs JOIN) but it is semantically equivalent to the gold SQL; this is a harmless plan-level variation rather than a true semantic error.

@@ -1,0 +1,86 @@
+## HC termination type vs label step type
+1 ('max_time', 'answer', 'Orch:instruction')
+2 ('max_time', 'answer', 'WebSurfer')
+1 ('max_time', 'unable', 'Orch:stalled')
+1 ('other', 'answer', 'Assistant')
+2 ('other', 'answer', 'FileSurfer')
+2 ('other', 'answer', 'Orch:instruction')
+1 ('other', 'answer', 'Orch:ledger')
+2 ('other', 'answer', 'Orch:other')
+1 ('other', 'answer', 'Orch:stalled')
+27 ('other', 'answer', 'WebSurfer')
+4 ('satisfied', 'answer', 'Assistant')
+3 ('satisfied', 'answer', 'Orch:instruction')
+4 ('satisfied', 'answer', 'Orch:ledger')
+1 ('satisfied', 'answer', 'Orch:other')
+2 ('satisfied', 'answer', 'Orch:plan')
+1 ('satisfied', 'answer', 'Orch:stalled')
+3 ('satisfied', 'answer', 'WebSurfer')
+
+## WW-HC vs AgentRx (root cause and full failure set)
+n 44 exact root==ww 16 within1 21 within3 25 rx later 16 rx earlier 12 median signed 0.0
+WW step inside AgentRx failure set: 27 ; AgentRx first failure == WW step: 15 ; agent agree: 27
+| ww | n | ww_step | ww_type | rx_root | rx_type | rx_first | rx_all(first 8) | rx_cat |
+|---|---|---|---|---|---|---|---|---|
+| Hand-Crafted/1.json | 29 | 12 | WebSurfer | 9 | Orch:ledger | 8 | [8, 9, 10, 14, 18, 20, 24, 28] | Misinterpretation of Tool Ou |
+| Hand-Crafted/2.json | 86 | 4 | WebSurfer | 4 | WebSurfer | 4 | [4, 11, 15, 19, 23, 27, 31, 35] | Instruction/Plan Adherence F |
+| Hand-Crafted/3.json | 93 | 32 | WebSurfer | 55 | WebSurfer | 55 | [55, 63, 92] | Instruction/Plan Adherence F |
+| Hand-Crafted/4.json | 17 | 8 | WebSurfer | 16 | WebSurfer | 16 | [16] | System Failure |
+| Hand-Crafted/6.json | 8 | 5 | Orch:ledger | 6 | Orch:other | 4 | [4, 6] | Misinterpretation of Tool Ou |
+| Hand-Crafted/7.json | 25 | 8 | WebSurfer | 4 | WebSurfer | 4 | [4, 8, 12, 16, 20, 24] | Intent not supported |
+| Hand-Crafted/8.json | 129 | 8 | WebSurfer | 40 | WebSurfer | 40 | [40, 58, 89, 112, 116, 120, 128] | Instruction/Plan Adherence F |
+| Hand-Crafted/10.json | 44 | 9 | Orch:ledger | 9 | Orch:ledger | 8 | [8, 9, 12, 13, 16, 17, 43] | Misinterpretation of Tool Ou |
+| Hand-Crafted/11.json | 130 | 24 | WebSurfer | 26 | Orch:instruction | 12 | [12, 16, 20, 24, 26, 30, 36, 43] | Misinterpretation of Tool Ou |
+| Hand-Crafted/12.json | 20 | 16 | Assistant | 16 | Assistant | 16 | [16] | Misinterpretation of Tool Ou |
+| Hand-Crafted/13.json | 53 | 12 | WebSurfer | 20 | WebSurfer | 20 | [20, 24, 28, 32, 52] | Instruction/Plan Adherence F |
+| Hand-Crafted/16.json | 21 | 15 | Orch:other | 10 | Orch:instruction | 4 | [4, 8, 10] | Misinterpretation of Tool Ou |
+| Hand-Crafted/17.json | 37 | 8 | WebSurfer | 9 | Orch:ledger | 6 | [6, 8, 9] | Misinterpretation of Tool Ou |
+| Hand-Crafted/18.json | 31 | 16 | WebSurfer | 30 | Orch:other | 16 | [16, 20, 30] | Intent Plan Misalignment |
+| Hand-Crafted/20.json | 67 | 3 | Orch:instruction | 32 | FileSurfer | 12 | [12, 16, 32] | Invention of new information |
+| Hand-Crafted/21.json | 25 | 4 | WebSurfer | 24 | WebSurfer | 24 | [24] | Guardrails Triggered |
+| Hand-Crafted/22.json | 24 | 4 | WebSurfer | 16 | Orch:ledger | 16 | [16, 23] | Invention of new information |
+| Hand-Crafted/24.json | 5 | 1 | Orch:plan | 1 | Orch:plan | 1 | [1] | Misinterpretation of Tool Ou |
+| Hand-Crafted/25.json | 20 | 18 | Orch:other | 18 | Orch:other | 18 | [18] | Misinterpretation of Tool Ou |
+| Hand-Crafted/26.json | 33 | 32 | FileSurfer | 18 | Orch:instruction | 18 | [18, 22, 26, 30, 32] | Intent not supported |
+| Hand-Crafted/27.json | 51 | 4 | WebSurfer | 14 | Orch:instruction | 12 | [12, 14, 16, 18, 20, 33, 34, 49] | Invention of new information |
+| Hand-Crafted/28.json | 32 | 8 | WebSurfer | 13 | Orch:instruction | 8 | [8, 13, 19, 23, 27, 31] | Misinterpretation of Tool Ou |
+| Hand-Crafted/29.json | 13 | 12 | WebSurfer | 12 | WebSurfer | 12 | [12] | Guardrails Triggered |
+| Hand-Crafted/30.json | 121 | 82 | Assistant | 12 | WebSurfer | 8 | [8, 12, 16, 24, 35, 39, 51, 58] | Instruction/Plan Adherence F |
+| Hand-Crafted/31.json | 32 | 9 | Orch:ledger | 9 | Orch:ledger | 8 | [8, 9] | Misinterpretation of Tool Ou |
+| Hand-Crafted/32.json | 12 | 6 | Orch:instruction | 6 | Orch:instruction | 4 | [4, 6] | Misinterpretation of Tool Ou |
+| Hand-Crafted/33.json | 9 | 8 | WebSurfer | 8 | WebSurfer | 4 | [4, 8] | Guardrails Triggered |
+| Hand-Crafted/34.json | 5 | 4 | WebSurfer | 4 | WebSurfer | 4 | [4] | Guardrails Triggered |
+| Hand-Crafted/36.json | 91 | 9 | Orch:ledger | 9 | Orch:ledger | 8 | [8, 9] | Misinterpretation of Tool Ou |
+| Hand-Crafted/37.json | 59 | 4 | WebSurfer | 3 | Orch:instruction | 3 | [3] | Intent Plan Misalignment |
+| Hand-Crafted/38.json | 52 | 3 | Orch:instruction | 3 | Orch:instruction | 3 | [3, 33, 51] | Intent Plan Misalignment |
+| Hand-Crafted/40.json | 17 | 16 | WebSurfer | 16 | WebSurfer | 16 | [16] | Guardrails Triggered |
+| Hand-Crafted/41.json | 83 | 8 | WebSurfer | 16 | WebSurfer | 16 | [16] | Guardrails Triggered |
+| Hand-Crafted/44.json | 124 | 39 | WebSurfer | 31 | WebSurfer | 31 | [31, 35, 39, 54, 70, 90, 94, 123] | Instruction/Plan Adherence F |
+| Hand-Crafted/45.json | 21 | 20 | Orch:other | 20 | Orch:other | 20 | [20] | Guardrails Triggered |
+| Hand-Crafted/46.json | 130 | 32 | WebSurfer | 4 | WebSurfer | 4 | [4, 12, 16, 24, 28, 32, 36, 40] | Instruction/Plan Adherence F |
+| Hand-Crafted/48.json | 5 | 4 | WebSurfer | 4 | WebSurfer | 4 | [4] | Guardrails Triggered |
+| Hand-Crafted/49.json | 16 | 12 | Assistant | 11 | Orch:other | 11 | [11] | Invention of new information |
+| Hand-Crafted/50.json | 113 | 5 | WebSurfer | 6 | Orch:ledger | 5 | [5, 6, 9, 13, 17, 21, 29, 33] | Misinterpretation of Tool Ou |
+| Hand-Crafted/51.json | 123 | 5 | FileSurfer | 3 | Orch:instruction | 3 | [3, 11, 15, 50, 54, 56, 61, 65] | Intent not supported |
+| Hand-Crafted/52.json | 21 | 4 | WebSurfer | 6 | Orch:instruction | 4 | [4, 6, 20] | Misinterpretation of Tool Ou |
+| Hand-Crafted/53.json | 28 | 24 | Assistant | 8 | WebSurfer | 8 | [8, 20, 24] | Guardrails Triggered |
+| Hand-Crafted/56.json | 129 | 4 | WebSurfer | 4 | WebSurfer | 4 | [4, 6, 9, 11, 13, 15, 17, 19] | Instruction/Plan Adherence F |
+| Hand-Crafted/57.json | 17 | 12 | WebSurfer | 3 | Orch:instruction | 3 | [3] | Intent Plan Misalignment |
+
+## WW vs MP-Bench (3 annotators)
+
+Hand-Crafted: n=57
+ WW step votes 0/1/2/3: Counter({0: 26, 3: 13, 1: 12, 2: 6})
+ WW step in union 31 ; in majority set 19 ; == earliest majority 9 ; == earliest flag 8
+ majority steps strictly earlier than WW exist: 26 ; strictly later exist: 48
+ mean flagged per log 13.157894736842104 ; agent agree (ww vs mp earliest-majority agent) 23
+ earliest-majority minus WW: median 0 later 22 earlier 26 same 9
+ votes on WW step by WW step type: {'WebSurfer': Counter({0: 16, 3: 7, 1: 7, 2: 2}), 'Orch:ledger': Counter({2: 2, 3: 2, 1: 1}), 'Orch:other': Counter({0: 1, 1: 1, 3: 1}), 'FileSurfer': Counter({3: 1, 1: 1}), 'Assistant': Counter({2: 2, 3: 1, 1: 1}), 'Orch:plan': Counter({3: 1, 0: 1}), 'Orch:stalled': Counter({0: 2, 1: 1}), 'Orch:instruction': Counter({0: 6})}
+
+Algorithm-Generated: n=120
+ WW step votes 0/1/2/3: Counter({3: 74, 2: 42, 1: 4})
+ WW step in union 120 ; in majority set 116 ; == earliest majority 91 ; == earliest flag 56
+ majority steps strictly earlier than WW exist: 28 ; strictly later exist: 84
+ mean flagged per log 5.3 ; agent agree (ww vs mp earliest-majority agent) 98
+ earliest-majority minus WW: median 0.0 later 1 earlier 28 same 91
+ votes on WW step by WW step type: 

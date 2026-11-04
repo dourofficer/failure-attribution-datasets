@@ -1,0 +1,42 @@
+evidence location: {'nowhere (paraphrase)': 267, 'rendered step': 482, 'span attrs (input history)': 45, 'other span': 44, 'evidence too short': 1}
+by span kind: {('LLM', 'nowhere (paraphrase)'): 193, ('LLM', 'rendered step'): 470, ('LLM', 'span attrs (input history)'): 42, ('LLM', 'other span'): 38, ('TOOL', 'nowhere (paraphrase)'): 74, ('TOOL', 'other span'): 6, ('TOOL', 'rendered step'): 12, ('TOOL', 'span attrs (input history)'): 3}
+other-span offsets (other - labelled): [(3, 18), (2, 17), (-1, 4), (5, 3), (1, 1), (6, 1)]
+| category | rendered | span attrs | other span | nowhere |
+|---|---|---|---|---|
+| Formatting Errors | 145 | 16 | 15 | 20 |
+| Instruction Non-compliance | 92 | 8 | 2 | 50 |
+| Goal Deviation | 18 | 4 | 0 | 42 |
+| Resource Abuse | 13 | 3 | 6 | 35 |
+| Tool-related | 29 | 0 | 0 | 23 |
+| Language-only | 39 | 1 | 0 | 10 |
+| Task Orchestration | 33 | 2 | 0 | 11 |
+| Tool Selection Errors | 24 | 2 | 1 | 17 |
+| Context Handling Failures | 4 | 6 | 5 | 27 |
+| Poor Information Retrieval | 15 | 1 | 5 | 19 |
+| Incorrect Problem Identification | 20 | 0 | 3 | 4 |
+| Tool Output Misinterpretation | 10 | 1 | 0 | 6 |
+| Environment Setup Errors | 4 | 1 | 3 | 1 |
+| Resource Not Found | 7 | 0 | 0 | 0 |
+
+GAIA traces correct/wrong: {False: 83, True: 34}
+| category | traces w/ cat: correct | wrong | P(correct | cat present) |
+|---|---|---|---|
+| _impact_HIGH | 69 | 208 | 0.25 |
+| _impact_MEDIUM | 36 | 149 | 0.19 |
+| _impact_LOW | 41 | 82 | 0.33 |
+| Goal Deviation | 11 | 50 | 0.18 |
+| Instruction Non-compliance | 16 | 41 | 0.28 |
+| Formatting Errors | 16 | 39 | 0.29 |
+| Language-only | 10 | 30 | 0.25 |
+| Tool-related | 6 | 30 | 0.17 |
+| Tool Selection Errors | 8 | 28 | 0.22 |
+| Task Orchestration | 10 | 25 | 0.29 |
+| Resource Abuse | 5 | 24 | 0.17 |
+| Poor Information Retrieval | 3 | 20 | 0.13 |
+| Context Handling Failures | 5 | 13 | 0.28 |
+| Incorrect Problem Identification | 2 | 11 | 0.15 |
+| Tool Output Misinterpretation | 2 | 11 | 0.15 |
+| Environment Setup Errors | 2 | 7 | 0.22 |
+| Authentication Errors | 1 | 4 | 0.20 |
+| Context Handling Failure | 0 | 4 | 0.00 |
+| Resource Not Found | 0 | 4 | 0.00 |

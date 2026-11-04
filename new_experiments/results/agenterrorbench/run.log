@@ -1,0 +1,35 @@
+60 records
+| metric | n | % |
+|---|---|---|
+| agent_ok | 60 | 100.0 |
+| step_exact | 17 | 28.3 |
+| step_in_set | 17 | 28.3 |
+| step_within_1 | 17 | 28.3 |
+| step_within_3 | 28 | 46.7 |
+| step_within_5 | 30 | 50.0 |
+
+n=60 parse_fail=0 pred later than gold: 16, earlier: 27, exact: 17
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/agenterrorbench/all_at_once_std.jsonl
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| alfworld | 25 | 100.0 | 24.0 | 52.0 | 24.0 |
+| webshop | 17 | 100.0 | 29.4 | 35.3 | 29.4 |
+| gaia | 18 | 100.0 | 33.3 | 50.0 | 33.3 |
+| ALL | 60 | 100.0 | 28.3 | 46.7 | 28.3 |
+
+categories: {'exact': 17, 'later(+1..3)': 4, 'earlier(<-3)': 20, 'later(>3)': 12, 'earlier(-1..3)': 7}
+agent right but step wrong: 43; step right but agent wrong: 0
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 5 | 60.0 | 100.0 | 100.0 |
+| 11-30 | 2 | 50.0 | 50.0 | 100.0 |
+| 31-1000 | 53 | 24.5 | 41.5 | 100.0 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/agenterrorbench/all_at_once_std_analysis.md
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/agenterrorbench/all_at_once_std_nogt.jsonl'

@@ -1,0 +1,22 @@
+
+## Hand-Crafted (n=58)
+has FINAL ANSWER: 56; final matches GT exact/contains/number/no: Counter({'no': 54, 'contains': 1, 'number': 1})
+label is first step of blamed agent: 15 ; last step of blamed agent: 13 ; label is last step: 7
+label is first WebSurfer step: 10 of 31 WebSurfer-blamed
+error-string density before label: 0.047/step, after: 0.066/step, at label: 8
+ledger flags: logs with any flag 36 ; first flag before label 14 ; after 22
+Stalled/Replanning present 25 ; first stall before label 2
+missing specialist turns: logs 22 events 37
+WebSurfer repeats: logs with repeats 29 ; first repeat before label 10 after 19
+no FINAL ANSWER (timeout/exhaustion): 2 of which label is first WebSurfer step: 0 ; label rank in agent steps (median): [1, 1]
+with FINAL ANSWER: 56 label is first WebSurfer step: 10 ; label rank in agent steps: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 4, 4, 5, 6, 6, 6, 7, 7, 8, 10, 11, 13, 13, 16, 17, 19, 21, 22, 37, 38]
+
+## Algorithm-Generated (n=126)
+has FINAL ANSWER: 6; final matches GT exact/contains/number/no: Counter({'no': 5, 'contains': 1})
+label is first step of blamed agent: 67 ; last step of blamed agent: 42 ; label is last step: 1
+label is first WebSurfer step: 0 of 0 WebSurfer-blamed
+error-string density before label: 0.198/step, after: 0.220/step, at label: 29
+
+right-answer-but-failed: [('Hand-Crafted/2.json', 'CSI Cyber\nSCENARIO.PY COMPLETE !#!#\nRUN.SH COMPLETE !#!#', 'contains'), ('Algorithm-Generated/82.json', 'is well-rounded according to the instructions.\n\nWe can confi', 'contains')]
+
+step-0 labels: [('Algorithm-Generated/1.json', 'Excel_Expert'), ('Algorithm-Generated/19.json', 'Debugging_Problem_Solving_Expert'), ('Algorithm-Generated/20.json', 'WebServing_Expert'), ('Algorithm-Generated/21.json', 'Lyrics_Expert'), ('Algorithm-Generated/22.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/24.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/43.json', 'DataAnalysis_Expert'), ('Algorithm-Generated/51.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/52.json', 'ISBNCheckDigit_Expert'), ('Algorithm-Generated/57.json', 'TextExtraction_Expert'), ('Algorithm-Generated/70.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/77.json', 'YouTubeDownload_Expert'), ('Algorithm-Generated/80.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/86.json', 'Library_Database_Expert'), ('Algorithm-Generated/88.json', 'FinancialData_Expert'), ('Algorithm-Generated/92.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/104.json', 'PythonDebugging_Expert'), ('Algorithm-Generated/106.json', 'DataAnalysis_Expert'), ('Algorithm-Generated/117.json', 'JSON_Expert'), ('Algorithm-Generated/119.json', 'Geometry_Expert')]

@@ -1,0 +1,1267 @@
+=== mem0/locomo_locomo-1.json::query:locomo-qa-1-14@1 system=mem0 n_steps=120 gold=32 type=RetrievalError op_in_slice=True final_op=memory_system.search_vector_store
+QUERY: 'What career path has Caroline decided to persue?'
+GOLD ANSWERS: ["counseling or mental health for Transgender people"]
+PREDICTION: 'Based on the memories, Caroline has decided to pursue a career path related to art and mentoring young people. She uses art to express her feelings and explore her identity, and she is involved in mentoring, finding joy and fulfillment in supporting and seeing the happiness of her mentees.'
+REASON: The error was a retrieval failure. The system needed information that Caroline was considering or had decided on a career in mental health counseling, specifically supporting transgender people with self-acceptance and mental health. That information had been captured during memory construction and was still present in memory, but it was not included in the retrieved memory units for this operation. As a result, the retrieval step failed to surface the relevant career-goal details needed for the task.
+EVIDENCE: ['{\n    "content": "I\'m still figuring out the details, but I\'m thinking of working with trans people, helping them accept themselves and supporting their mental health. Last Friday, I went to an LGBTQ+ counseling workshop and it was really enlightening. They talked about different therapeutic methods and how to best work with trans people. Seeing how passionate these pros were about making a safe space for people like me was amazing.\\nBelow is this message\'s metadata:\\nSpeaker Name: Caroline\\nSpeaker Role: user\\n",\n    "name": "Caroline",\n    "role": "user",\n    "timestamp": "2023-06-27T10:37:00"\n}', '{\n    "content": "I\'m keen on counseling or working in mental health - I\'d love to support those with similar issues.\\nBelow is this message\'s metadata:\\nSpeaker Name: Caroline\\nSpeaker Role: user\\n",\n    "name": "Caroline",\n    "role": "user",\n    "timestamp": "2023-05-08T13:56:00"\n}']
+
+--- [step 0] extraction op=memory_system.extract_facts session=locomo-1-session-3
+Operation: memory_system.extract_facts [extraction] (op_id op-f7527120b3644afdbcb42b28357ae6a0, session locomo-1-session-3, 2026-04-21 16:13:28.820)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D3:2: {
+    "content": "Hey Caroline! Great to hear from you. Sounds like your event was amazing! I'm so proud of  ...[1310 more]
+
+--- [step 1] update op=memory_system.update_memory_decision session=locomo-1-session-3
+Operation: memory_system.update_memory_decision [update] (op_id op-24d594685ca449abbca969dfa0ada2fe, session locomo-1-session-3, 2026-04-21 16:13:31.086)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:7d4e99d6a16256cad6119529f75d541cfd99ac46: 'Find 9 existing memories similar to the new extracted facts.'
+  - [llm_response] str:dd9f9f07fb75915287e6d95f64b55bd634bc716f: ["User's name is Melanie", 'User is proud of Caroline for sp ...[6499 more]
+
+--- [step 2] extraction op=memory_system.extract_facts session=locomo-1-session-3
+Operation: memory_system.extract_facts [extraction] (op_id op-753aca5d4cb24fa4860879223b3c0799, session locomo-1-session-3, 2026-04-21 16:14:44.898)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D3:10: {
+    "content": "Yes, Caroline! We can do it. Your courage is inspiring. I want to be couragous for my fam ...[1056 more]
+
+--- [step 3] update op=memory_system.update_memory_decision session=locomo-1-session-3
+Operation: memory_system.update_memory_decision [update] (op_id op-c3131f6236c743f2816c018794bbdd7d, session locomo-1-session-3, 2026-04-21 16:14:47.164)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:b728588dd825d9a6f92c56a8cf6e72b80cf6096a: 'Find 16 existing memories similar to the new extracted facts.'
+  - [llm_response] str:55f3828f5a3ce4fd90c3c3cd4bbe9af24b699d94: ["User's name is Melanie", "User is inspired by Caroline's  ...[10820 more]
+
+--- [step 4] extraction op=memory_system.extract_facts session=locomo-1-session-4
+Operation: memory_system.extract_facts [extraction] (op_id op-999aa8b9a22b46c2bb22a203604d6921, session locomo-1-session-4, 2026-04-21 16:18:23.317)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D4:18: {
+    "content": "Congrats Caroline! Good on you for going after what you really care about.\nBelow is this ...[682 more]
+
+--- [step 5] update op=memory_system.update_memory_decision session=locomo-1-session-4
+Operation: memory_system.update_memory_decision [update] (op_id op-4640b01219be4c3aaa541842f5398ffb, session locomo-1-session-4, 2026-04-21 16:18:24.916)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:1d11637d2cbbd050a008a89385183949c8a1650b: 'Find 5 existing memories similar to the new extracted facts.'
+  - [llm_response] str:8da716d74e08d36fd422433f0d63014e02e360d9: ['User congratulated Caroline for pursuing what she really c ...[3717 more]
+
+--- [step 6] extraction op=memory_system.extract_facts session=locomo-1-session-8
+Operation: memory_system.extract_facts [extraction] (op_id op-32fa0551cbfd42a69b6f25cac571358f, session locomo-1-session-8, 2026-04-21 16:29:33.017)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D8:36: {
+    "content": "Yeah, Caroline, they're some of my fave memories. It brings us together and brings us hap ...[1151 more]
+
+--- [step 7] update op=memory_system.update_memory_decision session=locomo-1-session-8
+Operation: memory_system.update_memory_decision [update] (op_id op-15bfcd938e7043dda8d94feead0511cc, session locomo-1-session-8, 2026-04-21 16:29:34.919)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:d70b5f680e2b5fcaa09f935df5ebd0d3c31ac49a: 'Find 6 existing memories similar to the new extracted facts.'
+  - [llm_response] str:7ef183c76bd63f25670c300db80782f8563c557d: ['Caroline is someone important to the user', 'The user valu ...[5642 more]
+
+--- [step 8] extraction op=memory_system.extract_facts session=locomo-1-session-9
+Operation: memory_system.extract_facts [extraction] (op_id op-55136585840a406caa22cd912d25d67e, session locomo-1-session-9, 2026-04-21 16:30:33.671)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D9:4: {
+    "content": "The mentoring is going great! I've met some amazing young folks and supported them along t ...[1017 more]
+
+--- [step 9] update op=memory_system.update_memory_decision session=locomo-1-session-9
+Operation: memory_system.update_memory_decision [update] (op_id op-7cb0d5518aab44d58f3d1a3cbd7faef9, session locomo-1-session-9, 2026-04-21 16:30:35.514)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:213aa0fb9e510c4413ea4d3193188328da9fc848: 'Find 7 existing memories similar to the new extracted facts.'
+  - [llm_response] str:ffe499b40f119dfd401e274df238e9058954bbe9: ['Caroline is involved in mentoring young people', 'Caroline ...[5376 more]
+
+--- [step 10] extraction op=memory_system.extract_facts session=locomo-1-session-9
+Operation: memory_system.extract_facts [extraction] (op_id op-4a518130d39a48459f78fbc476177cf3, session locomo-1-session-9, 2026-04-21 16:30:44.171)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D9:6: {
+    "content": "I mentor a transgender teen just like me. We've been working on building up confidence and ...[1095 more]
+
+--- [step 11] update op=memory_system.update_memory_decision session=locomo-1-session-9
+Operation: memory_system.update_memory_decision [update] (op_id op-87f67a0e0aa04e2d95e8353b82a6ff18, session locomo-1-session-9, 2026-04-21 16:30:45.554)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:bc8dd21417d8aca118054f9d3872b6b069d93655: 'Find 14 existing memories similar to the new extracted facts.'
+  - [llm_response] str:3ab79595c124187d4faca70fa833a06c3694f6d9: ['Mentors a transgender teen', 'Has been working on buildin ...[10476 more]
+
+--- [step 12] extraction op=memory_system.extract_facts session=locomo-1-session-9
+Operation: memory_system.extract_facts [extraction] (op_id op-4de473d02a9043cd96d33aac28bc1608, session locomo-1-session-9, 2026-04-21 16:31:06.877)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D9:10: {
+    "content": "Seeing my mentee's face light up when they saw the support was the best! Such a special m ...[748 more]
+
+--- [step 13] update op=memory_system.update_memory_decision session=locomo-1-session-9
+Operation: memory_system.update_memory_decision [update] (op_id op-f090470de4f04c5894b1a2c626c11fca, session locomo-1-session-9, 2026-04-21 16:31:08.397)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:3a82ed585fc1d5dae6573a915a7c5fc982cc2b24: 'Find 8 existing memories similar to the new extracted facts.'
+  - [llm_response] str:0638e669669bba5d034cf2b40689d07e662b40c2: ['Caroline is a mentor', "Caroline values seeing her mentee' ...[5667 more]
+
+--- [step 14] extraction op=memory_system.extract_facts session=locomo-1-session-13
+Operation: memory_system.extract_facts [extraction] (op_id op-2d3539903e904343a7be96f415af26ae, session locomo-1-session-13, 2026-04-21 16:40:26.252)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D13:1: {
+    "content": "Hi Melanie! Hope you're doing good. Guess what I did this week? I took the first step to ...[1298 more]
+
+--- [step 15] update op=memory_system.update_memory_decision session=locomo-1-session-13
+Operation: memory_system.update_memory_decision [update] (op_id op-d10d8cf55294470abac2eb5f4b0fc0a3, session locomo-1-session-13, 2026-04-21 16:40:28.021)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:51fe65b667286dfd3eced911f45431360b1365b2: 'Find 11 existing memories similar to the new extracted facts.'
+  - [llm_response] str:62bf139168d5457bc3faf8ba2594ac583a4d5ae2: ["User's name is Caroline", 'Caroline has taken the first  ...[7451 more]
+
+--- [step 16] extraction op=memory_system.extract_facts session=locomo-1-session-13
+Operation: memory_system.extract_facts [extraction] (op_id op-2ad6f36ebb7b4bf49ed588ef9e08fefc, session locomo-1-session-13, 2026-04-21 16:41:45.091)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D13:13: {
+    "content": "Thanks, Mel! I felt liberated and empowered doing it. Painting helps me explore my iden ...[874 more]
+
+--- [step 17] update op=memory_system.update_memory_decision session=locomo-1-session-13
+Operation: memory_system.update_memory_decision [update] (op_id op-6ca7c914fc3b479bbf5ed69e82a08e5b, session locomo-1-session-13, 2026-04-21 16:41:46.406)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:d70b5f680e2b5fcaa09f935df5ebd0d3c31ac49a: 'Find 6 existing memories similar to the new extracted facts.'
+  - [llm_response] str:a99b1f900a8c84c48ff24e1910ddc826a687f6d6: ['Painting helps Caroline explore her identity and be true  ...[4650 more]
+
+--- [step 18] extraction op=memory_system.extract_facts session=locomo-1-session-14
+Operation: memory_system.extract_facts [extraction] (op_id op-728e9b242fba4ae489af86e7bb3d5c98, session locomo-1-session-14, 2026-04-21 16:45:26.157)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D14:27: {
+    "content": "Thanks, Mel! Art gives me so much joy. It helps me show my feelings and freeze gorgeous ...[1058 more]
+
+--- [step 19] update op=memory_system.update_memory_decision session=locomo-1-session-14
+Operation: memory_system.update_memory_decision [update] (op_id op-a6b6422284e14c9ba92fe0acf5a2cefa, session locomo-1-session-14, 2026-04-21 16:45:27.652)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:d18c1566db74a7ae1d8768f9c6d720c2b7703fcf: 'Find 15 existing memories similar to the new extracted facts.'
+  - [llm_response] str:e32b9a619799db21f97c0c400a348d072e8b6651: ["User's name is Caroline", 'Art gives Caroline joy', 'Art ...[11347 more]
+
+--- [step 20] extraction op=memory_system.extract_facts session=locomo-1-session-15
+Operation: memory_system.extract_facts [extraction] (op_id op-1cecbd312bbf45118474f2bc99edddbf, session locomo-1-session-15, 2026-04-21 16:47:00.018)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [message] U1:D15:5: {
+    "content": "I loved it. It was awesome to see how strong the young people were, with all the challen ...[1342 more]
+
+--- [step 21] update op=memory_system.update_memory_decision session=locomo-1-session-15
+Operation: memory_system.update_memory_decision [update] (op_id op-12bc58d2b2d248bdb700b30abef4265a, session locomo-1-session-15, 2026-04-21 16:47:02.259)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:88ee19316d969a2172b33e7f61ebde911579124f: 'Find 20 existing memories similar to the new extracted facts.'
+  - [llm_response] str:3d46d19fd3d862e6fb28d10437b5bcf29ab0f90d: ['Loved seeing how strong the young people were despite ch ...[17480 more]
+
+--- [step 22] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-425e1aaad25f4546998382abaf1c5d0a, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.689)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-1: 'When did Caroline go to the LGBTQ support group?'
+Outputs:
+  - [memory_entry] memory-unit-1174c682-746b-4731-ad36-22bb49ad26a4: {
+    "id": "1174c682-746b-4731-ad36-22bb49ad26a4",
+    "memory": "F ...[2217 more]
+
+--- [step 23] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e24ade96c02948989e76437cdcc8c9a8, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.733)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-3: 'What fields would Caroline be likely to pursue in her educaton?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+  ...[2123 more]
+
+--- [step 24] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a6d6a7c8ba31407aae379c8ea570c058, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.753)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-4: 'What did Caroline research?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps Caroline sho ...[2108 more]
+
+--- [step 25] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-6381c52b418048cbade52bfdbab25bbb, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.773)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-5: "What is Caroline's identity?"
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps Caroline sh ...[2005 more]
+
+--- [step 26] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e7e1d244f4f54f05b29344820a3d9ede, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.835)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-8: "What is Caroline's relationship status?"
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is pl ...[2020 more]
+
+--- [step 27] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-edeaca2024334d4b89bbb3565347b9c4, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.856)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-9: 'When did Caroline give a speech at a school?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Carol ...[2132 more]
+
+--- [step 28] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-caed73f0fe0848abb08faaf8496b1a66, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.876)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-10: 'When did Caroline meet up with her friends, family, and mentors?'
+Outputs:
+  - [memory_entry] memory-unit-1174c682-746b-4731-ad36-22bb49ad26a4: {
+    "id": "1174c682-746b-4731-ad36-22bb49ad26a4", ...[2268 more]
+
+--- [step 29] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-7efda3dde8d54379b1ee470131bda90d, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.897)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-11: 'How long has Caroline had her current group of friends for?'
+Outputs:
+  - [memory_entry] memory-unit-1174c682-746b-4731-ad36-22bb49ad26a4: {
+    "id": "1174c682-746b-4731-ad36-22bb49ad26a4",
+     ...[2289 more]
+
+--- [step 30] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e83ad0704c494f0badf8c8324364774b, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.917)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-12: 'Where did Caroline move from 4 years ago?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User ac ...[2115 more]
+
+--- [step 31] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-2b4dfe938243418291cc3c0a931a0091, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.937)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-13: "How long ago was Caroline's 18th birthday?"
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Caroline has made strong connections with people at the youth center",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps Caroline show her feelings",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-24474e4a-ddb4-48d7-85b3-d2922bc65840: {
+    "id": "24474e4a-ddb4-48d7-85b3-d2922bc65840",
+    "memory": "Caroline is someone important to the user",
+    "timestamp": "2023-07-15T13:51:00"
+}
+  - [memory_entry] memory-unit-3ab64007-8c60-47df-88dd-b9e8b8def5f4: {
+    "id": "3ab64007-8c60-47df-88dd-b9e8b8def5f4",
+    "memory": "Art gives Caroline joy",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-4baad288-0d96-4d69-9bdc-a29987482da5: {
+    "id": "4baad288-0d96-4d69-9bdc-a29987482da5",
+    "memory": "User is a trans woman named Caroline",
+    "timestamp": "2023-10-22T09:55:00"
+}
+  - [memory_entry] memory-unit-564037e8-347a-459d-8f36-8b2aa191c1fd: {
+    "id": "564037e8-347a-459d-8f36-8b2aa191c1fd",
+    "memory": "Caroline is involved in mentoring young people",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-9dc885d8-c3f2-4471-b1ff-e3876b996067: {
+    "id": "9dc885d8-c3f2-4471-b1ff-e3876b996067",
+    "memory": "User would like to see another painting by Caroline",
+    "timestamp": "2023-08-14T14:24:00"
+}
+  - [memory_entry] memory-unit-d10dfe0d-94d6-42d6-aff5-8be1b95e5174: {
+    "id": "d10dfe0d-94d6-42d6-aff5-8be1b95e5174",
+    "memory": "User is on a trip with Caroline",
+    "timestamp": "2023-10-13T10:31:00"
+}
+  - [memory_entry] memory-unit-d68b7b39-d9e9-4bd9-8aa5-1b8e0d4ad03f: {
+    "id": "d68b7b39-d9e9-4bd9-8aa5-1b8e0d4ad03f",
+    "memory": "Melanie knows someone named Caroline",
+    "timestamp": "2023-06-09T19:55:00"
+}
+  - [memory_entry] memory-unit-f3ef4ce2-eaec-4249-8370-9a362b524bcf: {
+    "id": "f3ef4ce2-eaec-4249-8370-9a362b524bcf",
+    "memory": "User's name is Caroline",
+    "timestamp": "2023-10-22T09:55:00"
+}
+
+--- [step 32] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e <<<< GOLD
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bac53c47468d4d988da187f924f7d96c, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.958)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-14: 'What career path has Caroline decided to persue?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User acknowledges Caroline's transition and finds her inspiring for her strength and courage",
+    "timestamp": "2023-06-09T19:55:00"
+}
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps Caroline show her feelings",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-24474e4a-ddb4-48d7-85b3-d2922bc65840: {
+    "id": "24474e4a-ddb4-48d7-85b3-d2922bc65840",
+    "memory": "Caroline is someone important to the user",
+    "timestamp": "2023-07-15T13:51:00"
+}
+  - [memory_entry] memory-unit-3ab64007-8c60-47df-88dd-b9e8b8def5f4: {
+    "id": "3ab64007-8c60-47df-88dd-b9e8b8def5f4",
+    "memory": "Art gives Caroline joy",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-564037e8-347a-459d-8f36-8b2aa191c1fd: {
+    "id": "564037e8-347a-459d-8f36-8b2aa191c1fd",
+    "memory": "Caroline is involved in mentoring young people",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-6e801a4b-b836-42c0-9ca2-1354707b2699: {
+    "id": "6e801a4b-b836-42c0-9ca2-1354707b2699",
+    "memory": "User congratulated Caroline for pursuing what she really cares about",
+    "timestamp": "2023-06-27T10:37:00"
+}
+  - [memory_entry] memory-unit-7353dc02-674e-4376-8d43-e7fec8066901: {
+    "id": "7353dc02-674e-4376-8d43-e7fec8066901",
+    "memory": "Caroline has taken the first step towards becoming a mom by applying to adoption agencies",
+    "timestamp": "2023-08-23T15:31:00"
+}
+  - [memory_entry] memory-unit-9914832f-27e6-4a9d-9f1d-a69262659086: {
+    "id": "9914832f-27e6-4a9d-9f1d-a69262659086",
+    "memory": "Painting helps Caroline explore her identity and be true to herself",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-dab70d12-8bec-49f1-92ef-147427bcebbe: {
+    "id": "dab70d12-8bec-49f1-92ef-147427bcebbe",
+    "memory": "Caroline values seeing her mentee's happiness and support",
+    "timestamp": "2023-07-17T14:31:00"
+}
+  - [memory_entry] memory-unit-e841aa5f-e5b3-44c6-8ef5-7425babf0edf: {
+    "id": "e841aa5f-e5b3-44c6-8ef5-7425babf0edf",
+    "memory": "User is inspired by Caroline's courage",
+    "timestamp": "2023-06-09T19:55:00"
+}
+
+--- [step 33] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-06bf0109472b4f0c89f7c820fdbfb9f9, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:45.981)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-15: "Would Caroline still want to pursue counseling as a career if she hadn't received support growing up?"
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User acknowledges Caroline's transition and finds her inspiring for her strength and courage",
+    "timestamp": "2023-06-09T19:55:00"
+}
+  - [memory_entry] memory-unit-564037e8-347a-459d-8f36-8b2aa191c1fd: {
+    "id": "564037e8-347a-459d-8f36-8b2aa191c1fd",
+    "memory": "Caroline is involved in mentoring young people",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-6e801a4b-b836-42c0-9ca2-1354707b2699: {
+    "id": "6e801a4b-b836-42c0-9ca2-1354707b2699",
+    "memory": "User congratulated Caroline for pursuing what she really cares about",
+    "timestamp": "2023-06-27T10:37:00"
+}
+  - [memory_entry] memory-unit-9914832f-27e6-4a9d-9f1d-a69262659086: {
+    "id": "9914832f-27e6-4a9d-9f1d-a69262659086",
+    "memory": "Painting helps Caroline explore her identity and be true to herself",
+    "timestamp": "2023-08-25T13:33:00"
+}
+  - [memory_entry] memory-unit-a260a46d-14db-4a59-b296-6a4103e13cba: {
+    "id": "a260a46d-14db-4a59-b296-6a4103e13cba",
+    "memory": "Caroline finds mentoring inspiring due to the resilience and strength of the young people she supports",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-bd8868e0-6099-4e47-a81f-f8b0794e414e: {
+    "id": "bd8868e0-6099-4e47-a81f-f8b0794e414e",
+    "memory": "Caroline felt that sharing her story about past struggles and feelings of loneliness was special and that she was glad to offer support and make a difference",
+    "timestamp": "2023-08-28T15:19:00"
+}
+  - [memory_entry] memory-unit-bd97199c-0b68-4877-b26e-82f9f2686919: {
+    "id": "bd97199c-0b68-4877-b26e-82f9f2686919",
+    "memory": "Values friendship with Caroline and appreciates her support",
+    "timestamp": "2023-10-20T18:55:00"
+}
+  - [memory_entry] memory-unit-ca6f620a-3b28-496d-a78e-f1a7dfe4b8e2: {
+    "id": "ca6f620a-3b28-496d-a78e-f1a7dfe4b8e2",
+    "memory": "Caroline attended an adoption advice/assistance group and found it helpful",
+    "timestamp": "2023-08-23T15:31:00"
+}
+  - [memory_entry] memory-unit-dab70d12-8bec-49f1-92ef-147427bcebbe: {
+    "id": "dab70d12-8bec-49f1-92ef-147427bcebbe",
+    "memory": "Caroline values seeing her mentee's happiness and support",
+    "timestamp": "2023-07-17T14:31:00"
+}
+  - [memory_entry] memory-unit-e841aa5f-e5b3-44c6-8ef5-7425babf0edf: {
+    "id": "e841aa5f-e5b3-44c6-8ef5-7425babf0edf",
+    "memory": "User is inspired by Caroline's courage",
+    "timestamp": "2023-06-09T19:55:00"
+}
+
+--- [step 34] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c75de634e1ac4bf18694a47d3a9a156f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.047)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-18: 'When is Caroline going to the transgender conference?'
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memor ...[2107 more]
+
+--- [step 35] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e697636362ca4407ad5b29db45fc12cf, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.133)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-22: 'When did Caroline have a picnic?'
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is planning ...[2146 more]
+
+--- [step 36] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4040aa072fe54a189f9384f29d869aea, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.152)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-23: 'Would Caroline likely have Dr. Seuss books on her bookshelf?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    ...[2075 more]
+
+--- [step 37] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c8e383dabe55494ebf1ea74ced5e42ae, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.213)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-26: 'When did Caroline go to the LGBTQ conference?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Car ...[2123 more]
+
+--- [step 38] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4ad47fb38336446d815d59448c8f7841, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.254)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-28: 'Would Caroline pursue writing as a career option?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory":  ...[2158 more]
+
+--- [step 39] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8baea80422274301934089f59086ba0c, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.274)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-29: 'When did Caroline go to the adoption meeting?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Car ...[2115 more]
+
+--- [step 40] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e0a6ff45be4549b180e732cdcb9cbd13, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.358)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-33: 'What LGBTQ+ events has Caroline participated in?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": " ...[2159 more]
+
+--- [step 41] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-5eb27a158327467480a75525d70be39f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.379)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-34: 'When did Caroline go to a pride parade during the summer?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "m ...[2109 more]
+
+--- [step 42] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-2238ed5ae81d4764a335fbe553f2450e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.399)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-35: 'What events has Caroline participated in to help children?'
+Outputs:
+  - [memory_entry] memory-unit-195b8a09-51a3-46e2-af89-ce59ceb0148c: {
+    "id": "195b8a09-51a3-46e2-af89-ce59ceb0148c",
+    " ...[2399 more]
+
+--- [step 43] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c64320763d714e97a3c6ab8a2b332b7e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.439)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-37: 'When did Caroline join a mentorship program?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Caro ...[2246 more]
+
+--- [step 44] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-a43b99a4694846a6b676fb2ccc7dcb98, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.504)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-40: 'In what ways is Caroline participating in the LGBTQ community?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+  ...[2193 more]
+
+--- [step 45] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-406c082b4e4349329ded0ca9679b38a8, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.546)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-42: 'When did Caroline join a new activist group?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Caro ...[2225 more]
+
+--- [step 46] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c96d42f15e4944939cc3e5db1854274f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.588)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-44: 'What kind of art does Caroline make?'
+Outputs:
+  - [memory_entry] memory-unit-22977737-52d4-425d-8d81-d3350ccf75a4: {
+    "id": "22977737-52d4-425d-8d81-d3350ccf75a4",
+    "memory": "Caroline app ...[2177 more]
+
+--- [step 47] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0478ee7155ef48a3beed9eea15dfcbf6, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.629)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-46: 'When did Caroline attend a pride parade in August?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": ...[2106 more]
+
+--- [step 48] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4fb8335c6a5245eb894b543ea736dbd7, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.671)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-48: 'Who supports Caroline when she has a negative experience?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "m ...[2265 more]
+
+--- [step 49] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-6baab6cc21884495983ea1ea1c8c1f21, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.712)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-50: 'When did Caroline and Melanie go to a pride fesetival together?'
+Outputs:
+  - [memory_entry] memory-unit-3ab64007-8c60-47df-88dd-b9e8b8def5f4: {
+    "id": "3ab64007-8c60-47df-88dd-b9e8b8def5f4",
+ ...[2171 more]
+
+--- [step 50] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0d9371569b414b54818b0f3d33ac3419, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.733)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-51: "What would Caroline's political leaning likely be?"
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": ...[2175 more]
+
+--- [step 51] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-9059f02228bd41e89105f937ef18c428, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.793)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-54: 'When did Caroline apply to adoption agencies?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Car ...[2117 more]
+
+--- [step 52] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4f0a649e68a1495ab742349fbf90c8ab, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.813)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-55: 'When did Caroline draw a self-portrait?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps ...[2208 more]
+
+--- [step 53] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e6dc786f8dc948b49a29682fb93d465e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.834)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-56: 'What subject have Caroline and Melanie both painted?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory ...[2110 more]
+
+--- [step 54] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-de07a87027cc45a6bd9ba9e3e41ae82c, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.854)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-57: 'What symbols are important to Caroline?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps ...[2194 more]
+
+--- [step 55] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-11f3f6fe9be04086863b77008ee00bea, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.882)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-58: 'When did Caroline encounter people on a hike and have a negative experience?'
+Outputs:
+  - [memory_entry] memory-unit-1174c682-746b-4731-ad36-22bb49ad26a4: {
+    "id": "1174c682-746b-4731-ad36-22 ...[2293 more]
+
+--- [step 56] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-3aeefcc318f943a489a1ee884a94f7da, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:46.922)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-60: 'Would Caroline be considered religious?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps ...[2117 more]
+
+--- [step 57] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-5c68ba5375104e68821f44f30fc5059f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.003)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-64: "When is Caroline's youth center putting on a talent show?"
+Outputs:
+  - [memory_entry] memory-unit-195b8a09-51a3-46e2-af89-ce59ceb0148c: {
+    "id": "195b8a09-51a3-46e2-af89-ce59ceb0148c",
+    "m ...[2188 more]
+
+--- [step 58] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-45ec356d3926480abeb4e643c9a42fa0, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.046)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-66: 'What are some changes Caroline has faced during her transition journey?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6 ...[2222 more]
+
+--- [step 59] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-1b32c76132da49069c68a2678b8dd70d, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.087)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-68: 'When did Caroline go biking with friends?'
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is ...[2126 more]
+
+--- [step 60] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-543fc15c4f184191a325f4f9dc5e32c0, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.127)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-70: 'What personality traits might Melanie say Caroline has?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "mem ...[2110 more]
+
+--- [step 61] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ff289a2a55814e1bb81d2471d85e7e2e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.148)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-71: 'What transgender-specific events has Caroline attended?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "mem ...[2258 more]
+
+--- [step 62] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ddef9c8e60434f3f9f2fa5779b10eee2, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.168)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-72: "What book did Melanie read from Caroline's suggestion?"
+Outputs:
+  - [memory_entry] memory-unit-07b80ee9-52eb-4367-a71a-86c07e0fde51: {
+    "id": "07b80ee9-52eb-4367-a71a-86c07e0fde51",
+    "memo ...[2083 more]
+
+--- [step 63] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-99aa006a773f496c88463f96b028ca1a, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.332)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-80: 'When did Caroline pass the adoption interview?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "Us ...[2190 more]
+
+--- [step 64] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bdce0517ad07436880878a0d06e492a5, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.375)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-82: 'Would Caroline want to move back to her home country soon?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    " ...[2138 more]
+
+--- [step 65] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c3b57010b7c5457b8c12788333a71329, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.459)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-86: "What are Caroline's plans for the summer?"
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is ...[2067 more]
+
+--- [step 66] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0d137a4842f34ab6ba567b8d2e3aeba3, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.479)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-87: 'What type of individuals does the adoption agency Caroline is considering support?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b ...[2215 more]
+
+--- [step 67] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bcbc8235779248d7838aeb88519f5465, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.499)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-88: 'Why did Caroline choose the adoption agency?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User ...[2184 more]
+
+--- [step 68] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ba3a60d4ee4542769637354ee5eba4d1, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.519)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-89: 'What is Caroline excited about in the adoption process?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "mem ...[2195 more]
+
+--- [step 69] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f0a432a019774877a2b0f771d93c17c2, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.539)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-90: "What does Melanie think about Caroline's decision to adopt?"
+Outputs:
+  - [memory_entry] memory-unit-430133e7-40b3-4b12-b842-c201cb637e0b: {
+    "id": "430133e7-40b3-4b12-b842-c201cb637e0b",
+     ...[2212 more]
+
+--- [step 70] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-73bd0631e3eb49bb91393048b40adaf8, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.580)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-92: "What does Caroline's necklace symbolize?"
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art help ...[2210 more]
+
+--- [step 71] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-94883ac49d3c493282a7225f1a6e6a08, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.600)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-93: "What country is Caroline's grandma from?"
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art help ...[2025 more]
+
+--- [step 72] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-14eec7a36ba74704b2336a87daafc2b4, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.620)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-94: "What was grandma's gift to Caroline?"
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is plan ...[2090 more]
+
+--- [step 73] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4e297801e55c45ef8aecbf9a1a51e2a0, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.684)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-97: 'What kind of counseling and mental health services is Caroline interested in pursuing?'
+Outputs:
+  - [memory_entry] memory-unit-22e21c1c-a161-4d59-8c43-75d2f51685d7: {
+    "id": "22e21c1c-a161-4d ...[2247 more]
+
+--- [step 74] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ad1d1debfa3140e5a7b0c9212e37b685, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.705)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-98: 'What workshop did Caroline attend recently?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Carol ...[2080 more]
+
+--- [step 75] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-21971fe8e01a484fb28acd68781550f0, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.746)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-100: 'What motivated Caroline to pursue counseling?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "Us ...[2332 more]
+
+--- [step 76] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bfa6947a05da46889788be2a68dbbb86, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.766)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-101: 'What kind of place does Caroline want to create for people?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    ...[2259 more]
+
+--- [step 77] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d314550e86f8431fabdead9b22aa9fdb, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.925)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-103: 'What kind of books does Caroline have in her library?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memo ...[2088 more]
+
+--- [step 78] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-38ab41e83c6a413981e9b583cf868639, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.971)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-105: 'What book did Caroline recommend to Melanie?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art ...[2104 more]
+
+--- [step 79] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b33f60dabdfe433eb12d09e9e9097219, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:47.992)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-106: 'What did Caroline take away from the book "Becoming Nicole"?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+   ...[2261 more]
+
+--- [step 80] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-9928977f692c4e229134027f555dbafc, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.152)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-114: 'What did Caroline see at the council meeting for adoption?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+     ...[2224 more]
+
+--- [step 81] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-4f4258f056324b1a9a8c4a7a7895c2e2, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.172)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-115: 'What do sunflowers represent according to Caroline?'
+Outputs:
+  - [memory_entry] memory-unit-22977737-52d4-425d-8d81-d3350ccf75a4: {
+    "id": "22977737-52d4-425d-8d81-d3350ccf75a4",
+    "memory ...[2240 more]
+
+--- [step 82] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-80248ded0d734de4a4c07eafb6e0c07f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.212)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-117: "What inspired Caroline's painting for the art show?"
+Outputs:
+  - [memory_entry] memory-unit-22977737-52d4-425d-8d81-d3350ccf75a4: {
+    "id": "22977737-52d4-425d-8d81-d3350ccf75a4",
+    "memory ...[2177 more]
+
+--- [step 83] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f273e5085384410b93579069c78f3cfc, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.349)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-124: 'What pet does Caroline have?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art helps Caroline  ...[2014 more]
+
+--- [step 84] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-e14ac8e686034578a2ee3c166040b498, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.413)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-127: 'What activity did Caroline used to do with her dad?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory ...[2130 more]
+
+--- [step 85] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-584c1b3fd229423baac83f3b03b1d6b0, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.433)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-128: 'What did Caroline make for a local church?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "memory": "Carol ...[2151 more]
+
+--- [step 86] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-577a192f6cd3431593f55421119e8c06, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.452)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-129: 'What did Caroline find in her neighborhood during her walk?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    ...[2215 more]
+
+--- [step 87] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d056107f14aa4163973fe4adda1511e5, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.472)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-130: 'Which song motivates Caroline to be courageous?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": " ...[2154 more]
+
+--- [step 88] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-29a2a1c6974d4aa6b4fdfb92f992b359, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.580)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-135: 'What advice does Caroline give for getting started with adoption?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b ...[2262 more]
+
+--- [step 89] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-56352be279dd4cfd82a2d3023a39d4ba, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.641)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-138: 'What painting did Melanie show to Caroline on October 13, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c", ...[2120 more]
+
+--- [step 90] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-04b168dd7e564518ae2b0651a00ce5fb, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.664)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-139: 'What kind of painting did Caroline share with Melanie on October 13, 2023?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4db ...[2128 more]
+
+--- [step 91] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ec0228747e38499aa343914b598c29f5, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.692)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-140: 'What was the poetry reading that Caroline attended about?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    " ...[2168 more]
+
+--- [step 92] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-bf63296e18e647b2abff4beb6990e2d2, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.734)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-142: "What does Caroline's drawing symbolize for her?"
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": " ...[2198 more]
+
+--- [step 93] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0df30cdeca4d4c99b8bfec22b324687e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.754)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-143: 'How do Melanie and Caroline describe their journey through life together?'
+Outputs:
+  - [memory_entry] memory-unit-0fb969c4-a833-4f4b-8f80-8cb4636a5985: {
+    "id": "0fb969c4-a833-4f4b-8f80-8cb4 ...[2223 more]
+
+--- [step 94] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-9f096f00399140edbd71d48d35ec0a06, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:48.951)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-153: 'What did Caroline realize after her charity race?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": ...[2191 more]
+
+--- [step 95] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-51922452a46a4446bbba7fa00f313856, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.113)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-161: "What was grandpa's gift to Caroline?"
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory": "User is pla ...[2130 more]
+
+--- [step 96] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-8276f33efc78496aa348e20e1ba3b6e3, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.133)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-162: "What is Caroline's hand-painted bowl a reminder of?"
+Outputs:
+  - [memory_entry] memory-unit-1a584ebd-6eaf-42ae-9885-35305b18e9ee: {
+    "id": "1a584ebd-6eaf-42ae-9885-35305b18e9ee",
+    "memory ...[2231 more]
+
+--- [step 97] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-fc53dd8b67914cbe8260b72194cfb248, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.153)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-163: 'What did Caroline and her family do while camping?'
+Outputs:
+  - [memory_entry] memory-unit-0227fc11-b875-4744-aa78-8943952e94f0: {
+    "id": "0227fc11-b875-4744-aa78-8943952e94f0",
+    "memory" ...[2195 more]
+
+--- [step 98] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-b6e3499903b946c6aaf2e454d95ed27a, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.253)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-168: 'Did Caroline make the black and white bowl in the photo?'
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "m ...[2194 more]
+
+--- [step 99] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-05856c369d73496c865b77941778e1a6, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.273)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-169: 'What are the new shoes that Caroline got used for?'
+Outputs:
+  - [memory_entry] memory-unit-0d160c2d-e6a3-4c63-ac64-ebd406788e4d: {
+    "id": "0d160c2d-e6a3-4c63-ac64-ebd406788e4d",
+    "memory" ...[2056 more]
+
+--- [step 100] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0ad1e931bfe2429283da29192f909582, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.293)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-170: "What is Caroline's reason for getting into running?"
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory ...[2158 more]
+
+--- [step 101] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-3d44db965b4e477e9d36fd9b9f79928b, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.313)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-171: 'What does Caroline say running has been great for?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory" ...[2220 more]
+
+--- [step 102] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-506f9b15c5934b59b1275e681e29e3ca, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.373)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-174: "What inspired Caroline's sculpture for the art show?"
+Outputs:
+  - [memory_entry] memory-unit-22977737-52d4-425d-8d81-d3350ccf75a4: {
+    "id": "22977737-52d4-425d-8d81-d3350ccf75a4",
+    "memor ...[2193 more]
+
+--- [step 103] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-18605e30ccec4fcd87023b951faeb119, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.395)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-175: 'How often does Caroline go to the beach with her kids?'
+Outputs:
+  - [memory_entry] memory-unit-1acec314-3ef3-49ea-b58f-29305719a3b3: {
+    "id": "1acec314-3ef3-49ea-b58f-29305719a3b3",
+    "mem ...[2128 more]
+
+--- [step 104] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c1e6f637fcf64aeeb6a565fb90302dae, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.437)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-177: 'How did Caroline feel while watching the meteor shower?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "me ...[2230 more]
+
+--- [step 105] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-eae9aa84f44644568e801e2f40c5cd24, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.457)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-178: 'Why did Caroline choose to use colors and patterns in her pottery project?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4db ...[2286 more]
+
+--- [step 106] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ea4345e64dfe48838649e90ee2dc062f, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.598)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-185: 'What type of instrument does Caroline play?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory": "Art  ...[2017 more]
+
+--- [step 107] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ff306c844a2649ecb4ccf51468076708, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.618)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-186: 'Which classical musicians does Caroline enjoy listening to?'
+Outputs:
+  - [memory_entry] memory-unit-22977737-52d4-425d-8d81-d3350ccf75a4: {
+    "id": "22977737-52d4-425d-8d81-d3350ccf75a4",
+    ...[2180 more]
+
+--- [step 108] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-12e792b21e894cba9e890a1555431a7e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.638)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-187: 'Who is Caroline a fan of in terms of modern music?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memory" ...[2059 more]
+
+--- [step 109] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-ae0051d56c584b288ea4d815d3c8634e, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.658)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-188: 'What precautionary sign did Caroline see at the café?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e22637c",
+    "memo ...[2093 more]
+
+--- [step 110] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-15389120c60c4979906d7cab4ee214e8, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.677)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-189: 'What setback did Caroline face recently?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User ac ...[2127 more]
+
+--- [step 111] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-aaa1811a4cd24885bea7f7aa31cbcc9c, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.700)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-190: 'What does Caroline do to keep herself busy during her pottery break?'
+Outputs:
+  - [memory_entry] memory-unit-2320b975-c0f9-4551-ade0-4dbb1e22637c: {
+    "id": "2320b975-c0f9-4551-ade0-4dbb1e226 ...[2095 more]
+
+--- [step 112] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-610eeb3593e0431bb8dd34f39e3e1761, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.741)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-192: "What happened to Caroline's son on their road trip?"
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory ...[2146 more]
+
+--- [step 113] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-cf74480b5fa9459f98f6c67ecfcb4338, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.761)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-193: "How did Caroline's son handle the accident?"
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User ...[2092 more]
+
+--- [step 114] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-c1a2bcf653c04b00968a35bb5f8f551c, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.781)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-194: 'How did Caroline feel about her family after the accident?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+     ...[2174 more]
+
+--- [step 115] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-f0f3bafaf2244798937aed62cba7fd94, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.801)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-195: "How did Caroline's children handle the accident?"
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory":  ...[2099 more]
+
+--- [step 116] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-0d3718fe4ded4aab81b391dd157c3283, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.821)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-196: 'How did Caroline feel after the accident?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User a ...[2066 more]
+
+--- [step 117] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-834cc34f2236479895604959fb6d413d, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.840)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-197: "What was Caroline's reaction to her children enjoying the Grand Canyon?"
+Outputs:
+  - [memory_entry] memory-unit-1174c682-746b-4731-ad36-22bb49ad26a4: {
+    "id": "1174c682-746b-4731-ad36-22bb49 ...[2242 more]
+
+--- [step 118] retrieval op=memory_system.search_vector_store session=session-099a1519432b43e29f5d8cd4f4a5507e
+Operation: memory_system.search_vector_store [retrieval] (op_id op-cee8d49fab5e4ef68e5c4bf0602d102a, session session-099a1519432b43e29f5d8cd4f4a5507e, 2026-04-25 11:59:49.860)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] locomo-qa-1-198: 'What did Caroline do after the road trip to relax?'
+Outputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory" ...[2210 more]
+
+--- [step 119] evaluation op=question-answering session=session-f8ebb41cb88742deb2da3736a30c2641
+Operation: question-answering [evaluation] (op_id op-a013856f997d400bb78afd412be4132b, session session-f8ebb41cb88742deb2da3736a30c2641, 2026-04-25 13:22:29.316)
+Description: The question-answering model generates an answer based on the question, the context retrieved from the memory system, and a question-answering prompt.
+Inputs:
+  - [memory_entry] memory-unit-13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b: {
+    "id": "13ceaf4e-ccdb-40c8-ac6a-6a9bec6be27b",
+    "memory": "User acknowledges Caroline's t ...[3884 more]

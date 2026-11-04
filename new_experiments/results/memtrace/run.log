@@ -1,0 +1,69 @@
+30 records
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 143, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/all_at_once.py", line 114, in main
+    outs = chat_json_many(msgs, workers=args.workers, max_tokens=args.max_tokens, think=not args.no_think,
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 155, in chat_json_many
+    return list(ex.map(lambda m: chat_json(m, **kw), list_of_messages))
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 621, in result_iterator
+    yield _result_or_cancel(fs.pop())
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 319, in _result_or_cancel
+    return fut.result(timeout)
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 458, in result
+    return self.__get_result()
+  File "/usr/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 155, in <lambda>
+    return list(ex.map(lambda m: chat_json(m, **kw), list_of_messages))
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 141, in chat_json
+    out = chat(messages, max_tokens=max_tokens, think=think, **kw)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/baseline/../common/llm.py", line 98, in chat
+    raise RuntimeError(f'LLM call failed after {retries} attempts: {last}')
+RuntimeError: LLM call failed after 3 attempts: 400 Client Error: Bad Request for url: http://localhost:8211/v1/chat/completions
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/memtrace/all_at_once_std.jsonl'
+Traceback (most recent call last):
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 70, in <module>
+    main()
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/analyze_baseline.py", line 36, in main
+    rows = read_jsonl(path)
+  File "/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/inspect/../common/util.py", line 27, in read_jsonl
+    with open(path, encoding='utf-8') as fh:
+FileNotFoundError: [Errno 2] No such file or directory: '/dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/memtrace/all_at_once_std_nogt.jsonl'
+30 records
+| metric | n | % |
+|---|---|---|
+| agent_ok | 1 | 3.3 |
+| step_exact | 9 | 30.0 |
+| step_in_set | 9 | 30.0 |
+| step_within_1 | 12 | 40.0 |
+| step_within_3 | 12 | 40.0 |
+| step_within_5 | 12 | 40.0 |
+
+n=30 parse_fail=3 pred later than gold: 11, earlier: 7, exact: 9
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/memtrace/all_at_once_std.jsonl
+| subset | n | agent_ok | step_exact | step_within_3 | step_in_set |
+|---|---|---|---|---|---|
+| rag | 9 | 0.0 | 22.2 | 44.4 | 22.2 |
+| mem0 | 7 | 14.3 | 57.1 | 57.1 | 57.1 |
+| long_context | 10 | 0.0 | 20.0 | 30.0 | 20.0 |
+| evermemos | 4 | 0.0 | 25.0 | 25.0 | 25.0 |
+| ALL | 30 | 3.3 | 30.0 | 40.0 | 30.0 |
+
+categories: {'later(+1..3)': 2, 'earlier(<-3)': 6, 'later(>3)': 9, 'exact': 9, 'parse_fail': 3, 'earlier(-1..3)': 1}
+agent right but step wrong: 0; step right but agent wrong: 8
+| n_steps | n | step_exact% | within3% | agent% |
+|---|---|---|---|---|
+| 0-10 | 0 | 0.0 | 0.0 | 0.0 |
+| 11-30 | 1 | 100.0 | 100.0 | 0.0 |
+| 31-1000 | 24 | 29.2 | 41.7 | 4.2 |
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/memtrace/all_at_once_std_analysis.md

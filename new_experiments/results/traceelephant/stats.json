@@ -1,0 +1,69 @@
+{
+ "captain": {
+  "gold_is_first_specialist": 9,
+  "code_before_gold": 65,
+  "code_at_gold": 41,
+  "no_code_anywhere": 8,
+  "gold_is_orchestrator": 15,
+  "n": 85
+ },
+ "repetition": {
+  "magentic-one": {
+   "dup_rate_before": 0.006517690875232775,
+   "dup_rate_after": 0.003389830508474576,
+   "n_before": 1074,
+   "n_after": 1475,
+   "records_with_dup_after_but_not_before": 4,
+   "records_with_dup_before": 4,
+   "n": 90
+  },
+  "captain-agent": {
+   "dup_rate_before": 0.287109375,
+   "dup_rate_after": 0.6040034812880766,
+   "n_before": 512,
+   "n_after": 1149,
+   "records_with_dup_after_but_not_before": 14,
+   "records_with_dup_before": 60,
+   "n": 85
+  },
+  "swe-agent": {
+   "dup_rate_before": 0.04582651391162029,
+   "dup_rate_after": 0.31026785714285715,
+   "n_before": 611,
+   "n_after": 896,
+   "records_with_dup_after_but_not_before": 14,
+   "records_with_dup_before": 9,
+   "n": 44
+  }
+ },
+ "swe": {
+  "counts": {
+   "n": 44,
+   "gold==first_src_edit": 18,
+   "gold==first_edit": 9,
+   "gold<first_src_edit": 5,
+   "gold>first_src_edit": 20,
+   "no_src_edit": 1,
+   "gold_kind:edit:src": 28,
+   "gold_kind:text": 4,
+   "gold_kind:view:src": 6,
+   "gold_kind:edit:repro/test": 5,
+   "gold_kind:submit": 1
+  },
+  "gold_minus_first_src_edit": {
+   "n": 43,
+   "mean": 4.791,
+   "median": 0,
+   "min": -1,
+   "max": 32,
+   "p10": -1,
+   "p90": 18
+  }
+ },
+ "final_vs_gt": {
+  "n": 176,
+  "no_final": 64,
+  "gt_in_answer": 5,
+  "gt_in_any_step": 19
+ }
+}

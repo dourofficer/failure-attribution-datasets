@@ -1,0 +1,44 @@
+id | sub | n | type | correct | gold(prim) | gold cats | pred | dist | pred-span kind | pred step is in error set | pred cats | cat
+gaia/6cc6dc35a28bb | gaia | 137 | search_agent | False | 83 | Goal Deviation:H | 7 | -76 | CHAIN/CodeAgen | False |  | earlier
+gaia/75121379e11c5 | gaia | 11 | memory | False | 6 | Language-only:H/Formatting Errors:L/Inst | 5 | -1 | LLM/CodeAgen | False |  | earlier
+gaia/41bbc898aa7de | gaia | 21 | search_agent | False | 8 | Instruction Non-compliance:M/Tool Select | 18 | 10 | LLM/CodeAgen | True | Language-only:H/Goal Deviation:H | later
+gaia/4ae16319f0de4 | gaia | 11 | memory | False | 8 | Tool-related:H/Tool Selection Errors:H/G | 8 | 0 | LLM/CodeAgen | True | Tool-related:H/Tool Selection Errors:H/G | exact
+gaia/672d36d8ecc48 | gaia | 22 | tools | False | 14 | Tool Definition Issues:H/Goal Deviation: | 19 | 5 | LLM/CodeAgen | True | Language-only:H | later
+gaia/dbc070b918d4a | gaia | 11 | memory | True | 8 | Language-only:H/Goal Deviation:H/Instruc | 8 | 0 | LLM/CodeAgen | True | Language-only:H/Goal Deviation:H/Instruc | exact
+swe_bench/af1931b7 | swe_ | 42 | memory | False | 6 | Formatting Errors:M | 36 | 30 | LLM/CodeAgen | False |  | later
+gaia/b7f8fcd484777 | gaia | 11 | memory | False | 6 | Instruction Non-compliance:L | 5 | -1 | LLM/CodeAgen | False |  | earlier
+gaia/860f9d45f2e50 | gaia | 164 | search_agent | False | 82 | Formatting Errors:H | 160 | 78 | LLM/CodeAgen | False |  | later
+gaia/6e64c2e543327 | gaia | 13 | memory | False | 10 | Tool-related:H/Goal Deviation:H | 10 | 0 | LLM/CodeAgen | True | Tool-related:H/Goal Deviation:H | exact
+gaia/9e67afe0ff4ec | gaia | 11 | memory | False | 8 | Instruction Non-compliance:M/Tool-relate | 8 | 0 | LLM/CodeAgen | True | Instruction Non-compliance:M/Tool-relate | exact
+gaia/d9a8dff7edce2 | gaia | 17 | memory | False | 8 | Tool Selection Errors:H | 12 | 4 | LLM/CodeAgen | True | Tool-related:H/Goal Deviation:H | later
+swe_bench/0e6f7928 | swe_ | 32 | memory | False | 8 | Incorrect Problem Identification:M/Langu | 30 | 22 | LLM/CodeAgen | False |  | later
+gaia/3637c5845140a | gaia | 13 | memory | False | 8 | Tool Selection Errors:H/Task Orchestrati | 8 | 0 | LLM/CodeAgen | True | Tool Selection Errors:H/Task Orchestrati | exact
+gaia/c60ad8608dd94 | gaia | 74 | search_agent | False | 19 | Formatting Errors:H | 69 | 50 | LLM/ToolCall | False |  | later
+gaia/dcb89b6b049d4 | gaia | 80 | search_agent | False | 17 | Authentication Errors:L | 75 | 58 | LLM/ToolCall | False |  | later
+gaia/0adc4f3b99d95 | gaia | 11 | memory | True | 6 | Formatting Errors:L | 2 | -4 | INTERNAL/framewor | False |  | earlier
+gaia/b810534e79151 | gaia | 13 | memory | False | 8 | Language-only:H/Tool Selection Errors:H/ | 8 | 0 | LLM/CodeAgen | True | Language-only:H/Tool Selection Errors:H/ | exact
+gaia/3f05ba33cd4ae | gaia | 11 | memory | False | 8 | Task Orchestration:M/Tool Selection Erro | 6 | -2 | LLM/CodeAgen | False |  | earlier
+gaia/0242ca2533fac | gaia | 15 | memory | False | 8 | Formatting Errors:H/Tool Selection Error | 12 | 4 | LLM/CodeAgen | True | Poor Information Retrieval:H/Language-on | later
+gaia/3205fa0cb2135 | gaia | 40 | search_agent | False | 35 | Tool Selection Errors:H/Goal Deviation:H | 8 | -27 | LLM/CodeAgen | False |  | earlier
+gaia/a7017f40866dd | gaia | 13 | memory | False | 10 | Tool-related:H/Goal Deviation:H | 10 | 0 | LLM/CodeAgen | True | Tool-related:H/Goal Deviation:H | exact
+gaia/cac8b6b2d8484 | gaia | 32 | search_agent | False | 27 | Tool Output Misinterpretation:H | 27 | 0 | LLM/ToolCall | True | Tool Output Misinterpretation:H | exact
+gaia/876eb108c8650 | gaia | 16 | tools | False | 8 | Goal Deviation:H/Task Orchestration:M/In | 5 | -3 | LLM/CodeAgen | False |  | earlier
+gaia/33cedc57294f3 | gaia | 48 | search_agent | True | 16 | Tool Selection Errors:H | 43 | 27 | LLM/CodeAgen | False |  | later
+gaia/a99faf782e8ad | gaia | 85 | search_agent | True | 19 | Formatting Errors:H | 8 | -11 | LLM/CodeAgen | False |  | earlier
+gaia/331aece579d94 | gaia | 18 | search_agent | False | 6 | Instruction Non-compliance:L | 13 | 7 | LLM/ToolCall | False |  | later
+gaia/f84e4dfe98f92 | gaia | 69 | search_agent | False | 45 | Tool-related:H | 19 | -26 | LLM/ToolCall | False |  | earlier
+gaia/25c8275651013 | gaia | 11 | memory | False | 8 | Poor Information Retrieval:H/Tool Select | 8 | 0 | LLM/CodeAgen | True | Poor Information Retrieval:H/Tool Select | exact
+gaia/6d5b91f06e5a7 | gaia | 13 | memory | False | 8 | Tool Selection Errors:H/Language-only:H/ | 8 | 0 | LLM/CodeAgen | True | Tool Selection Errors:H/Language-only:H/ | exact
+gaia/7bf0addde339e | gaia | 16 | tools | True | 8 | Environment Setup Errors:H/Task Orchestr | 8 | 0 | LLM/CodeAgen | True | Environment Setup Errors:H/Task Orchestr | exact
+swe_bench/81d7ec04 | swe_ | 19 | memory | False | 18 | Context Handling Failures:M/Goal Deviati | 14 | -4 | LLM/CodeAgen | True | Formatting Error:L/Poor Information retr | earlier
+gaia/aa76e85e274bb | gaia | 13 | memory | True | 6 | Instruction Non-compliance:L | 10 | 4 | LLM/CodeAgen | False |  | later
+swe_bench/fa4a1e7a | swe_ | 36 | memory | False | 6 | Formatting Errors:L | 28 | 22 | LLM/CodeAgen | False |  | later
+gaia/e7d5dd0d36db9 | gaia | 46 | search_agent | False | 23 | Tool-related:H | 41 | 18 | LLM/ToolCall | False |  | later
+gaia/2c77a8feec544 | gaia | 21 | memory | True | 18 | Tool-related:H | 8 | -10 | LLM/CodeAgen | False |  | earlier
+swe_bench/fdaf88f3 | swe_ | 30 | memory | False | 8 | Formatting Errors:M/Instruction Non-comp | 24 | 16 | LLM/CodeAgen | False |  | later
+gaia/396b6aa1ab86e | gaia | 77 | search_agent | True | 36 | Formatting Errors:H | 72 | 36 | LLM/ToolCall | False |  | later
+gaia/512475a321c61 | gaia | 24 | search_agent | False | 11 | Formatting Errors:M/Tool Output Misinter | 8 | -3 | LLM/CodeAgen | False |  | earlier
+gaia/62df2a06b647c | gaia | 11 | memory | True | 8 | Tool Selection Errors:M/Language-only:H/ | 5 | -3 | LLM/CodeAgen | False |  | earlier
+Counter({('memory', 'exact'): 9, ('search_agent', 'later'): 8, ('memory', 'earlier'): 7, ('memory', 'later'): 7, ('search_agent', 'earlier'): 5, ('tools', 'later'): 1, ('search_agent', 'exact'): 1, ('tools', 'earlier'): 1, ('tools', 'exact'): 1})
+pred span kind: Counter({'LLM': 38, 'CHAIN': 1, 'INTERNAL': 1})
+pred relative position mean 0.6798503825759766  gold 0.578118309018219

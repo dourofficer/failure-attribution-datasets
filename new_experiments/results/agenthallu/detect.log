@@ -1,0 +1,35 @@
+success {'BFCL': 6, 'Camel': 6, 'Magentic_One': 6, 'Octotools': 6, 'OpenDeepSearch': 6, 'OpenManus': 5, 'SmolAgents': 5}
+fail {'BFCL': 6, 'Camel': 6, 'Magentic_One': 6, 'Octotools': 6, 'OpenDeepSearch': 6, 'OpenManus': 5, 'SmolAgents': 5}
+| metric | value |
+|---|---|
+| n (halluc / clean) | 40 / 40 |
+| AUROC (conf) | 0.798 |
+| accuracy (pred_halluc) | 0.688 |
+| recall on hallucinated | 23/40 |
+| false alarms on clean | 8/40 |
+| step exact | hallucinated | 8/40 |
+| step exact | hallucinated & detected | 8/23 |
+| step exact | hallucinated & missed | 0/17 |
+| step within 1 | hallucinated | 15/40 |
+
+by framework (halluc: detected/n, step exact; clean: false alarms/n)
+  BFCL: halluc 2/6 det, 1 exact; clean FA 3/6
+  Camel: halluc 4/6 det, 2 exact; clean FA 0/6
+  Magentic_One: halluc 2/6 det, 0 exact; clean FA 2/6
+  Octotools: halluc 3/6 det, 0 exact; clean FA 0/6
+  OpenDeepSearch: halluc 4/6 det, 2 exact; clean FA 2/6
+  OpenManus: halluc 4/5 det, 2 exact; clean FA 0/5
+  SmolAgents: halluc 4/5 det, 1 exact; clean FA 1/5
+
+by category (halluc only): detected/n, exact
+  Human-Interaction Hallucination: 2/3 det, 0 exact, mean conf 0.67
+  Planning Hallucination: 6/7 det, 2 exact, mean conf 0.90
+  Reasoning Hallucination: 10/17 det, 4 exact, mean conf 0.61
+  Retrieval Hallucination: 3/7 det, 1 exact, mean conf 0.58
+  Tool-Use Hallucination: 2/6 det, 1 exact, mean conf 0.40
+
+conf bins (halluc): exact-step rate
+  [0,0.5): n=15 exact=0
+  [0.5,0.8): n=1 exact=0
+  [0.8,1.01): n=24 exact=8
+wrote /dataDisk/home/thanhdo/failure-attribution-datasets/new_experiments/results/agenthallu/detect.jsonl

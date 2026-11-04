@@ -1,0 +1,198 @@
+=== mem0/longmemeval_longmemeval-c9f37c46.json::query:c9f37c46@1 system=mem0 n_steps=12 gold=11 type=ResponseError op_in_slice=True final_op=question-answering
+QUERY: 'How long had I been watching stand-up comedy specials regularly when I attended the open mic night at the local comedy club?'
+GOLD ANSWERS: ["2 months"]
+PREDICTION: 'You had been watching stand-up comedy specials regularly for about 3 months when you attended the open mic night at the local comedy club last month.'
+REASON: The relevant memories were correctly retrieved, including the user’s “last month” open mic night and their statement that they had been watching stand-up regularly for about three months as of 2023-05-20. The error occurred in the response, not memory retrieval. The model failed to adjust the three-month duration backward to the time of the open mic, which was around April 2023. At that point, the user would have been watching stand-up regularly for about two months. Instead, the model incorrectly reused the three-month duration.
+EVIDENCE: ['{\n    "content": "I\'m looking for some comedy recommendations. I\'ve been really into stand-up lately - I think it started about 3 months ago when I watched that Netflix special by John Mulaney, and I\'ve been watching stand-ups regularly ever since. Can you suggest some comedians or specials I might enjoy?\\nBelow is this message\'s metadata:\\nSpeaker Name: user\\nSpeaker Role: user\\n",\n    "name": "user",\n    "role": "user",\n    "timestamp": "2023-05-20T12:45:00"\n}', '{\n    "content": "I\'m looking for some advice on writing jokes. I\'ve recently gotten into stand-up comedy and I\'m trying to improve my craft. Last month, I finally worked up the courage to attend an open mic night at a local comedy club, and it was amazing to see people trying out their material in front of a live audience.\\nBelow is this message\'s metadata:\\nSpeaker Name: user\\nSpeaker Role: user\\n",\n    "name": "user",\n    "role": "user",\n    "timestamp": "2023-05-20T09:41:00"\n}']
+
+--- [step 0] extraction op=memory_system.extract_facts session=answer_cdba3d9f_2
+Operation: memory_system.extract_facts [extraction] (op_id op-2a3da1d8c2ed433db9f9b9c4cf7268b4, session answer_cdba3d9f_2, 2026-04-26 20:40:16.382)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [prompt] fact-extraction-system-prompt (prompt template, 4248 chars, omitted)
+  - [message] longmemeval-message-332-35-1: {
+     ...[1210 more]
+
+--- [step 1] update op=memory_system.update_memory_decision session=answer_cdba3d9f_2
+Operation: memory_system.update_memory_decision [update] (op_id op-121e2eae33a349169b4f7b282a3c6d99, session answer_cdba3d9f_2, 2026-04-26 20:40:17.304)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:70bc8a22ac4325bb28717881ebf51672a1c1c0f8: 'Find 13 existing memories similar to the new extracted facts.'
+  - [llm_response] str:d408e31036aada2cc7df03e8a8656b8e84b09855: ['Recently got into stand-up comedy', 'Attended an open mic  ...[8941 more]
+
+--- [step 2] extraction op=memory_system.extract_facts session=answer_cdba3d9f_1
+Operation: memory_system.extract_facts [extraction] (op_id op-dbcbe4ec0b0840cab6bba96f6ae57887, session answer_cdba3d9f_1, 2026-04-26 20:42:26.456)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [prompt] fact-extraction-system-prompt (prompt template, 4248 chars, omitted)
+  - [message] longmemeval-message-332-5-1: {
+    " ...[1231 more]
+
+--- [step 3] update op=memory_system.update_memory_decision session=answer_cdba3d9f_1
+Operation: memory_system.update_memory_decision [update] (op_id op-a31bb07a1b1b45bdb50da236992964d6, session answer_cdba3d9f_1, 2026-04-26 20:42:28.207)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:b4bc9ddbd9751ba664de9b02de7eccfb0bae981c: 'Find 10 existing memories similar to the new extracted facts.'
+  - [llm_response] str:752402c72e13690dba1fdc4163e650b54749d1ae: ['Interested in comedy, specifically stand-up', 'Started wat ...[8213 more]
+
+--- [step 4] extraction op=memory_system.extract_facts session=answer_cdba3d9f_1
+Operation: memory_system.extract_facts [extraction] (op_id op-4dde861f41d24177b0cef98d0d0c06c6, session answer_cdba3d9f_1, 2026-04-26 20:42:34.354)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [prompt] fact-extraction-system-prompt (prompt template, 4248 chars, omitted)
+  - [message] longmemeval-message-332-5-3: {
+    " ...[1001 more]
+
+--- [step 5] update op=memory_system.update_memory_decision session=answer_cdba3d9f_1
+Operation: memory_system.update_memory_decision [update] (op_id op-018cdb43cd7c41718e6dd205551e7572, session answer_cdba3d9f_1, 2026-04-26 20:42:35.515)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:213aa0fb9e510c4413ea4d3193188328da9fc848: 'Find 7 existing memories similar to the new extracted facts.'
+  - [llm_response] str:630c36c028e68908e865e4a9b815c8b966a397ac: ['Interested in comedy clubs or open mics in their area', 'Wo ...[5530 more]
+
+--- [step 6] extraction op=memory_system.extract_facts session=answer_cdba3d9f_1
+Operation: memory_system.extract_facts [extraction] (op_id op-678a85a630aa42afa2e6c47a74e47d70, session answer_cdba3d9f_1, 2026-04-26 20:42:40.576)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [prompt] fact-extraction-system-prompt (prompt template, 4248 chars, omitted)
+  - [message] longmemeval-message-332-5-5: {
+    " ...[1263 more]
+
+--- [step 7] update op=memory_system.update_memory_decision session=answer_cdba3d9f_1
+Operation: memory_system.update_memory_decision [update] (op_id op-bd59927f58e1439ca69522d3456b28c7, session answer_cdba3d9f_1, 2026-04-26 20:42:41.606)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:3a82ed585fc1d5dae6573a915a7c5fc982cc2b24: 'Find 8 existing memories similar to the new extracted facts.'
+  - [llm_response] str:ea4d08dec870b7a7767073e9df5e10a02d24c956: ['Interested in finding live comedy events in their area', 'C ...[6572 more]
+
+--- [step 8] extraction op=memory_system.extract_facts session=50136b31
+Operation: memory_system.extract_facts [extraction] (op_id op-46486e72702b4314a6d8fd053fb7042e, session 50136b31, 2026-04-26 20:44:32.334)
+Description: Extract facts from a conversation snippet using an LLM. Please note that these extracted facts are initially without timestamps, which will be added later when the memory unit is created or updated.
+Inputs:
+  - [prompt] fact-extraction-system-prompt (prompt template, 4248 chars, omitted)
+  - [message] longmemeval-message-332-38-3: {
+    "content" ...[887 more]
+
+--- [step 9] update op=memory_system.update_memory_decision session=50136b31
+Operation: memory_system.update_memory_decision [update] (op_id op-2bf18988912646dd848db1d60a7eb914, session 50136b31, 2026-04-26 20:44:33.227)
+Description: Decide how to update the memory store using a large language model.
+Inputs:
+  - [similar_memories] str:3a82ed585fc1d5dae6573a915a7c5fc982cc2b24: 'Find 8 existing memories similar to the new extracted facts.'
+  - [llm_response] str:512fcac46fa84c904bb42b0c682c8c456bb3625a: ['Watched Avengers: Endgame last weekend with family', 'Saw Joker with ...[5638 more]
+
+--- [step 10] retrieval op=memory_system.search_vector_store session=session-a2cfb78cfdc343d5a9151add567f35b3
+Operation: memory_system.search_vector_store [retrieval] (op_id op-d1c71e2902d444608efb34b62e6941be, session session-a2cfb78cfdc343d5a9151add567f35b3, 2026-04-27 14:41:28.783)
+Description: A task query searches the memory store for top-10 relevant memories.
+Inputs:
+  - [message & query] c9f37c46: 'How long had I been watching stand-up comedy specials regularly when I attended the open mic night at the local comedy club?'
+Outputs:
+  - [memory_entry] memory-unit-1cf3777e-9cc1-4233-b7f0-ecc8260ce145: {
+    "id": "1cf3777e-9cc1-4233-b7f0-ecc8260ce145",
+    "memory": "Would love to see live comedy",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-3d6fb0e2-221f-41bb-9d39-1c32d70814d3: {
+    "id": "3d6fb0e2-221f-41bb-9d39-1c32d70814d3",
+    "memory": "Recently got into stand-up comedy",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-3f015335-2857-43e4-82aa-b2770e9583a2: {
+    "id": "3f015335-2857-43e4-82aa-b2770e9583a2",
+    "memory": "Watches stand-up comedy regularly",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-583fef50-bbf6-4c56-bffc-6404c5c07a13: {
+    "id": "583fef50-bbf6-4c56-bffc-6404c5c07a13",
+    "memory": "Enjoyed the Netflix special by John Mulaney",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-5d81a847-2f03-4232-8f48-231918f47b28: {
+    "id": "5d81a847-2f03-4232-8f48-231918f47b28",
+    "memory": "Attended an open mic night at a local comedy club last month",
+    "timestamp": "2023-05-20T09:41:00"
+}
+  - [memory_entry] memory-unit-9d7aaf26-f31b-432c-b689-2e4328b99b62: {
+    "id": "9d7aaf26-f31b-432c-b689-2e4328b99b62",
+    "memory": "Saw Joker with friends at the cinema about three weeks ago",
+    "timestamp": "2023-05-20T13:40:00"
+}
+  - [memory_entry] memory-unit-c7ceae17-19d8-411d-a5c7-0b9b8b49b49e: {
+    "id": "c7ceae17-19d8-411d-a5c7-0b9b8b49b49e",
+    "memory": "Interested in comedy, specifically stand-up",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-cb737119-0d7f-44ba-a162-15317628945c: {
+    "id": "cb737119-0d7f-44ba-a162-15317628945c",
+    "memory": "Started watching stand-up about 3 months ago",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-d8eab2ea-1e7f-49fa-bf82-8c8a40e236e5: {
+    "id": "d8eab2ea-1e7f-49fa-bf82-8c8a40e236e5",
+    "memory": "Considering attending open mics before taking a comedy class",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-e7515a60-fb3f-49e4-8a3d-a6857914e628: {
+    "id": "e7515a60-fb3f-49e4-8a3d-a6857914e628",
+    "memory": "Interested in comedy clubs or open mics in their area",
+    "timestamp": "2023-05-20T12:45:00"
+}
+
+--- [step 11] evaluation op=question-answering session=session-bb5a087bfe3c4ac9953cac432464d2bf <<<< GOLD
+Operation: question-answering [evaluation] (op_id op-4efb3650e1104de688bb39ab525341b0, session session-bb5a087bfe3c4ac9953cac432464d2bf, 2026-04-27 14:57:21.383)
+Description: The question-answering model generates an answer based on the question, the context retrieved from the memory system, and a question-answering prompt.
+Inputs:
+  - [memory_entry] memory-unit-1cf3777e-9cc1-4233-b7f0-ecc8260ce145: {
+    "id": "1cf3777e-9cc1-4233-b7f0-ecc8260ce145",
+    "memory": "Would love to see live comedy",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-3d6fb0e2-221f-41bb-9d39-1c32d70814d3: {
+    "id": "3d6fb0e2-221f-41bb-9d39-1c32d70814d3",
+    "memory": "Recently got into stand-up comedy",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-3f015335-2857-43e4-82aa-b2770e9583a2: {
+    "id": "3f015335-2857-43e4-82aa-b2770e9583a2",
+    "memory": "Watches stand-up comedy regularly",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-583fef50-bbf6-4c56-bffc-6404c5c07a13: {
+    "id": "583fef50-bbf6-4c56-bffc-6404c5c07a13",
+    "memory": "Enjoyed the Netflix special by John Mulaney",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-5d81a847-2f03-4232-8f48-231918f47b28: {
+    "id": "5d81a847-2f03-4232-8f48-231918f47b28",
+    "memory": "Attended an open mic night at a local comedy club last month",
+    "timestamp": "2023-05-20T09:41:00"
+}
+  - [memory_entry] memory-unit-9d7aaf26-f31b-432c-b689-2e4328b99b62: {
+    "id": "9d7aaf26-f31b-432c-b689-2e4328b99b62",
+    "memory": "Saw Joker with friends at the cinema about three weeks ago",
+    "timestamp": "2023-05-20T13:40:00"
+}
+  - [memory_entry] memory-unit-c7ceae17-19d8-411d-a5c7-0b9b8b49b49e: {
+    "id": "c7ceae17-19d8-411d-a5c7-0b9b8b49b49e",
+    "memory": "Interested in comedy, specifically stand-up",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-cb737119-0d7f-44ba-a162-15317628945c: {
+    "id": "cb737119-0d7f-44ba-a162-15317628945c",
+    "memory": "Started watching stand-up about 3 months ago",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-d8eab2ea-1e7f-49fa-bf82-8c8a40e236e5: {
+    "id": "d8eab2ea-1e7f-49fa-bf82-8c8a40e236e5",
+    "memory": "Considering attending open mics before taking a comedy class",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [memory_entry] memory-unit-e7515a60-fb3f-49e4-8a3d-a6857914e628: {
+    "id": "e7515a60-fb3f-49e4-8a3d-a6857914e628",
+    "memory": "Interested in comedy clubs or open mics in their area",
+    "timestamp": "2023-05-20T12:45:00"
+}
+  - [message & query] c9f37c46: 'How long had I been watching stand-up comedy specials regularly when I attended the open mic night at the local comedy club?'
+  - [prompt] question-answering-prompt (prompt template, 92 chars, omitted)
+Outputs:
+  - [memory_context] str:9beb203ffd23b6337a753418f791470883aaead6: '### Memory 1:\nMemory: Attended an open mic night at a local comedy club last month\nTime: 2023-05-20T09:41:00\n\n### Memory 2:\nMemory: Started watching stand-up about 3 months ago\nTime: 2023-05-20T12:45:00\n\n### Memory 3:\nMemory: Considering attending open mics before taking a comedy class\nTime: 2023-05-20T12:45:00\n\n### Memory 4:\nMemory: Recently got into stand-up comedy\nTime: 2023-05-20T12:45:00\n\n### Memory 5:\nMemory: Watches stand-up comedy regularly\nTime: 2023-05-20T12:45:00\n\n### Memory 6:\nMemory: Interested in comedy clubs or open mics in their area\nTime: 2023-05-20T12:45:00\n\n### Memory 7:\nMemory: Interested in comedy, specifically stand-up\nTime: 2023-05-20T12:45:00\n\n### Memory 8:\nMemory: Would love to see live comedy\nTime: 2023-05-20T12:45:00\n\n### Memory 9:\nMemory: Enjoyed the Netflix special by John Mulaney\nTime: 2023-05-20T12:45:00\n\n### Memory 10:\nMemory: Saw Joker with friends at the cinema about three weeks ago\nTime: 2023-05-20T13:40:00'
+  - [llm_response] str:92b38a847696091f7ecfc8302bf9ce532b640716: 'You had been watching stand-up comedy ...[113 more]

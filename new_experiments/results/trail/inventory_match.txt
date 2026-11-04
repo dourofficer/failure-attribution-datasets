@@ -1,0 +1,29 @@
+40 records; predicted mistake steps total 159 (mean 4.0/trace); gold spans mean 3.6
+precision of predicted mistakes: {'no gold': 84, 'hit gold (+-1)': 75}  unmatched relative to primary: {'before primary': 43, 'after primary': 41}
+primary in predicted set: 27 / 40 ; decisive exact: 11
+| impact | recalled | total | recall% |
+|---|---|---|---|
+| HIGH | 70 | 96 | 73 |
+| LOW | 13 | 40 | 32 |
+| MEDIUM | 30 | 77 | 39 |
+| span kind | recalled | total | recall% |
+|---|---|---|---|
+| LLM | 105 | 190 | 55 |
+| TOOL | 8 | 23 | 35 |
+| category | recalled | total | recall% |
+|---|---|---|---|
+| Formatting Errors | 21 | 52 | 40 |
+| Instruction Non-compliance | 7 | 23 | 30 |
+| Goal Deviation | 15 | 19 | 79 |
+| Tool Selection Errors | 14 | 16 | 88 |
+| Tool-related | 11 | 15 | 73 |
+| Language-only | 12 | 13 | 92 |
+| Task Orchestration | 8 | 12 | 67 |
+| Poor Information Retrieval | 3 | 12 | 25 |
+| Tool Output Misinterpretation | 5 | 9 | 56 |
+| Resource Abuse | 1 | 9 | 11 |
+| Context Handling Failures | 2 | 7 | 29 |
+| Environment Setup Errors | 2 | 5 | 40 |
+| Incorrect Problem Identification | 4 | 5 | 80 |
+| Authentication Errors | 1 | 3 | 33 |
+decisive offset (pred - primary): later 11 earlier 18 exact 11

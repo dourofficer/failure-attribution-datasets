@@ -1,0 +1,17 @@
+ID embodied_claude_01KJPDZEK9YZ65V379E1MWARPY domain=embodied model=claude run=None passed=None score=None
+[r2] False Assumption | step=None | The plan blindly uses fixed poses and grasps without perceiving or verifying object colors/locations, assuming the green and blue cubes are at those coordinates, so it may not pick or move the intended cubes.
+[r3] Success | step=None | The plan correctly follows the instruction sequence by picking the green cube, then the blue cube, and subsequently moving (repositioning and releasing) the green cube and then the blue cube.
+
+Task: Pick the green cube, then pick the blue cube, then move the green cube, then move the blue cube.
+
+Primitive plan (10 steps):
+  home({})
+  move_to_pose({'arm': 'right', 'pose': [0.1, 0.16, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'right'})
+  move_to_pose({'arm': 'left', 'pose': [0.3, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  envelop_grasp({'arm': 'left'})
+  move_to_pose({'arm': 'right', 'pose': [0.0, 0.16, 1.0, 0, -0.818, 0.574, 0]})
+  release({'arm': 'right'})
+  move_to_pose({'arm': 'left', 'pose': [0.0, 0.26, 1.0, 0, -0.818, 0.574, 0]})
+  release({'arm': 'left'})
+  home({})
